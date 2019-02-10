@@ -1,4 +1,4 @@
-package gc;
+package JVM;
 
 import java.util.Vector;
 

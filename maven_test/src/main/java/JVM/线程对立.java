@@ -1,8 +1,8 @@
-package gc;
+package JVM;
 
 public class 线程对立 {
     public static void main(String[] args) {
-        Thread thread = new Thread(new Runnable() {
+        final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true){
