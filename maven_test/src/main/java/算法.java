@@ -314,6 +314,7 @@ public class 算法 {
         ListNode n1=new ListNode(head.val);
         String buf = "sad";
         String xsadasd = "sds";
+        Integer sds=222;
         n2.next=n1;
         n1=n2;
         n2=n2.next;
