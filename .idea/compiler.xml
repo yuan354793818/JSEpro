@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="branch-test" />
         <module name="maven_test" />
         <module name="web-test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="branch-test" target="1.5" />
       <module name="maven_test" target="6" />
       <module name="web-test" target="1.5" />
     </bytecodeTargetLevel>

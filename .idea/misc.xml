@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/maven_test/pom.xml" />
         <option value="$PROJECT_DIR$/web-test/pom.xml" />
+        <option value="$PROJECT_DIR$/branch-test/pom.xml" />
       </list>
     </option>
   </component>
