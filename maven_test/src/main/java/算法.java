@@ -2,8 +2,18 @@ import java.util.*;
 
 public class 算法 {
     public static void main(String[] args) {
+        ListNode listNode = new ListNode(1);
+        ListNode head=listNode;
+        for (int i = 0; i < 4; i++) {
+            listNode.next = new ListNode(i+2);
+            listNode=listNode.next;
+        }
+        ListNode listNode1 = swapPairs(head);
 
-        System.out.println(isValid("(56546{)}5464{7876}"));
+        while (listNode1!= null) {
+            System.out.println(listNode1.val);
+            listNode1=listNode1.next;
+        }
     }
 
 
@@ -113,7 +123,7 @@ public class 算法 {
         return maxl;
     }
 
-    // "abcabcbb"  "apzivnhwqapyttsmaboaqhcqn"
+    // "abcabcbb"  "lkjapzivnhwqapyttsmaboaqhcqn"
     public static int 滑动窗口(String s) {
         int len = s.length();
         int maxl = 0;
@@ -134,9 +144,9 @@ public class 算法 {
 
     //如果 s[j]s[j] 在 [i, j)[i,j) 范围内有与 j'j
 //′
-//  重复的字符，我们不需要逐渐增加 ii 。 我们可以直接跳过 [i，j'][i，j
+//  重复的字符，我们不需要逐渐增加 ii 。 我们可以直接跳过 [i，j'][i，j]
 //′
-// ] 范围内的所有元素，并将 ii 变为 j' + 1j
+//  范围内的所有元素，并将 ii 变为 j' + 1j
 //′
 // +1。
     public static int 滑动窗口优化(String s) {
@@ -145,8 +155,10 @@ public class 算法 {
         HashMap<Character, Integer> map = new HashMap<Character, Integer>();// 不同字符的最靠右位置
         for (int i = 0, j = 0; j < len; j++) {
             if (map.containsKey(s.charAt(j))) {
-                i = Math.max(map.get(s.charAt(j)), i);
+               // i = Math.max(map.get(s.charAt(j)), i);
+                i = map.get(s.charAt(j));
             }
+
             maxl = Math.max(maxl, j - i + 1);
             map.put(s.charAt(j), j + 1);
         }
@@ -271,13 +283,69 @@ public class 算法 {
             }
         }
 
-        if (stack.size() != 0) {
-            return false;
+        return stack.size() == 0;
+    }
+
+    // ["flower","flow","flight"]
+    // ["dog","racecar","car"]
+    //["a","a","b"]
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        for (int i = 1; i < strs.length; i++) {
+            int j;
+            for (j = 0; j < strs[i].length()&&j<strs[0].length(); j++) {//当前最大公串和strs[i]
+                if (strs[0].charAt(j) != strs[i].charAt(j)) {
+                    break;
+                }
+            }
+            strs[0] = strs[0].substring(0, j);
+        }
+        return strs[0]; //strs[0]做返回
+    }
+
+    //1->2->3->4 5 6, 你应该返回 2->1->4->3 6 5.
+    public static ListNode swapPairs(ListNode head) {
+
+        ListNode ln=head.next;
+
+        ListNode n2=new ListNode(head.next.val);
+        ListNode n1=new ListNode(head.val);
+
+        n2.next=n1;
+        n1=n2;
+        n2=n2.next;
+
+        ListNode s1=null;
+        ListNode s2=null;
+
+        while (true) {
+            if (ln.next != null) {
+                s1=ln.next;
+            }else {
+                break;
+            }
+            ln=ln.next;
+            if (ln.next != null) {
+                s2=ln.next;
+            }else {
+                n2.next=s1;
+                break;
+            }
+            ln=ln.next;
+
+            n2.next=s2;
+            n2=n2.next;
+            n2.next=s1;
+            n2=n2.next;
         }
 
-        return true;
+        return n1;
     }
 }
+
+
 
 class ListNode {
     int val;

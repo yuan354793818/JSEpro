@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>selectchoosedisplay</title>
+    <script type="text/javascript" src="jquery-3.3.1.js">
+    </script>
+    <script>
+
+
+        function todo(obj) {
+
+            var value = obj.value;
+            var s = value.substring(3, 4);
+            console.log(s);
+
+            for (var i = 1; i < 5; i++) {
+                $('#tag' + i).hide();
+            }
+            $('#tag' + s).show();
+        }
+
+        $(function () {
+            for (var i = 1; i < 5; i++) {
+                $('#tag' + i).hide();
+            }
+            for (var i = 1; i < 5; i++) {
+                $('#d' + i).hide();
+            }
+            sltd();
+
+           // delete  person.name;
+            //alert(person.child.sayBye());
+        });
+
+        var prei;
+        function sltd() {
+            $("#slt1").change(function () {
+                $(prei).hide();
+
+                var val = $(this).val();
+
+                var now = $('#'+ val);
+
+                now.show();
+
+                prei= now;
+            });
+        }
+
+
+        var person={
+            name:'yjy',
+            child:{
+                name:'woerzi',
+                sayBye() {
+                    return 886;
+                }
+            },
+            getAge() {
+                return 999;
+            },
+            getTime:function() {
+                return new Date();
+            }
+        }
+    </script>
+</head>
+<body>
+<div>
+    <select onchange="todo(this)">
+    <option value=""></option>
+    <option value="tag1">tag1</option>
+    <option value="tag2">tag2</option>
+    <option value="tag3">tag3</option>
+    <option value="tag4">tag4</option>
+</select>
+    <div id="tag1">ttt111</div>
+    <div id="tag2">ttt222</div>
+    <div id="tag3">ttt333</div>
+    <div id="tag4">ttt444</div>
+</div>
+<div>
+    <select id="slt1">
+        <option value=""></option>
+        <option value="d1">tag1</option>
+        <option value="d2">tag2</option>
+        <option value="d3">tag3</option>
+        <option value="d4">tag4</option>
+    </select>
+    <div id="d1">d1</div>
+    <div id="d2">d2</div>
+    <div id="d3">d3</div>
+    <div id="d4">d4</div>
+</div>
+
+</body>
+</html>

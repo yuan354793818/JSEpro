@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HeapOOM {
+
+    public int x=111;
+
     static class OOMObject{
 
     }
