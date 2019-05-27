@@ -1467,6 +1467,10 @@ public class 算法 {
     //解释:
     //原子的数量是 {'K': 4, 'N': 2, 'O': 14, 'S': 4}。
     // 65-90 A-Z 97-122 a-z 48-57 0-9
+
+   /* private String formula;
+    private int length;*/
+
     public static String countOfAtoms(String formula) {
         HashMap<String, Integer> rst = helpz(formula, 0);
         String s = rst.entrySet().stream().sorted((o1, o2) -> {
@@ -1499,6 +1503,7 @@ public class 算法 {
     public void test1501() {
         System.out.println(countOfAtoms("(ScTh13)16Tb22C18Fl34Ag14(At41Bk4NpEsTc27Am20)3"));
     }
+
 
     public static HashMap<String, Integer> helpz(String formula, int start) {
         HashMap<String, Integer> map = new HashMap<>();
@@ -1572,6 +1577,78 @@ public class 算法 {
     @Test
     public void test1533() {
         helpz("(ScTh13)16Tb22C18Fl34Ag14(At41Bk4NpEsTc27Am20)3", 0).forEach((s, integer) -> System.out.println(s + " " + integer));
+    }
+
+    //s = "3[a]2[bc]", 返回 "aaabcbc".
+    //s = "3[a2[c]]", 返回 "accaccacc".
+    //s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
+    private int slen;
+    private String s;
+    public String decodeString(String s) {
+      this.slen=s.length();
+      this.s=s;
+      return helpd(0).s;
+    }
+
+    @Test
+    public void test1593() {
+        String s = decodeString("2[abc]3[cd]ef");
+        System.out.println(s);
+    }
+
+    private class HelpObj{
+        public String s;
+        public int ridx;
+
+        public HelpObj(String s, int ridx) {
+            this.s = s;
+            this.ridx = ridx;
+        }
+    }
+
+    public HelpObj helpd(int start){
+        StringBuilder sb=new StringBuilder();
+        int prefix=0;
+        for (int i = start; i < slen; ) {
+            char c = s.charAt(i);
+            i++;
+            if (c>47&&c<58){
+                StringBuilder num=new StringBuilder();
+                num.append(c);
+                while (i < slen) {
+                    char c1 = s.charAt(i);
+                    if (c1>47&&c1<58){
+                        num.append(c1);
+                        i++;
+                    }else {
+                        break;
+                    }
+                }
+                prefix = Integer.valueOf(num.toString());
+            }else if ((c>96&&c<123)||(c>64&&c<91)){
+                sb.append(c);
+                while (i < slen) {
+                    char c1 = s.charAt(i);
+                    if (c1>96&&c1<123){
+                        sb.append(c1);
+                        i++;
+                    }else {
+                        break;
+                    }
+                }
+            }else if (c=='['){
+                HelpObj helpd = helpd(i);
+                while (prefix>1){
+                    sb.append(helpd.s);
+                    prefix--;
+                }
+                sb.append(helpd.s);
+                i=helpd.ridx;
+            }else if (c==']'){
+                return new HelpObj(sb.toString(),i);
+            }
+        }
+        return new HelpObj(sb.toString(),0);
     }
 
 
