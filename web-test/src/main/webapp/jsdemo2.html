@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script>
+
+        onerror = function (event, source, fileno) {
+            console.log(event);
+            console.log(source);
+            console.log(fileno);
+        };
+
+        function doerror() {
+            alessdrt();
+        }
+
+
+        function mytimer() {
+            $('#clock').text(new Date());
+        }
+
+
+        function dpclearInterval() {
+            clearInterval(interval);
+        }
+
+        function doconfirm() {
+            var b = window.confirm('ok?');
+            if (b) {
+                window.prompt("what's your name", "");
+            }
+        }
+
+        function toload() {
+            window.location.assign("https://www.baidu.com")
+        }
+
+        function getCookie() {
+            console.log(document.cookie);
+        }
+
+        function setCookie() {
+            var date = new Date();
+            date.setTime(date.getTime() + 1000);
+            document.cookie = "myname=yjy;expires=" + date.toGMTString();
+        }
+    </script>
+</head>
+<body>
+<button onclick="toload();">toload</button>
+<button onclick="history.back()">back</button>
+<button onclick="history.forward()">forward</button>
+<button onclick="doconfirm()">confirm</button>
+<button onclick="dpclearInterval()">clearInterval</button>
+<hr>
+<p id="clock"></p>
+<button onclick="getCookie()">getCookie</button>
+<button onclick="setCookie()">setCookie</button>
+<div id="div1">ojboooojj</div>
+<button onclick="doerror();">doerror</button>
+</body>
+</html>
+
+<script>
+    var cars = ["Saab", "Volvo", "BMW"];
+    var entries = cars.entries();
+    var val;
+    for (v in cars) {
+        console.log(cars[v])
+    }
+
+    var nums = [1, 4, 67, 83];
+
+    console.log(nums.filter(function (value) {
+        return value > 50;
+    }));
+
+    console.log(nums.every(function (value) {
+        return value > 0
+    }));
+
+    console.log(nums.reverse());
+    console.log(nums.join(','));
+    console.log(nums.map(function (value) {
+        return value * 10
+    }));
+    console.log(nums.some(function (value) {
+        return value > 80;
+    }));
+    console.log(nums.keys);
+    console.log(Math.log(22));
+    console.log(window.innerHeight);
+    console.log(window.screen.height);
+    //console.log(window.location);
+    console.log(location.href + "\n" + location.pathname);
+
+    console.log(window.navigator);
+    console.log(window.history);
+
+    var interval = setInterval(function (args) {
+        mytimer()
+    }, 1000);
+    document.cookie = "name=YJY;expires=30;path=/";
+    console.log(document.cookie)
+
+    var $div1 = $('#div1');
+    var div1 = document.getElementById('div1');
+
+    console.log($div1);
+    console.log(div1);
+</script>

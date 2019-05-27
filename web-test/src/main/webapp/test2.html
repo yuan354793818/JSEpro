@@ -1,0 +1,30 @@
+<html>
+<script>
+    function copyData(){
+        clipboardData.setData('Text',document.selection.createRange().text);
+    }
+    function pasteData(){
+        txtArea.value = clipboardData.getData('Text');
+    }
+</script>
+<body>
+<div style="background: #ff9900; width:'100%';" align="center">
+    <font color="#0000ff" size="12pt">
+        <b>Get Data Example</b>
+    </font>
+</div>
+<center>
+    </br>
+    <div style="background: #0099ff; width:'100%';" align="center">
+        <p>Rose India Technologies Pvt. Ltd.  is a global services company that ensures maximum returns by providing quality software solutions and services. The Indian based company provides services to several reputed institutional clients, in the domain of IT and IT enabled Technologies. We help in understanding the client requirements and offer customized solutions in various specialized areas like Web based Technologies, Database Systems, Client Server Architecture, E-commerce Solutions and Consultancy Services</p>
+    </div>
+    <textarea id="txtArea" style="width:600; height:100; background:#ffffcc;">
+Paste your text here....
+</textarea>
+    <hr>
+    <button onclick="copyData();">Copy</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="pasteData();">Paste</button>
+</center>
+</body>
+</html>

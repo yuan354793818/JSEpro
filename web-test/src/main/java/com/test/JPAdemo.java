@@ -1,3 +1,5 @@
+package com.test;
+
 import com.test.entity.Comment;
 import com.test.entity.Role;
 import com.test.entity.User;
@@ -25,6 +27,23 @@ public class JPAdemo {
 
     }
 
+    public JPAdemo() {
+        factory = Persistence.createEntityManagerFactory("jpa");
+        entity=factory.createEntityManager();
+        transaction = entity.getTransaction();
+    }
+
+    public void dosome() {
+        transaction.begin();
+        Query q = entity.createQuery("select c from Comment c ");
+        List<Comment> list = q.getResultList();
+        for (Comment c : list) {
+            System.out.println(c.getUser());
+        }
+        transaction.commit();
+        entity.close();
+        factory.close();
+    }
 
     @Test
     public void findOneUser() {

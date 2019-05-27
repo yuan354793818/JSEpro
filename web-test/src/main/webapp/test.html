@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TEST</title>
+    <script type="text/javascript" src="jquery-3.3.1.js">
+    </script>
+    <script src="lib/doT.min.js"></script>
+    <script>
+        $(function () {
+            if (/(iPhone|iPad|iPod|iOS|Android)/i.test('iOS')) { //移动端
+                alert(navigator.userAgent);
+            }
+        });
+
+        var message = {
+            msg: "hello",
+            code: "this is dot template test"
+        };
+
+        var ss = {
+            abs: function () {
+
+            },
+            sdsd: {aaa:function () {
+                    
+                }}
+        };
+
+
+        function dofun() {
+            var tmp = doT.template($("#testTpl").text());
+            var result = tmp(message);
+            $("body").html(result);
+        }
+    </script>
+</head>
+<body>
+<button onclick="dofun()">dofun</button>
+<script type="text/x-dot-template" id="testTpl">
+    <div>{{= it.msg }}</div>
+    <div>{{= it.code }}</div>
+</script>
+<i>sdsds</i>
+</body>
+</html>

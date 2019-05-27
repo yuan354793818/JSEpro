@@ -16,13 +16,11 @@ public class MySqlDemo {
         try {
             con = JDBCUtil.getConnection();
             st = con.createStatement();
-            String str = "select * from person";
+            String str = "select * from blog";
             rs = st.executeQuery(str);
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String age = rs.getString("age");
-                System.out.println(id + " " + name + " " + age);
+                int id = rs.getInt("blog_id");
+                System.out.println(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script>
+        var result = [
+            {
+                subject: 'math',
+                score: 88
+            },
+            {
+                subject: 'chinese',
+                score: 95
+            },
+            {
+                subject: 'english',
+                score: 80
+            }
+        ];
+        //返回累加数组
+        var sum = result.reduce(function (list, cur, currentIndex, array) { //上次return的元素,当前元素,index,整个数组
+            if (currentIndex>0){
+                list.push(cur.score+list[currentIndex-1])
+            } else {
+                list=[];
+                list.push(cur.score);
+            }
+            return  list;
+        }, 0);   //起始值
+        console.log(sum);
+
+        console.log(function (num) {
+            return num;
+        }(889));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

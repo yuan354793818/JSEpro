@@ -60,7 +60,7 @@ class MyProxyDemo {
 interface ProxyHandlerDemo {
     public Object proxyDoCheck(final Object obj, String methodName, Object...arg);
 
-    public Object proxyDoAnalyze(final Object obj, String methodName, Object result ,Object...arg);
+    public Object proxyDoAnalyze(final Object obj, String methodName, Object result , Object...arg);
 
 }
 
@@ -72,7 +72,7 @@ class MyProxyHandler implements ProxyHandlerDemo {
         return null;
     }
 
-    public Object proxyDoAnalyze(final Object obj, String methodName,Object result,Object...arg) {
+    public Object proxyDoAnalyze(final Object obj, String methodName, Object result, Object...arg) {
 
         System.out.println("proxy do else ANALYZE");
         return null;

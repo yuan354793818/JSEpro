@@ -8,17 +8,20 @@ public class AnalysisProceduceTest {
 }
 
 interface M1{
-    static Integer a=0;
+     int a=0;
 }
-interface M2{
-    static  Integer a=0;
+interface M2 extends M1{
+    int a=0;
+}
+interface M3 {
+    int a=0;
 }
 
-class Fa{
-   static Integer a;
+class Fa implements M2{
+   static int a;
 }
 
 
-class Ch extends Fa  implements M1{
-    static Integer a;
+class Ch extends Fa  implements M3{
+    static int a;
 }

@@ -9,12 +9,15 @@
 <html>
 <head>
     <title>TEST</title>
+    <script type="text/javascript" src="../../jquery-3.3.1.js"></script>
+    <script>
+    </script>
 </head>
 <body>
-${dto.tag}
-<form action="/getpage" method="post">
-    <input type="text" value="${dto.msg}" name="msg">
-    <button>submit</button>
+<form action="/shutdown" method="post">
+    <input type="text" name="id">
+    <input type="password" name="password">
+    <button>shutdown</button>
 </form>
 </body>
 </html>

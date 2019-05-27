@@ -21,8 +21,24 @@ public class 自定义ClassLoader {
 
     }
 
+    @Test
+    public void test2() throws IOException, ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchFieldException {
+        MyClassLoader2 classLoader2 = new MyClassLoader2();
+        Class<?> aClass = classLoader2.loadClass("MasterBranchAdd");
+
+    }
 
 
+
+}
+
+class MyClassLoader2 extends ClassLoader {
+    public MyClassLoader2() {
+    }
+
+    public MyClassLoader2(ClassLoader parent) {
+        super(parent);
+    }
 }
 
  class MyClassLoader extends ClassLoader{
@@ -30,7 +46,7 @@ public class 自定义ClassLoader {
      private String classpath;
 
      public MyClassLoader(String classpath) {
-
+         super(null);
          this.classpath = classpath;
      }
 

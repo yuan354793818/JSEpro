@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script>
+        $(function () {
+            $.extend({
+                getapp: function (a,b) {
+                    return a*b;
+                }
+            });
+            //alert($.getapp(3, 4));
+
+            $.fn.alertThisOne = function () {
+                var val = $(this).val();
+                alert(val);
+            };
+
+            // $('#ipt1').on('click', function () {
+            //     $(this).alertThisOne();
+            // });
+
+            $.markDown=function () {
+                alert("markDown!");
+            }
+
+            //$.markDown();
+
+
+            var src = $('#img1').attr('src');
+            console.dir(src);
+        });
+    </script>
+</head>
+<body>
+<input id="ipt1" />
+<img id="img1" src="javascript:alert('sds');"/>
+</body>
+</html>

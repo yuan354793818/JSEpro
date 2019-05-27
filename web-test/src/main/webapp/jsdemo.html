@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSDEMO</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script>
+        function validateForm() {
+            var x = document.forms["myForm"]["fname"].value;
+            if (x == null || x == "") {
+                alert("姓必须填写");
+                return false;
+            }
+        }
+
+        function validateForm2() {
+            var input1 = document.getElementById("input1");
+            input1.setCustomValidity('');
+            if (!input1.checkValidity()) {
+                input1.setCustomValidity("ERROR");
+                document.getElementById("msg").innerText = input1.validationMessage;
+            }
+        }
+
+        var person1 = {
+            fullName: function () {
+                return this.firstName + " " + this.lastName;
+            }
+        };
+        var person2 = {
+            firstName: "John",
+            lastName: "Doe"
+        };
+
+        console.log(person1.fullName.apply(person2));
+
+
+        var text = '{ "sites" : [' +
+            '{ "name":"Runoob" , "url":"www.runoob.com" },' +
+            '{ "name":"Google" , "url":"www.google.com" },' +
+            '{ "name":"Taobao" , "url":"www.taobao.com" } ]}';
+        var jsonObj = JSON.parse(text);
+
+
+        function myFunction(a, b) {
+            console.log(arguments.callee + '   ' + arguments.length)
+            return a * b;
+        }
+
+        myFunction(1, 2);
+
+        var txt = myFunction.toString();
+        console.log(txt);
+
+
+        var closeBAG = function () {
+            var count = 0;
+            return function () {
+                return count++;
+            }
+        }(); //返回的是函数的一次调用
+
+        closeBAG();
+        closeBAG();
+        closeBAG();
+        console.log(closeBAG()); // -->3
+
+
+        function changeDate(obj) {
+            obj.value = Date();
+        }
+
+        function f() {
+            alert('HELLO!');
+        }
+
+        function leave() {
+            alert('goodbye!');
+        }
+
+
+    </script>
+</head>
+<body onload="" onunload="leave()">
+<button onclick="this.innerHTML='<strong>kkkk</strong>'">click</button>
+<p onmouseover="this.innerHTML='<strong>kkkk</strong>'" onmouseleave="this.innerHTML='this is why we do'">this is why we
+    do</p>
+
+<form name="myForm" action="" onsubmit="validateForm()" method="post" autocomplete="on">
+    <span id="msg">kkk</span><br>
+    名字: <input id="input1" type="number" name="fname" autofocus="autofocus" min="3" required>
+    <input type="button" onclick="validateForm2()" value="提交">
+</form>
+
+<button onclick="dothis()">dothis</button>
+<a href="javascript:void(function() { alert('sds') }())">sds</a>
+<a href="#msg">#do</a>
+<button onclick="this.style.color='red'">changeColor</button>
+<button onmouseover="this.style.visibility='hidden'" onmouseleave="this.style.visibility='visible'">showORhide</button>
+<br>
+<input type="text" onchange="changeDate(this)"/>
+<div id="div1">
+    <p id="p1">this is parent node</p>
+</div>
+<button id="acd">addChild</button>
+<button id="rcd">removeChild</button>
+<button id="ibf">insertBefore</button>
+</body>
+</html>
+
+<script>
+    var element1=996;
+    var acd = document.getElementById('acd');
+    acd.addEventListener('click', function (ev) {
+        var newP = document.createElement('p');
+        var node = document.createTextNode('add child');
+        newP.appendChild(node);
+        document.getElementById('p1').appendChild(newP);
+    })
+    var rcd = document.getElementById('rcd');
+    rcd.addEventListener('click', function (ev) {
+        var p1 = document.getElementById('p1');
+        var childNodes = p1.childNodes;
+        if (childNodes.length > 0) {
+            p1.removeChild(childNodes[0]);
+        }
+    });
+    $('#ibf').click(function () {
+        var pp = document.createElement('p');
+        var text1 = document.createTextNode("xxx");
+        pp.appendChild(text1);
+        var $p1 = $('#p1');
+        $('#div1').insertBefore(pp,$p1);
+    });
+
+    function Person(name,age) {
+        this.name=name;
+        this.age=age;
+    }
+
+    Person.prototype.money=99;
+    Person.money=88;
+    var me = new Person('yjy', 19);
+    var num=0.2+0.1;
+</script>

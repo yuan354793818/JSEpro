@@ -3,6 +3,7 @@ package gc;
 import java.io.IOException;
 
 
+
 public class ClassLoaderTest {
     public static void main(String[] args) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException {
         new Lady().run();
@@ -24,3 +25,4 @@ class Lady{
         System.out.println(Long.class.getClassLoader());
     }
 }
+
