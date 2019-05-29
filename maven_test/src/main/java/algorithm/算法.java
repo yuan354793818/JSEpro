@@ -1470,7 +1470,6 @@ public class 算法 {
 
    /* private String formula;
     private int length;*/
-
     public static String countOfAtoms(String formula) {
         HashMap<String, Integer> rst = helpz(formula, 0);
         String s = rst.entrySet().stream().sorted((o1, o2) -> {
@@ -1584,10 +1583,11 @@ public class 算法 {
     //s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
     private int slen;
     private String s;
+
     public String decodeString(String s) {
-      this.slen=s.length();
-      this.s=s;
-      return helpd(0).s;
+        this.slen = s.length();
+        this.s = s;
+        return helpd(0).s;
     }
 
     @Test
@@ -1596,7 +1596,7 @@ public class 算法 {
         System.out.println(s);
     }
 
-    private class HelpObj{
+    private class HelpObj {
         public String s;
         public int ridx;
 
@@ -1606,51 +1606,70 @@ public class 算法 {
         }
     }
 
-    public HelpObj helpd(int start){
-        StringBuilder sb=new StringBuilder();
-        int prefix=0;
+    public HelpObj helpd(int start) {
+        StringBuilder sb = new StringBuilder();
+        int prefix = 0;
         for (int i = start; i < slen; ) {
             char c = s.charAt(i);
             i++;
-            if (c>47&&c<58){
-                StringBuilder num=new StringBuilder();
+            if (c > 47 && c < 58) {
+                StringBuilder num = new StringBuilder();
                 num.append(c);
                 while (i < slen) {
                     char c1 = s.charAt(i);
-                    if (c1>47&&c1<58){
+                    if (c1 > 47 && c1 < 58) {
                         num.append(c1);
                         i++;
-                    }else {
+                    } else {
                         break;
                     }
                 }
                 prefix = Integer.valueOf(num.toString());
-            }else if ((c>96&&c<123)||(c>64&&c<91)){
+            } else if ((c > 96 && c < 123) || (c > 64 && c < 91)) {
                 sb.append(c);
                 while (i < slen) {
                     char c1 = s.charAt(i);
-                    if (c1>96&&c1<123){
+                    if (c1 > 96 && c1 < 123) {
                         sb.append(c1);
                         i++;
-                    }else {
+                    } else {
                         break;
                     }
                 }
-            }else if (c=='['){
+            } else if (c == '[') {
                 HelpObj helpd = helpd(i);
-                while (prefix>1){
+                while (prefix > 1) {
                     sb.append(helpd.s);
                     prefix--;
                 }
                 sb.append(helpd.s);
-                i=helpd.ridx;
-            }else if (c==']'){
-                return new HelpObj(sb.toString(),i);
+                i = helpd.ridx;
+            } else if (c == ']') {
+                return new HelpObj(sb.toString(), i);
             }
         }
-        return new HelpObj(sb.toString(),0);
+        return new HelpObj(sb.toString(), 0);
     }
 
+    //给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
+    public boolean isPowerOfTwo(int n) {
+        int count=0;
+        while (n > 0) {
+            count += (n & 1);
+            n>>=1;
+        }
+        return count==1;
+    }
+
+    // 减一相与为0
+    public boolean isPowerOfTwo_unlimited(int n) {
+        return (n>0)&&((((n-1)&n)==0));
+    }
+
+    @Test
+    public void test1672() {
+        System.out.println(isPowerOfTwo(45));
+    }
 
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {

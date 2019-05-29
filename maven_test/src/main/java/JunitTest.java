@@ -1,6 +1,11 @@
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +18,7 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 public class JunitTest {
     @Test
@@ -192,7 +198,7 @@ public class JunitTest {
 
     @Test
     public void test194() {
-        String s="yuan jiaytu" +
+        String s = "yuan jiaytu" +
                 " asdfasdas ";
         Arrays.stream(s.split("\\s")).forEach(s1 -> System.out.println(s1));
     }
@@ -201,19 +207,40 @@ public class JunitTest {
     public void test201() {
         String s = "sdsd";
         String x = new String("sdsd");
-        System.out.println(x==s);
+        System.out.println(x == s);
     }
 
 
     @Test
     public void test209() {
 
-        System.out.println(9>>> 31);
+        System.out.println(9 >>> 31);
     }
 
     @Test
     public void test215() {
         System.out.println("As".compareTo("Aaa"));
+    }
+
+    @Test
+    public void test220() {
+        System.out.println(5 & 1);
+    }
+
+    @Test
+    public void test225() {
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(new Printable() {
+            @Override
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                switch (pageIndex) {
+                    case 0:
+                        return PAGE_EXISTS;
+                    default:
+                        return NO_SUCH_PAGE;
+                }
+            }
+        });
     }
 }
 
