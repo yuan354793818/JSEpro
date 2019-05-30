@@ -2,6 +2,7 @@
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/web-test" />
+    <file type="web" url="file://$PROJECT_DIR$/websocketdemo" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
@@ -11,6 +12,7 @@
       <list>
         <option value="$PROJECT_DIR$/maven_test/pom.xml" />
         <option value="$PROJECT_DIR$/web-test/pom.xml" />
+        <option value="$PROJECT_DIR$/websocketdemo/pom.xml" />
       </list>
     </option>
   </component>

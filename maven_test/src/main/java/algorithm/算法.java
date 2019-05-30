@@ -1581,6 +1581,9 @@ public class 算法 {
     //s = "3[a]2[bc]", 返回 "aaabcbc".
     //s = "3[a2[c]]", 返回 "accaccacc".
     //s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
+    // 方法一 ：本方法
+    // 方法二low ：如果遇到 ']'，就一直在栈中找到 '['，将之间的字符连接起来，将 '['前面的数字连接起来作为出现次数再次压栈，
+    //         遇到数字、字母、'['就直接压栈，最后将栈里的字符串弹出连接起来就ok了
     private int slen;
     private String s;
 

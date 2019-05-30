@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/JSEPRO.iml" filepath="$PROJECT_DIR$/JSEPRO.iml" />
       <module fileurl="file://$PROJECT_DIR$/maven_test/maven_test.iml" filepath="$PROJECT_DIR$/maven_test/maven_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/web-test/web-test.iml" filepath="$PROJECT_DIR$/web-test/web-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/websocketdemo/websocketdemo.iml" filepath="$PROJECT_DIR$/websocketdemo/websocketdemo.iml" />
     </modules>
   </component>
 </project>

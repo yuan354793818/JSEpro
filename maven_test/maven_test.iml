@@ -48,5 +48,6 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.11" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox:2.0.15" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:fontbox:2.0.15" level="project" />
+    <orderEntry type="library" name="Maven: javax.websocket:javax.websocket-api:1.1" level="project" />
   </component>
 </module>

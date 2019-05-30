@@ -74,6 +74,11 @@
             <artifactId>pdfbox</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>

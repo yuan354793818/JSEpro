@@ -1,15 +1,14 @@
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
-import java.awt.*;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -18,7 +17,6 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 public class JunitTest {
     @Test
@@ -198,7 +196,7 @@ public class JunitTest {
 
     @Test
     public void test194() {
-        String s = "yuan jiaytu" +
+        String s="yuan jiaytu" +
                 " asdfasdas ";
         Arrays.stream(s.split("\\s")).forEach(s1 -> System.out.println(s1));
     }
@@ -207,14 +205,14 @@ public class JunitTest {
     public void test201() {
         String s = "sdsd";
         String x = new String("sdsd");
-        System.out.println(x == s);
+        System.out.println(x==s);
     }
 
 
     @Test
     public void test209() {
 
-        System.out.println(9 >>> 31);
+        System.out.println(9>>> 31);
     }
 
     @Test
@@ -222,25 +220,59 @@ public class JunitTest {
         System.out.println("As".compareTo("Aaa"));
     }
 
+
     @Test
-    public void test220() {
-        System.out.println(5 & 1);
+    public void test221() {
+       String s="http://zc.swust.edu.cn/sfw/e?page=assets.bills.changeBill.bill&type_=jxls&divisionPassed=&hasLowAssets=&belong=&code=request_jasper&businessId=409528&hasMaterial=N&source=normal&financeOutlaySubject=&businessCode=scrap&assetsTypes=&hasOther=false&backstockType=&materialMoney=&bpmNo=22011974&state=0&assetsType=furniture_low&hasHighAssets=&financeState=&isPrint=&sort=&hasSoft=N&node=division&businessRole=manager&money=600&mergeBpmNo=&isMerge=N&isCar=0&isdifferentcollege=&isProjectToAssets=false&isNeedSso=&payId=409528&maxPrice=100&hasNonFixBook=false&equipmentMaxMoney=100&advanceScrap=1&window_=pdf";
+        int window_ = s.lastIndexOf("window_");
+        System.out.println(window_);
+        System.out.println(s.charAt(window_+7));
     }
 
     @Test
-    public void test225() {
-        PrinterJob job = PrinterJob.getPrinterJob();
-        job.setPrintable(new Printable() {
-            @Override
-            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-                switch (pageIndex) {
-                    case 0:
-                        return PAGE_EXISTS;
-                    default:
-                        return NO_SUCH_PAGE;
-                }
+    public void test229() {
+        System.out.println(BillPrinter.PrintType.PDF.getType());
+    }
+
+    @Test
+    public void test234() {
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        try {
+            int i=9;
+            int v=i/0;
+        } catch (Exception e) {
+            e.printStackTrace(ps);
+        }
+        System.out.println(baos.toString());
+    }
+
+    @Test
+    public void test244() {
+        HttpClient client = new DefaultHttpClient();
+        HttpGet get = new HttpGet("http://localhost:8083/sfw/e?page=assets.bills.changeBill.bills&type_=jxls&belong=1&code=backstockBillVoucher&businessId=1912280155&hasMaterial=N&source=normal&businessCode=backstock&hasOther=false&backstockType=3&bpmNo=1808220014&state=1&assetsType=equipment&sort=&hasSoft=N&node=divisionhead&businessRole=division&money=5000&isMerge=N&isCar=0&isdifferentcollege=N&isProjectToAssets=false&isNeedSso=&payId=1912280155&maxPrice=5000&hasNonFixBook=false&equipmentMaxMoney=5000&advanceScrap=1&window_=pdf");
+        get.addHeader("Cookie","JSESSIONID=FEBDD54B1A9D270BDD230761E79D7366");
+        try {
+            HttpResponse execute = client.execute(get);
+            Header contentType = execute.getEntity().getContentType();
+            HeaderElement[] elements = contentType.getElements();
+            for (HeaderElement element : elements) {
+                System.out.println(element.getName());
             }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test259() throws IOException {
+        FileInputStream fis=new FileInputStream("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\xx.txt");
+        PDDocument load = PDDocument.load(fis);
+    }
+
+    @Test
+    public void test274() {
+
     }
 }
 
