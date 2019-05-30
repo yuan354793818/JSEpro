@@ -8,12 +8,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import java.awt.print.PrinterJob;
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -272,7 +270,15 @@ public class JunitTest {
 
     @Test
     public void test274() {
+        Arrays.stream(PrinterJob.lookupPrintServices()).forEach(printService -> {
+            System.out.println(printService.getName());
+        });
+    }
 
+    @Test
+    public void test282() throws UnknownHostException {
+        InetAddress address = InetAddress.getLocalHost();
+        System.out.println(address.toString());
     }
 }
 

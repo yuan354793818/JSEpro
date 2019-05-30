@@ -121,6 +121,16 @@ public class BillPrinter {
         public void setErrorStackMsg(String errorStackMsg) {
             this.errorStackMsg = errorStackMsg;
         }
+
+        @Override
+        public String toString() {
+            return "PrintResult{" +
+                    "state=" + state +
+                    ", info='" + info + '\'' +
+                    ", errorStackMsg='" + errorStackMsg + '\'' +
+                    ", costPageNum=" + costPageNum +
+                    '}';
+        }
     }
 
     private boolean checkType(PrintType printType) {
@@ -136,9 +146,10 @@ public class BillPrinter {
     }
 
     public static void main(String[] args) {
-        new BillPrinter("http://zc.swust.edu.cn/sfw/e?page=assets.bills.changeBill.bill&type_=jxls&divisionPassed=&hasLowAssets=&belong=&code=request_jasper&businessId=409528&hasMaterial=N&source=normal&financeOutlaySubject=&businessCode=scrap&assetsTypes=&hasOther=false&backstockType=&materialMoney=&bpmNo=22011974&state=0&assetsType=furniture_low&hasHighAssets=&financeState=&isPrint=&sort=&hasSoft=N&node=division&businessRole=manager&money=600&mergeBpmNo=&isMerge=N&isCar=0&isdifferentcollege=&isProjectToAssets=false&isNeedSso=&payId=409528&maxPrice=100&hasNonFixBook=false&equipmentMaxMoney=100&advanceScrap=1&window_=pdf"
-                , "JSESSIONID=E271806213B531E638C76D06E6874248")
+        PrintResult result = new BillPrinter("http://sbc.scu.edu.cn/sfw_u/e?page=assets.change.bills.changeBill.bill&type_=jxls&divisionPassed=&hasLowAssets=&belong=1&code=request_jasper&businessId=912371890&hasMaterial=N&source=normal&financeOutlaySubject=&businessCode=scrap&assetsTypes=&hasOther=false&backstockType=&materialMoney=&bpmNo=1905300191&state=0&acceptanceForm=&assetsType=equipment&hasHighAssets=&flittingoutType=&financeState=&isPrint=&sort=&hasSoft=N&node=manager&businessRole=manager&money=9950&mergeBpmNo=&isMerge=N&isCar=0&isdifferentcollege=N&isProjectToAssets=false&isNeedSso=&payId=912371890&maxPrice=9950&hasNonFixBook=false&equipmentMaxMoney=9950&advanceScrap=1&window_=pdf",
+                "JSESSIONID=A102EB80B1893433BCC751585FAD4201")
                 .print();
+        System.out.println(result);
     }
 
     public PrintResult print() {
@@ -151,7 +162,7 @@ public class BillPrinter {
         int windowIndex = 0;
         PrintType printType = null;
         if ((windowIndex = url.lastIndexOf("window_")) != -1) {
-            windowIndex += 6;
+            windowIndex += 7;
             String equalType = url.substring(windowIndex);
             if (equalType.startsWith("=")) {
                 for (PrintType type : PrintType.values()) {
@@ -241,7 +252,7 @@ public class BillPrinter {
         int pIndex = url.indexOf("printer");
         String printerName=null;
         if (pIndex != -1) {
-            pIndex+=6;
+            pIndex+=7;
             String printerStr = url.substring(pIndex);
             if (printerStr.startsWith("=")) {
                 int i=1;
@@ -259,14 +270,16 @@ public class BillPrinter {
         }
         //找不到对应的就调默认打印机
         PrinterJob printerJob=PrinterJob.getPrinterJob();
-        PrintService[] printServices = PrinterJob.lookupPrintServices();
-        for (PrintService service : printServices) {
-            if (service.getName().equals(printerName)) {
-                try {
-                    printerJob.setPrintService(service);
-                } catch (PrinterException e) {
-                    e.printStackTrace(ps);
-                    return new PrintResult(PrintResultState.PRINT_FAIL,e.getMessage(),errorStackMsg.toString());
+        if (printerName != null) {
+            PrintService[] printServices = PrinterJob.lookupPrintServices();
+            for (PrintService service : printServices) {
+                if (service.getName().contains(printerName)) {
+                    try {
+                        printerJob.setPrintService(service);
+                    } catch (PrinterException e) {
+                        e.printStackTrace(ps);
+                        return new PrintResult(PrintResultState.PRINT_FAIL,e.getMessage(),errorStackMsg.toString());
+                    }
                 }
             }
         }
