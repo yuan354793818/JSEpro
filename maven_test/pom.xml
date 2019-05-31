@@ -79,6 +79,11 @@
             <artifactId>javax.websocket-api</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.strategicgains</groupId>
+            <artifactId>RestExpress</artifactId>
+            <version>0.11.2</version>
+        </dependency>
     </dependencies>
 
 </project>
