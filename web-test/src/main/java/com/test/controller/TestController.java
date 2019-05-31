@@ -1,6 +1,10 @@
 package com.test.controller;
 
 import com.test.dto.TestDto;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +14,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 
 @Controller
 public class TestController {
@@ -74,4 +80,20 @@ public class TestController {
         }
         return "success";
     }
+
+    @RequestMapping("/tomaster")
+    @ResponseBody
+    public String toMaster() throws IOException {//home anydesk 802 855 547
+
+        InetAddress address=InetAddress.getLocalHost();
+        HttpClient client = new DefaultHttpClient();
+        HttpGet get=new HttpGet("http://localhost:8081/demo/user/getpage?terminaladdress="+address.getHostAddress());
+        HttpResponse response = client.execute(get);
+        InputStream content = response.getEntity().getContent();
+        byte[] bytes=new byte[2048];
+        content.read(bytes);
+        System.out.println(new String(bytes,"UTF-8"));
+        return "success";
+    }
+
 }
