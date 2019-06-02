@@ -1,9 +1,15 @@
+package noclassify;
+
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -279,6 +285,28 @@ public class JunitTest {
     public void test282() throws UnknownHostException {
         InetAddress address = InetAddress.getLocalHost();
         System.out.println(address.toString());
+    }
+
+    @Test
+    public void test287() throws IOException {
+        HttpClientBuilder builder = HttpClientBuilder.create();
+        CloseableHttpClient client = builder.build();
+
+        HttpPost post = new HttpPost("http://localhost:8085/print");
+
+        CloseableHttpResponse response = null;
+        try {
+            response = client.execute(post);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        InputStream content = response.getEntity().getContent();
+        BufferedReader reader =new BufferedReader( new InputStreamReader(content));
+
+        String buf;
+        while ((buf = reader.readLine()) != null) {
+            System.out.println(buf);
+        }
     }
 }
 

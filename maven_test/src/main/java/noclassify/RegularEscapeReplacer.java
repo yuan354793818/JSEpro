@@ -1,4 +1,4 @@
-import org.junit.Test;
+package noclassify;
 
 import java.io.*;
 import java.util.regex.Matcher;

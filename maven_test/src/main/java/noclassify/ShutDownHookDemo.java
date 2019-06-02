@@ -1,3 +1,5 @@
+package noclassify;
+
 public class ShutDownHookDemo {
     public static void main(String[] args) throws InterruptedException {
        Runtime.getRuntime().addShutdownHook(new Thread(() -> {

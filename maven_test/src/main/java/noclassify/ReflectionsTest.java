@@ -1,3 +1,5 @@
+package noclassify;
+
 import com.google.common.base.Stopwatch;
 import org.junit.Test;
 import org.reflections.Reflections;

@@ -1,3 +1,4 @@
+package noclassify;
 
 public class DynamicInvoke {
     public static void main(String[] args) {

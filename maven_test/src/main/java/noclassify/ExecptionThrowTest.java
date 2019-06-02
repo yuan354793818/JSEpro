@@ -1,3 +1,5 @@
+package noclassify;
+
 import java.lang.reflect.Method;
 
 public class ExecptionThrowTest {

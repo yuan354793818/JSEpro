@@ -1,3 +1,5 @@
+package noclassify;
+
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,101 +37,6 @@ public class BillPrinter {
 
         public String getType() {
             return type;
-        }
-    }
-
-    public enum PrintResultState {
-        URL_PRINT_TYPE_INCORRECT(-2, "链接打印类型错误"),
-        URL_EXCUTE_ERROR(-3,"访问错误"),
-        NO_RESPONSE(-4,"无响应"),
-        NOT_PDF_PROBABLY(-5,"可能不是pdf文件"),
-        PRINT_FAIL(-1,"打印失败"),
-        PRINT_SUCCESS(1,"打印成功"),
-        NO_STATE(0,"无状态");
-
-        private int resultCode;
-        private String info;
-
-        PrintResultState(int resultCode) {
-            this.resultCode = resultCode;
-        }
-
-        PrintResultState(int resultCode, String info) {
-            this.resultCode = resultCode;
-            this.info = info;
-        }
-
-        public int getResultCode() {
-            return resultCode;
-        }
-
-        public String getInfo() {
-            return info;
-        }
-    }
-
-    public class PrintResult implements Serializable {
-
-        private PrintResultState state;
-        private String info;
-        private String errorStackMsg;
-        private int costPageNum;
-
-        public int getCostPageNum() {
-            return costPageNum;
-        }
-
-        public void setCostPageNum(int costPageNum) {
-            this.costPageNum = costPageNum;
-        }
-
-        public PrintResult(PrintResultState state, String info) {
-            this.state = state;
-            this.info = info;
-        }
-
-        public PrintResult(PrintResultState state, String info, String errorStackMsg) {
-            this.state = state;
-            this.info = info;
-            this.errorStackMsg = errorStackMsg;
-        }
-
-        public PrintResult(PrintResultState state) {
-            this.state = state;
-        }
-
-        public PrintResultState getState() {
-            return state;
-        }
-
-        public void setState(PrintResultState state) {
-            this.state = state;
-        }
-
-        public String getInfo() {
-            return info;
-        }
-
-        public void setInfo(String info) {
-            this.info = info;
-        }
-
-        public String getErrorStackMsg() {
-            return errorStackMsg;
-        }
-
-        public void setErrorStackMsg(String errorStackMsg) {
-            this.errorStackMsg = errorStackMsg;
-        }
-
-        @Override
-        public String toString() {
-            return "PrintResult{" +
-                    "state=" + state +
-                    ", info='" + info + '\'' +
-                    ", errorStackMsg='" + errorStackMsg + '\'' +
-                    ", costPageNum=" + costPageNum +
-                    '}';
         }
     }
 
@@ -320,13 +227,51 @@ public class BillPrinter {
     }
 
 
+    public static PrintResult print(InputStream inputStream) {
+        ByteArrayOutputStream errorStackMsg = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(errorStackMsg);
+
+        PrinterJob printerJob=PrinterJob.getPrinterJob();
+        PDDocument document = null;
+        try {
+            document = PDDocument.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace(ps);
+            return new PrintResult(PrintResultState.NOT_PDF_PROBABLY,e.getMessage(),errorStackMsg.toString());
+        }
+        PDFPrintable pdf = new PDFPrintable(document, Scaling.SCALE_TO_FIT);//打印规则
+        Book book = new Book(); //多页
+        PageFormat format = new PageFormat();
+        format.setOrientation(PageFormat.PORTRAIT);//纵向
+        format.setPaper(getPaper());
+        int pageNum=0;
+        if (document != null) {
+            pageNum=document.getNumberOfPages();
+            book.append(pdf, format, pageNum);
+        }else {
+            return new PrintResult(PrintResultState.NOT_PDF_PROBABLY,"PDF文件为空");
+        }
+        printerJob.setPageable(book);
+        printerJob.setCopies(1);//打印份数
+        HashPrintRequestAttributeSet pars = new HashPrintRequestAttributeSet();
+        pars.add(Sides.ONE_SIDED); //设置单双页
+        try {
+            printerJob.print(pars);
+        } catch (PrinterException e) {
+            e.printStackTrace(ps);
+            return new PrintResult(PrintResultState.PRINT_FAIL,e.getMessage(),errorStackMsg.toString());
+        }
+        PrintResult printResult = new PrintResult(PrintResultState.PRINT_SUCCESS, "打印成功");
+        printResult.setCostPageNum(pageNum);
+        return printResult;
+    }
 
     /**
      * 纸张大小设置
      *
      * @return
      */
-    private Paper getPaper() {
+    private static Paper getPaper() {
         Paper paper = new Paper();
         // 默认为A4纸张，对应像素宽和高分别为 595, 842
         int width = 595;

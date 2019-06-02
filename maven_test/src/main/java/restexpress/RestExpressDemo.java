@@ -1,9 +1,13 @@
+package restexpress;
+
 import io.netty.handler.codec.http.HttpMethod;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.restexpress.Request;
 import org.restexpress.Response;
 import org.restexpress.RestExpress;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,10 +34,11 @@ public class RestExpressDemo {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println(new Date());
+                CloseableHttpClient client = HttpClientBuilder.create().build();
+                HttpGet get=new HttpGet();
             }
         },300,1000 );
-        
+
         server.bind(8084);
         server.awaitShutdown();
     }
