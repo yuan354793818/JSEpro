@@ -1669,6 +1669,29 @@ public class 算法 {
         return (n>0)&&((((n-1)&n)==0));
     }
 
+    //求最大容量水桶
+    //动态规划
+    //这里用到了动态规划，基本的表达式: area = min(height[i], height[j]) * (j - i)
+    // 使用两个指针，值小的指针向内移动，
+    // 这样就减小了搜索空间 因为面积取决于指针的距离与值小的值乘积，如果值大的值向内移动，
+    // 距离一定减小，而求面积的另外一个乘数一定小于等于值小的值，因此面积一定减小，
+    // 而我们要求最大的面积，因此值大的指针不动，而值小的指针向内移动遍历
+    public int maxArea(int[] height) {
+        int left=0,right=height.length-1;
+        int maxArea=0;
+        while (left < right) {
+            int lHigh = height[left];
+            int rHigh = height[right];
+            maxArea=Math.max(maxArea,Math.min(lHigh, rHigh)*(right-left));
+            if (lHigh > rHigh){
+                right--;
+            }else {
+                left++;
+            }
+        }
+        return maxArea;
+    }
+
     @Test
     public void test1672() {
         System.out.println(isPowerOfTwo(45));
