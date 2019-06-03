@@ -1,25 +1,26 @@
 package com.test.controller;
 
 import com.test.dto.TestDto;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
+import com.test.entity.RemoteClient;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
+import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
+@EnableScheduling
 public class TestController {
 
     @CrossOrigin
@@ -82,22 +83,49 @@ public class TestController {
         return "success";
     }
 
-    @RequestMapping("/tomaster")
-    @ResponseBody
-    public String toMaster() throws IOException {//home anydesk 802 855 547
+    private ConcurrentHashMap<String, RemoteClient> clients=new ConcurrentHashMap<>();
 
-        InetAddress address = InetAddress.getLocalHost();
-        HttpClient client = new HttpClient();
-        PostMethod post = new PostMethod("http://localhost:8081/demo/user/getpage?terminaladdress=" + address.getHostAddress());
-        File file = new File("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\restexpress\\ppddff.pdf");
-        Part[] parts = {new FilePart("file", file)};
-        post.setRequestEntity(new MultipartRequestEntity(parts, post.getParams()));
-        client.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
-        client.executeMethod(post);
-//        InputStream content = response.getEntity().getContent();
-//        byte[] bytes=new byte[2048];
-//        content.read(bytes);
-//        System.out.println(new String(bytes,"UTF-8"));
+    @Scheduled(fixedRate = 5000)
+    private void CheckAlive() {
+        for (Map.Entry<String, RemoteClient> entry : clients.entrySet()) {
+            if (new Date().getTime()-entry.getValue().getLastVisitTime().getTime()>10000){
+                System.out.println(entry.getValue());
+                System.out.println(">>>>>>>>>>>> may be lose !");
+            }
+        }
+    }
+
+    @RequestMapping("/observe")
+    @ResponseBody
+    public String toMaster(HttpServletRequest request) throws IOException {//home anydesk 802 855 547
+//        String ip = request.getHeader("x-forwarded-for");
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("Proxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("WL-Proxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("HTTP_CLIENT_IP");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getRemoteAddr();
+//        }
+//        System.out.println("ip : "+ip);
+        String id = request.getParameter("id");
+        String clientHost = request.getParameter("clientHost");
+        String clientPort = request.getParameter("clientPort");
+        if (!clients.containsKey(id)) {
+            clients.put(id, new RemoteClient(clientHost, clientPort,new Date()));
+        }else {
+            clients.get(id).setLastVisitTime(new Date());
+        }
+        System.out.println("id: " + id);
+        System.out.println("clientHost: " + clientHost);
+        System.out.println("clientPort: " + clientPort);
         return "success";
     }
 

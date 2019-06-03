@@ -1697,6 +1697,113 @@ public class 算法 {
         System.out.println(isPowerOfTwo(45));
     }
 
+    //给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+    //
+    //示例 1：
+    //
+    //输入: "babad"
+    //输出: "bab"
+    //注意: "aba" 也是一个有效答案。
+    //示例 2：
+    //
+    //输入: "cbbd"
+    //输出: "bb"
+    public String longestPalindrome(String s) {
+        String longestStr = "";
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i+1; j < s.length()+1; j++) {
+                String curStr = s.substring(i, j);
+                if (isPalindrome(curStr)) {
+                    longestStr = curStr.length() > longestStr.length() ? curStr : longestStr;
+                }
+            }
+        }
+        return longestStr;
+    }
+
+    public boolean isPalindrome(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        return sb.reverse().toString().equals(s);
+    }
+
+    //Z字形变换
+    //将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。
+    //
+    //比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：
+    //
+    //L   C   I   R     0,4,8,12
+    //E T O E S I I G   1,3,5,7,9,11,13,15
+    //E   D   H   N     2,6,10,14
+    //之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："LCIRETOESIIGEDHN"。
+    //
+    //请你实现这个将字符串进行指定行数变换的函数：
+    //
+    //string convert(string s, int numRows);
+    //示例 1:
+    //
+    //输入: s = "LEETCODEISHIRING", numRows = 3
+    //输出: "LCIRETOESIIGEDHN"
+    //示例 2:
+    //
+    //输入: s = "LEETCODEISHIRING", numRows = 4
+    //输出: "LDREOEIIECIHNTSG"
+    //解释:
+    //
+    //L     D     R   0,6,12
+    //E   O E   I I   1,5,7,11
+    //E C   I H   N   2,4,8,10
+    //T     S     G   3,9
+    public String convert(String s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+        int len = s.length();
+        int colNum=0;
+        while (len>0){
+            len-=numRows;
+            colNum++;
+            for (int i = 0; i < numRows-2; i++) {
+                if (len<1)
+                    break;
+                len-=1;
+                colNum++;
+            }
+        }
+        char [][] matrix=new char[numRows][colNum];
+        int x=0,y=0,cur=0;
+        while (cur<s.length()) {
+            for (int i = 0; i < numRows; i++) {
+                if (cur>s.length()-1)
+                    break;
+                matrix[x++][y]=s.charAt(cur++);
+            }
+            x-=2;
+            y++;
+            for (int i = 0; i < numRows - 2; i++) {
+                if (cur>s.length()-1)
+                    break;
+                matrix[x--][y++]=s.charAt(cur++);
+            }
+        }
+
+        StringBuilder rst = new StringBuilder();
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < colNum; j++) {
+                char c = matrix[i][j];
+                if (c !='\0'){
+                    rst.append(c);
+                }
+            }
+        }
+        return rst.toString();
+    }
+
+    @Test
+    public void test1776() {
+        String s = convert("AB", 1);
+        System.out.println(s);
+    }
+
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;

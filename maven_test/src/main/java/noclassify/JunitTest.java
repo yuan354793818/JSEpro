@@ -308,5 +308,11 @@ public class JunitTest {
             System.out.println(buf);
         }
     }
+
+    @Test
+    public void test313() {
+        char[] chars = new char[2];
+        System.out.println(chars[1]=='\0');
+    }
 }
 
