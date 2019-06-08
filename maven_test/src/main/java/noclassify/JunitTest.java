@@ -314,5 +314,60 @@ public class JunitTest {
         char[] chars = new char[2];
         System.out.println(chars[1]=='\0');
     }
+
+    @Test
+    public void test319() {
+        List<String> strings = new ArrayList<>();
+        for (int i = 0; i <22; i++) {
+            strings.add(String.valueOf(i));
+        }
+
+        List<List<String>> subList = getSubList(strings, 16);
+
+        System.out.println(subList);
+
+
+    }
+
+    public  <T> List<List<T>> getSubList(List<T> listObj, int groupNum) {
+        List<List<T>> resultList = new ArrayList<List<T>>();
+        if (listObj == null || listObj.isEmpty() || groupNum <= 0) {
+            return resultList;
+        }
+        // 余数
+        int remainder = listObj.size() % groupNum;
+        // 获取需要拆分的List个数
+        int loopCount = (remainder == 0) ? (listObj.size() / groupNum) : ((listObj.size() / groupNum) + 1);
+        int startNum, endNum;
+        List<T> listObjSub;
+        // 开始拆分
+        for (int i = 0; i < loopCount; i++) {
+            // 子List的起始值
+            startNum = i * groupNum;
+            // 子List的终止值
+            endNum = (i + 1) * groupNum;
+            // 不能整除的时候最后一个List的终止值为原始List的最后一个
+            if (i == loopCount - 1) {
+                endNum = listObj.size();
+            }
+            // 拆分List
+            listObjSub = listObj.subList(startNum, endNum);
+            // 保存差分后的List
+            resultList.add(listObjSub);
+        }
+        return resultList;
+    }
+
+
+    // 123456
+    // 214365
+    // 432165
+    // 654321
+    @Test
+    public void test363() {
+     
+    }
+
+
 }
 

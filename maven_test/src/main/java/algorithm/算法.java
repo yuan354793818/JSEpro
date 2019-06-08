@@ -1656,17 +1656,17 @@ public class 算法 {
 
     //给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
     public boolean isPowerOfTwo(int n) {
-        int count=0;
+        int count = 0;
         while (n > 0) {
             count += (n & 1);
-            n>>=1;
+            n >>= 1;
         }
-        return count==1;
+        return count == 1;
     }
 
     // 减一相与为0
     public boolean isPowerOfTwo_unlimited(int n) {
-        return (n>0)&&((((n-1)&n)==0));
+        return (n > 0) && ((((n - 1) & n) == 0));
     }
 
     //求最大容量水桶
@@ -1677,15 +1677,15 @@ public class 算法 {
     // 距离一定减小，而求面积的另外一个乘数一定小于等于值小的值，因此面积一定减小，
     // 而我们要求最大的面积，因此值大的指针不动，而值小的指针向内移动遍历
     public int maxArea(int[] height) {
-        int left=0,right=height.length-1;
-        int maxArea=0;
+        int left = 0, right = height.length - 1;
+        int maxArea = 0;
         while (left < right) {
             int lHigh = height[left];
             int rHigh = height[right];
-            maxArea=Math.max(maxArea,Math.min(lHigh, rHigh)*(right-left));
-            if (lHigh > rHigh){
+            maxArea = Math.max(maxArea, Math.min(lHigh, rHigh) * (right - left));
+            if (lHigh > rHigh) {
                 right--;
-            }else {
+            } else {
                 left++;
             }
         }
@@ -1711,7 +1711,7 @@ public class 算法 {
     public String longestPalindrome(String s) {
         String longestStr = "";
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i+1; j < s.length()+1; j++) {
+            for (int j = i + 1; j < s.length() + 1; j++) {
                 String curStr = s.substring(i, j);
                 if (isPalindrome(curStr)) {
                     longestStr = curStr.length() > longestStr.length() ? curStr : longestStr;
@@ -1758,31 +1758,31 @@ public class 算法 {
             return s;
         }
         int len = s.length();
-        int colNum=0;
-        while (len>0){
-            len-=numRows;
+        int colNum = 0;
+        while (len > 0) {
+            len -= numRows;
             colNum++;
-            for (int i = 0; i < numRows-2; i++) {
-                if (len<1)
+            for (int i = 0; i < numRows - 2; i++) {
+                if (len < 1)
                     break;
-                len-=1;
+                len -= 1;
                 colNum++;
             }
         }
-        char [][] matrix=new char[numRows][colNum];
-        int x=0,y=0,cur=0;
-        while (cur<s.length()) {
+        char[][] matrix = new char[numRows][colNum];
+        int x = 0, y = 0, cur = 0;
+        while (cur < s.length()) {
             for (int i = 0; i < numRows; i++) {
-                if (cur>s.length()-1)
+                if (cur > s.length() - 1)
                     break;
-                matrix[x++][y]=s.charAt(cur++);
+                matrix[x++][y] = s.charAt(cur++);
             }
-            x-=2;
+            x -= 2;
             y++;
             for (int i = 0; i < numRows - 2; i++) {
-                if (cur>s.length()-1)
+                if (cur > s.length() - 1)
                     break;
-                matrix[x--][y++]=s.charAt(cur++);
+                matrix[x--][y++] = s.charAt(cur++);
             }
         }
 
@@ -1790,7 +1790,7 @@ public class 算法 {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < colNum; j++) {
                 char c = matrix[i][j];
-                if (c !='\0'){
+                if (c != '\0') {
                     rst.append(c);
                 }
             }
@@ -1802,6 +1802,115 @@ public class 算法 {
     public void test1776() {
         String s = convert("AB", 1);
         System.out.println(s);
+    }
+
+    //给定两个整数 L 和 R ，找到闭区间 [L, R] 范围内，计算置位位数为质数的整数个数。
+    //
+    //（注意，计算置位代表二进制表示中1的个数。例如 21 的二进制表示 10101 有 3 个计算置位。还有，1 不是质数。）
+    public int countPrimeSetBits(int L, int R) {
+        int count = 0;
+        for (int i = L; i < R + 1; i++) {
+            int bc = Integer.bitCount(i);
+            boolean is = true;
+            if (bc != 2) {
+                if (bc!=1&&bc % 2 != 0) {
+                    for (int j = 3; j <= Math.sqrt(bc); j++) {
+                        if (bc % j == 0) {
+                            is = false;
+                            break;
+                        }
+                    }
+                }else {
+                    is=false;
+                }
+            }
+            if (is) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    @Test
+    public void test1831() {
+        int i = countPrimeSetBits(6
+                ,10);
+        System.out.println(i
+        );
+    }
+
+    //给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+    //
+    //说明：
+    //
+    //你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？
+    //
+    //示例 1:
+    //
+    //输入: [2,2,1]
+    //输出: 1
+    //示例 2:
+    //
+    //输入: [4,1,2,1,2]
+    //输出: 4
+    public int singleNumber(int[] nums) {
+        int rst=0;
+        for (int i : nums) {
+            rst^=i;
+        }
+        return rst;
+    }
+
+    //给定一个正整数，检查他是否为交替位二进制数：换句话说，就是他的二进制数相邻的两个位数永不相等。
+    //
+    //示例 1:
+    //
+    //输入: 5
+    //输出: True
+    //解释:
+    //5的二进制数是: 101
+    //示例 2:
+    //
+    //输入: 7
+    //输出: False
+    //解释:
+    //7的二进制数是: 111
+    public boolean hasAlternatingBits(int n) {
+        int i = (Integer.highestOneBit(n) << 1) - 1;
+        int a= 0x55555555&i;
+        int b=0xAAAAAAAA&i;
+        if ((n^a)==0) {
+            return true;
+        }
+        if ((n^b)==0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasAlternatingBits_Plus(int n) {
+        int temp=n^(n>>1);
+        return (temp&(temp+1))==0;
+    }
+    //        int temp=n^(n>>1);
+    //        return (temp&(temp+1))==0;
+    //
+    // /*
+    //    * 分析：
+    //    * 如果n是交替的01，对于它右移一位后得到的m，
+    //    * 存在n跟m在二进制下必然是0和1对应的（对位）。异或运算必定都是1；
+    //    * 举个栗子：5=101 5>>1=10,5^(5>>1)=111 (这是伪代码)
+    //    *  101
+    //    *   10  =111
+    //    * 其他情况都不会满足这个特征。所以temp=n^(n>>1)必定满足temp=2^N-1;
+    //    * 而temp+1后是N+1位二进制数2^(N+1)。
+    //    * 所以temp&(temp+1)==0；
+    //    * 如果满足这个等式就是就是交替位二进制数
+    //    */
+
+    @Test
+    public void test1889() {
+        System.out.println(hasAlternatingBits(7));
     }
 
     //  [1,3,5,6], 5

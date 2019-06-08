@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
     <script>
-        alert(location.href)
+    var a={name:'yjy',age:18,country:'china'}
+    var b={name:'boss',age:76,sex:'female'}
+    let c = Object.assign({},a,b);
+    console.log(c)
+    
+    let d = $.extend({},a,b);
+    console.log(d)
+
     </script>
 </head>
 <body>
