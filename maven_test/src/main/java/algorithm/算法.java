@@ -1656,17 +1656,17 @@ public class 算法 {
 
     //给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
     public boolean isPowerOfTwo(int n) {
-        int count = 0;
+        int count=0;
         while (n > 0) {
             count += (n & 1);
-            n >>= 1;
+            n>>=1;
         }
-        return count == 1;
+        return count==1;
     }
 
     // 减一相与为0
     public boolean isPowerOfTwo_unlimited(int n) {
-        return (n > 0) && ((((n - 1) & n) == 0));
+        return (n>0)&&((((n-1)&n)==0));
     }
 
     //求最大容量水桶
@@ -1677,15 +1677,15 @@ public class 算法 {
     // 距离一定减小，而求面积的另外一个乘数一定小于等于值小的值，因此面积一定减小，
     // 而我们要求最大的面积，因此值大的指针不动，而值小的指针向内移动遍历
     public int maxArea(int[] height) {
-        int left = 0, right = height.length - 1;
-        int maxArea = 0;
+        int left=0,right=height.length-1;
+        int maxArea=0;
         while (left < right) {
             int lHigh = height[left];
             int rHigh = height[right];
-            maxArea = Math.max(maxArea, Math.min(lHigh, rHigh) * (right - left));
-            if (lHigh > rHigh) {
+            maxArea=Math.max(maxArea,Math.min(lHigh, rHigh)*(right-left));
+            if (lHigh > rHigh){
                 right--;
-            } else {
+            }else {
                 left++;
             }
         }
@@ -1711,7 +1711,7 @@ public class 算法 {
     public String longestPalindrome(String s) {
         String longestStr = "";
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i + 1; j < s.length() + 1; j++) {
+            for (int j = i+1; j < s.length()+1; j++) {
                 String curStr = s.substring(i, j);
                 if (isPalindrome(curStr)) {
                     longestStr = curStr.length() > longestStr.length() ? curStr : longestStr;
@@ -1758,31 +1758,31 @@ public class 算法 {
             return s;
         }
         int len = s.length();
-        int colNum = 0;
-        while (len > 0) {
-            len -= numRows;
+        int colNum=0;
+        while (len>0){
+            len-=numRows;
             colNum++;
-            for (int i = 0; i < numRows - 2; i++) {
-                if (len < 1)
+            for (int i = 0; i < numRows-2; i++) {
+                if (len<1)
                     break;
-                len -= 1;
+                len-=1;
                 colNum++;
             }
         }
-        char[][] matrix = new char[numRows][colNum];
-        int x = 0, y = 0, cur = 0;
-        while (cur < s.length()) {
+        char [][] matrix=new char[numRows][colNum];
+        int x=0,y=0,cur=0;
+        while (cur<s.length()) {
             for (int i = 0; i < numRows; i++) {
-                if (cur > s.length() - 1)
+                if (cur>s.length()-1)
                     break;
-                matrix[x++][y] = s.charAt(cur++);
+                matrix[x++][y]=s.charAt(cur++);
             }
-            x -= 2;
+            x-=2;
             y++;
             for (int i = 0; i < numRows - 2; i++) {
-                if (cur > s.length() - 1)
+                if (cur>s.length()-1)
                     break;
-                matrix[x--][y++] = s.charAt(cur++);
+                matrix[x--][y++]=s.charAt(cur++);
             }
         }
 
@@ -1790,7 +1790,7 @@ public class 算法 {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < colNum; j++) {
                 char c = matrix[i][j];
-                if (c != '\0') {
+                if (c !='\0'){
                     rst.append(c);
                 }
             }
@@ -1911,6 +1911,88 @@ public class 算法 {
     @Test
     public void test1889() {
         System.out.println(hasAlternatingBits(7));
+    }
+
+    //示例:
+    //输入: S = "a1b2"
+    //输出: ["a1b2", "a1B2", "A1b2", "A1B2"]
+    public List<String> letterCasePermutation(String S) {
+        return help(S, 0);
+    }
+
+    public List<String> help(String s,int offset){
+        if(offset>s.length()-1){
+            List<String> l = new ArrayList<>();
+            l.add(s);
+            return l;
+        }
+        while (s.charAt(offset)>47&&s.charAt(offset)<58){
+            offset++;
+            if (offset>s.length()-1){
+                List<String> l = new ArrayList<>();
+                l.add(s);
+                return l;
+            }
+        }
+        char[] chars = s.toCharArray();
+        if (chars[offset]>96){
+            chars[offset]= (char) (chars[offset]-32);
+        }else if (chars[offset]<91){
+            chars[offset]= (char) (chars[offset]+32);
+        }
+        String s1 = String.valueOf(chars);
+        List<String> help1 = help(s, offset + 1);
+        List<String> help2 = help(s1, offset + 1);
+        help1.addAll(help2);
+        return help1;
+    }
+
+    @Test
+    public void test359() {
+        letterCasePermutation("C").forEach(System.out::println);
+    }
+
+    //binary diff
+    public char findTheDifference(String s, String t) {
+        int sSum=0,tSum=0;
+        for (char c : s.toCharArray()) {
+            sSum+=c;
+        }
+        for (char c : t.toCharArray()) {
+            tSum+=c;
+        }
+        return (char) (tSum-sSum);
+    }
+
+    //不使用运算符 + 和 - ​​​​​​​，计算两整数 ​​​​​​​a 、b ​​​​​​​之和。
+    //
+    //示例 1:
+    //
+    //输入: a = 1, b = 2
+    //输出: 3
+    //示例 2:
+    //
+    //输入: a = -2, b = 3
+    //输出: 1
+    //
+    //思路 ： 两个整数a, b; a ^ b是无进位的相加； a&b<<1得到每一位的进位；
+    //       让无进位相加的结果与进位不断的异或， 直到进位为0；
+    public int getSum(int a, int b) {
+        int carry=0,sum=0;
+        do {
+            sum=a^b;
+            carry=(a&b)<<1;
+            if (carry != 0) {
+                a=sum;
+                b=carry;
+            }
+        }while (carry!=0);
+       return sum;
+    }
+
+    @Test
+    public void test1885() {
+        System.out.println(getSum(3,36));
     }
 
     //  [1,3,5,6], 5

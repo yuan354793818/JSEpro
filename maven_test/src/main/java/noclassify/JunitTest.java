@@ -317,57 +317,32 @@ public class JunitTest {
 
     @Test
     public void test319() {
-        List<String> strings = new ArrayList<>();
-        for (int i = 0; i <22; i++) {
-            strings.add(String.valueOf(i));
-        }
-
-        List<List<String>> subList = getSubList(strings, 16);
-
-        System.out.println(subList);
-
-
+        String s = Integer.toBinaryString(213123);
+        System.out.println(s);
     }
 
-    public  <T> List<List<T>> getSubList(List<T> listObj, int groupNum) {
-        List<List<T>> resultList = new ArrayList<List<T>>();
-        if (listObj == null || listObj.isEmpty() || groupNum <= 0) {
-            return resultList;
-        }
-        // 余数
-        int remainder = listObj.size() % groupNum;
-        // 获取需要拆分的List个数
-        int loopCount = (remainder == 0) ? (listObj.size() / groupNum) : ((listObj.size() / groupNum) + 1);
-        int startNum, endNum;
-        List<T> listObjSub;
-        // 开始拆分
-        for (int i = 0; i < loopCount; i++) {
-            // 子List的起始值
-            startNum = i * groupNum;
-            // 子List的终止值
-            endNum = (i + 1) * groupNum;
-            // 不能整除的时候最后一个List的终止值为原始List的最后一个
-            if (i == loopCount - 1) {
-                endNum = listObj.size();
-            }
-            // 拆分List
-            listObjSub = listObj.subList(startNum, endNum);
-            // 保存差分后的List
-            resultList.add(listObjSub);
-        }
-        return resultList;
-    }
-
-
-    // 123456
-    // 214365
-    // 432165
-    // 654321
     @Test
-    public void test363() {
-     
+    public void test325() {
+
     }
 
+    public static int bitCount(int n) {
+        // HD, Figure 5-2
+        int count=0;
+        for (int i = 0; i < 32; i++) {
+            if ((n&1)==1){
+                count++;
+            }
+            n>>=1;
+        }
+        return count;
+    }
 
+    @Test
+    public void test356() {
+        System.out.println((int)'a'+" "+(int)'z');
+        System.out.println((int)'A'+" "+(int)'Z');
+        System.out.println((int)'0'+" "+(int)'9');
+    }
 }
 
