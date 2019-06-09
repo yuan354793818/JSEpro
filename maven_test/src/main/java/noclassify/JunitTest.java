@@ -325,7 +325,6 @@ public class JunitTest {
     public void test325() {
 
     }
-
     public static int bitCount(int n) {
         // HD, Figure 5-2
         int count=0;
@@ -339,10 +338,9 @@ public class JunitTest {
     }
 
     @Test
-    public void test356() {
-        System.out.println((int)'a'+" "+(int)'z');
-        System.out.println((int)'A'+" "+(int)'Z');
-        System.out.println((int)'0'+" "+(int)'9');
+    public void test341() {
+        System.out.println(~2+1);
     }
+
 }
 
