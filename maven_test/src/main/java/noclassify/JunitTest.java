@@ -342,5 +342,24 @@ public class JunitTest {
         System.out.println(~2+1);
     }
 
+    @Test
+    public void test346() {
+        getSs("sd");
+    }
+
+    public void getSs(String s) {
+        int i=9/0;
+    }
+
+    @Test
+    public void test355() {
+        Byte b=122;
+        ggg(String.valueOf(b));
+    }
+
+    public void ggg(String s) {
+        System.out.println(s);
+    }
+
 }
 

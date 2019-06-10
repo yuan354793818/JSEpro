@@ -2042,12 +2042,18 @@ public class 算法 {
     //再然后根据上图a,c,结果b 三者的关系写出结果a的逻辑
     //结果a = a & ~c & (~结果b) + ~a & c & (~结果b) = (~结果b) & (a^c)
     public int singleNumber2(int[] nums) {
-        int a=0,b=0;
+        int a=0,b=0;            //b代表 出现一次的bit  a代表出现两次bit
         for (int c : nums) {
             b=b^c&~a;
             a=a^c&~b;
         }
         return b;
+    }
+
+    @Test
+    public void test2054() {
+        int i = singleNumber2(new int[]{3, 3, 3, 7, 5, 5,5,2,2});
+        System.out.println(i);
     }
 
     //  [1,3,5,6], 5
