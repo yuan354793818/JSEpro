@@ -2056,6 +2056,78 @@ public class 算法 {
         System.out.println(i);
     }
 
+    //给定一个整数数组 nums，其中恰好有两个元素只出现一次，其余所有元素均出现两次。 找出只出现一次的那两个元素。
+    //
+    //示例 :
+    //
+    //输入: [1,2,1,3,2,5]
+    //输出: [3,5]
+    //注意：
+    //
+    //结果输出的顺序并不重要，对于上面的例子， [5, 3] 也是正确答案。
+    //你的算法应该具有线性时间复杂度。你能否仅使用常数空间复杂度来实现？
+    public int[] singleNumber_two(int[] nums) {
+        int twone=0;
+        for (int i : nums) {
+            twone^=i;
+        }
+        int diff=twone&-twone; //最右边的1
+        int [] res=new int[2];
+        for(int i:nums){
+            if ((diff&i)==0){    //按该不同位将其分为该位为1或0的两组，
+                res[0]^=i;      //再次异或
+            }else {
+                res[1]^=i;
+            }
+        }
+        return res;
+    }
+
+    //给定一个整数 (32 位有符号整数)，请编写一个函数来判断它是否是 4 的幂次方。
+    //
+    //示例 1:
+    //
+    //输入: 16
+    //输出: true
+    //示例 2:
+    //
+    //输入: 5
+    //输出: false
+    // 思路  2的幂 且 奇数未为1
+    public boolean isPowerOfFour(int num) {
+        if(num<=0||(num&-num)!=num){
+            return false;
+        }
+        return (num&0x55555555)==num; // 或者 num%3==1 : 4^n=(3+1)^n=3x+1
+    }
+
+    public String toHex(int num) {
+        char[] charNums=new char[6];
+        for (int i = 0,j=97; i < charNums.length; i++,j++) {
+            charNums[i]= (char) j;
+        }
+        StringBuilder sb=new StringBuilder(8);
+        for (int i = 0; i < 8; i++) {
+            int x= num & 15;
+            if (x - 9 > 0) {
+                sb.insert(0,charNums[x-10]);
+            }else {
+                sb.insert(0,x);
+            }
+            num>>>=4;
+        }
+        int i=0;
+        while (i<7&&sb.charAt(i) == '0') {
+            i++;
+        }
+        return sb.substring(i);
+    }
+
+    @Test
+    public void test2123() {
+        System.out.println(toHex(0));
+    }
+
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;

@@ -361,5 +361,10 @@ public class JunitTest {
         System.out.println(s);
     }
 
+
+    @Test
+    public void test366() {
+        System.out.println((int)'f');
+    }
 }
 
