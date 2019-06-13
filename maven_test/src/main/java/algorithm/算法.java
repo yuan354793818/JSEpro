@@ -2101,6 +2101,7 @@ public class 算法 {
         return (num&0x55555555)==num; // 或者 num%3==1 : 4^n=(3+1)^n=3x+1
     }
 
+    //从低4位开始取 （较慢）
     public String toHex(int num) {
         char[] charNums=new char[6];
         for (int i = 0,j=97; i < charNums.length; i++,j++) {
@@ -2127,6 +2128,56 @@ public class 算法 {
     public void test2123() {
         System.out.println(toHex(0));
     }
+
+    //从高4位开始取 （快）
+    public String toHexRe(int num){
+        boolean mark=false;
+        StringBuilder sb=new StringBuilder(8);
+        for (int i = 7; i >-1; i--) {
+            int x = (num >>> 4 * i)&15;
+            if (x - 9 > 0) {
+                sb.append((char)(x+87));
+                if (!mark) {
+                    mark=true;
+                }
+            }else if (x==0){
+                if (mark) {
+                    sb.append('0');
+                }
+            }else {
+                sb.append(x);
+                if (!mark) {
+                    mark=true;
+                }
+            }
+        }
+        return sb.length()==0?"0":sb.toString();
+    }
+
+
+    @Test
+    public void test2156() {
+        System.out.println(toHexRe(998));
+    }
+
+
+    public int reverseBits(int n) {
+        int res=0;
+        int i=32;
+        while (i-->0){
+            res<<=1; //位移31次，这一次空移
+            res+=n&1; //加32次
+            n>>=1;   
+        }
+        return res;
+    }
+
+    @Test
+    public void test2176() {
+        System.out.println(reverseBits(998));
+        System.out.println(Integer.reverse(998));
+    }
+
 
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {

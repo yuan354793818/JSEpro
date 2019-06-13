@@ -364,7 +364,8 @@ public class JunitTest {
 
     @Test
     public void test366() {
-        System.out.println((int)'f');
+        System.out.println((int)'9');
+        System.out.println((char)58);
     }
 }
 
