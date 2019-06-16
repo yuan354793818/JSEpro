@@ -1027,7 +1027,7 @@ public class 算法 {
     @Test
     public void test859() {
         AtomicInteger i = new AtomicInteger(1);
-        buildPermutationV(new Character[]{'+', '-', '*', ' '}, 3).forEach(s -> System.out.println(i.getAndIncrement() + " " + s));
+        buildPermutationV(new Character[]{'1', '2', '3', ' '}, 3).forEach(s -> System.out.println(i.getAndIncrement() + " " + s));
     }
 
 
@@ -2161,6 +2161,7 @@ public class 算法 {
     }
 
 
+    //位移法
     public int reverseBits(int n) {
         int res=0;
         int i=32;
@@ -2179,6 +2180,181 @@ public class 算法 {
     }
 
 
+    //输入: nums = [1,2,3]
+    //输出:
+    //[
+    //  [3],
+    //  [1],
+    //  [2],
+    //  [1,2,3],
+    //  [1,3],
+    //  [2,3],
+    //  [1,2],
+    //  []
+    //]
+    //
+    // 1 2  21 3 31 32 321
+    //遇到一个数就把所有子集加上该数组成新的子集，遍历完毕即是所有子集
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> rst = new ArrayList<>();
+        for (int i = 0; i < nums.length; i++) {
+            List<List<Integer>> subRst = new ArrayList<>();
+            for (List<Integer> list:rst) {
+                List<Integer> subl=new ArrayList<>();
+                subl.add(nums[i]);
+                subl.addAll(list);
+                subRst.add(subl);
+            }
+            rst.addAll(subRst);
+            List<Integer> sub = new ArrayList<>();
+            sub.add(nums[i]);
+            rst.add(sub);
+        }
+        List<Integer> emptyl = new ArrayList<>();
+        rst.add(emptyl);
+        return rst;
+    }
+
+    @Test
+    public void test2209() {
+        subsets(new int[]{1, 2, 3}).forEach(ins->{
+            ins.forEach(System.out::print);
+            System.out.println();
+        });
+    }
+
+    //位运算解法
+    //数组 [1,2,3] 的子集也就是其中的三个元素取与不取的组合。
+    // 把它想象为二进制的三个 bit 位 1 1 1，那么从 0 0 0 到 1 1 1 的 8 个数，
+    // 就构成了所有子集的选取情况。比如 0 0 1 表示取第1个元素，0 1 1 表示取前两个元素。
+    public List<List<Integer>> subsetsByBitOperation(int[] nums) {
+        List<List<Integer>> rst = new ArrayList<>();
+        for (int i = 0; i < Math.pow(2,nums.length); i++) {
+            List<Integer> onePos = readOnePos(i, nums.length);
+            List<Integer> subRst = new ArrayList<>();
+            for (int p : onePos) {
+                subRst.add(nums[p]);
+            }
+            rst.add(subRst);
+        }
+        return rst;
+    }
+
+
+    //读取1所在位置
+    public List<Integer> readOnePos(int n,int len){
+        List<Integer> rst=new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            if ((n&1)==1){
+                rst.add(i);
+            }
+            n>>>=1;
+        }
+        return rst;
+    }
+
+    @Test
+    public void test2239() {
+        subsetsByBitOperation(new int[]{1, 2, 3}).forEach(ins -> {
+            ins.forEach(System.out::print);
+            System.out.println();
+        });
+    }
+
+
+    //给定一个非负整数 num。对于 0 ≤ i ≤ num 范围中的每个数字 i ，计算其二进制数中的 1 的数目并将它们作为数组返回。
+    //
+    //示例 1:
+    //
+    //输入: 2
+    //输出: [0,1,1]
+    //示例 2:
+    //
+    //输入: 5
+    //输出: [0,1,1,2,1,2]
+    //进阶:
+    //
+    //给出时间复杂度为O(n*sizeof(integer))的解答非常容易。但你可以在线性时间O(n)内用一趟扫描做到吗？
+    //要求算法的空间复杂度为O(n)。
+    //你能进一步完善解法吗？要求在C++或任何其他语言中不使用任何内置函数（如 C++ 中的 __builtin_popcount）来执行此操作。
+
+    // i & (i - 1)可以去掉i最右边的一个1（如果有），
+    // 因此 i & (i - 1）是比 i 小的，
+    // 而且i & (i - 1)的1的个数已经在前面算过了，
+    // 所以i的1的个数就是 i & (i - 1)的1的个数加上1
+    public int[] countBits(int num) {
+        int[] rst=new int[num+1];
+        for (int i = 1; i < num+1; i++) {
+            rst[i]=rst[i&(i-1)]+1;
+        }
+        return rst;
+    }
+    
+    //i >> 1会把最低位去掉，因此i >> 1 也是比i小的，同样也是在前面的数组里算过。
+    // 当 i 的最低位是0，则 i 中1的个数和i >> 1中1的个数相同；
+    // 当i的最低位是1，i 中1的个数是 i >> 1中1的个数再加1
+    public int[] countBitsTwo(int num){
+        int[] rst=new int[num+1];
+        for (int i = 1; i < num+1; i++) {
+            rst[i]=rst[i>>>1]+(i&1);
+        }
+        return rst;
+    }
+
+    @Test
+    public void test2294() {
+        Arrays.stream(countBits(5)).forEach(System.out::println);
+    }
+
+
+    //给定一个字符串数组 words，找到 length(word[i]) * length(word[j]) 的最大值，并且这两个单词不含有公共字母。你可以认为每个单词只包含小写字母。如果不存在这样的两个单词，返回 0。
+    //
+    //示例 1:
+    //
+    //输入: ["abcw","baz","foo","bar","xtfn","abcdef"]
+    //输出: 16
+    //解释: 这两个单词为 "abcw", "xtfn"。
+    //示例 2:
+    //
+    //输入: ["a","ab","abc","d","cd","bcd","abcd"]
+    //输出: 4
+    //解释: 这两个单词为 "ab", "cd"。
+    //示例 3:
+    //
+    //输入: ["a","aa","aaa","aaaa"]
+    //输出: 0
+    //解释: 不存在这样的两个单词。
+    //
+    // 解答 将单词转为26位bit 相与为0则为不重复
+    public int maxProduct(String[] words) {
+        int maxl=0,len=words.length;
+        int[] wordsBit=new int[len];
+        for (int i = 0; i < len; i++) {
+            wordsBit[i]=wordsTo26bit(words[i]);
+        }
+        for (int i = 0; i < len-1; i++) {
+            for (int j = i+1; j < len; j++) {
+                if ((wordsBit[i]&wordsBit[j])==0){
+                    maxl = Math.max(maxl, words[i].length() * words[j].length());
+                }
+            }
+        }
+        return maxl;
+    }
+
+    public int wordsTo26bit(String s) {
+        int i=0,rst=0;
+        for (char c : s.toCharArray()) {
+            i=c-'a';
+            rst|=(1<<i);
+        }
+        return rst;
+    }
+
+    @Test
+    public void test2353() {
+        System.out.println(maxProduct(new String[]{"a","ab","abc","d","cd","bcd","abcd"}));
+    }
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;

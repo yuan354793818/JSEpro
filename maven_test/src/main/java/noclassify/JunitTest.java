@@ -351,21 +351,20 @@ public class JunitTest {
         int i=9/0;
     }
 
-    @Test
-    public void test355() {
-        Byte b=122;
-        ggg(String.valueOf(b));
-    }
-
-    public void ggg(String s) {
+    public void ggg(float s) {
         System.out.println(s);
     }
-
-
     @Test
-    public void test366() {
-        System.out.println((int)'9');
-        System.out.println((char)58);
+    public void test366(){
+        Float f = new Float(1);
+        ggg(f);
     }
+
+    
+    @Test
+    public void test365(){
+        System.out.println((int)'a');
+    }
+
 }
 
