@@ -354,6 +354,10 @@ public class JunitTest {
     public void ggg(float s) {
         System.out.println(s);
     }
+
+    public void ggg(Float s) {
+        System.out.println(s);
+    }
     @Test
     public void test366(){
         Float f = new Float(1);
@@ -363,8 +367,67 @@ public class JunitTest {
     
     @Test
     public void test365(){
-        System.out.println((int)'a');
+        System.out.println((int)'Z');
     }
 
+
+    @Test
+    public void test375() {
+        String[] strings = new String[2];
+        System.out.println(strings[0]==null);
+    }
+
+    @Test
+    public void test381() {
+        System.out.println("CTGTTCGTTG".hashCode());
+    }
+
+
+    @Test
+    public void test387() throws IOException {
+        FileInputStream fis = new FileInputStream("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\algorithm\\bb.txt");
+        byte[] buf=new byte[5];
+        StringBuffer sb=new StringBuffer();
+        while (fis.read(buf)!=-1){
+            sb.append(new String(buf));
+            sb.append(System.lineSeparator());
+            buf=new byte[5];
+        }
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void test3872() throws IOException {
+        FileInputStream fis = new FileInputStream("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\algorithm\\bb.txt");
+        byte[] buf=new byte[5];
+        int len;
+        StringBuffer sb=new StringBuffer();
+        while ((len=fis.read(buf))!=-1){
+            sb.append(new String(buf,0,len));
+            sb.append(System.lineSeparator());
+            buf=new byte[5];
+        }
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void test414(){
+        HashSet<String> set = new HashSet<>();
+        String s = new String("11");
+        String s1 = new String("11");
+        set.add(s1);
+        set.add(s);
+        System.out.println(set);
+    }
+
+    @Test
+    public void test424() {
+        System.out.println(Integer.highestOneBit(2));
+    }
+
+    @Test
+    public void test429() {
+        System.out.println(Integer.highestOneBit(65));
+    }
 }
 

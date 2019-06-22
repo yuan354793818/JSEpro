@@ -2,6 +2,7 @@ package algorithm;
 
 import org.junit.Test;
 
+import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -2350,10 +2351,163 @@ public class 算法 {
         }
         return rst;
     }
-
     @Test
     public void test2353() {
         System.out.println(maxProduct(new String[]{"a","ab","abc","d","cd","bcd","abcd"}));
+    }
+
+    //给定一个非空数组，数组中元素为 a0, a1, a2, … , an-1，其中 0 ≤ ai < 231 。
+    //
+    //找到 ai 和aj 最大的异或 (XOR) 运算结果，其中0 ≤ i,  j < n 。
+    //
+    //你能在O(n)的时间解决这个问题吗？
+    //
+    //示例:
+    //
+    //输入: [3, 10, 5, 25, 2, 8]
+    //
+    //输出: 28
+    //
+    //解释: 最大的结果是 5 ^ 25 = 28.
+    //
+    // 找到最大数，然后找到最大数最高位相同的数的集合，然后每个数和nums相与
+    public int findMaximumXOR(int[] nums) {
+        int max=nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            max=Math.max(max,nums[i]);
+        }
+        List<Integer> highNums=new ArrayList<>();
+        int highBitPos=Integer.highestOneBit(max);
+        for (int i = 0; i < nums.length; i++) {
+            if (Integer.highestOneBit(nums[i])==highBitPos){
+                highNums.add(nums[i]);
+            }
+        }
+        int maxXOR=0;
+        for (int i = 0; i < highNums.size(); i++) {
+            for (int j = 0; j < nums.length; j++) {
+                maxXOR=Math.max(maxXOR,highNums.get(i)^nums[j]);
+            }
+        }
+        return maxXOR;
+    }
+
+    @Test
+    public void test2381() {
+        System.out.println(findMaximumXOR(new int[]{2,10,8}));
+    }
+
+    //所有 DNA 由一系列缩写为 A，C，G 和 T 的核苷酸组成，例如：“ACGAATTCCG”。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
+    //
+    //编写一个函数来查找 DNA 分子中所有出现超多一次的10个字母长的序列（子串）。
+    //
+    //示例:
+    //
+    //输入: s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"
+    //
+    //输出: ["AAAAACCCCC", "CCCCCAAAAA"]
+    //
+    //hashcode
+    // 遍历 0 到 len-10
+    // 每个string放入set，
+    // 有冲突则加入rst
+    public List<String> findRepeatedDnaSequences(String s) {
+        HashSet<String> hashSet = new HashSet<>();
+        HashSet<String> rst = new HashSet<>();
+        for (int i = 0; i < s.length() - 9; i++) {
+            String curStr = s.substring(i, i + 10);
+            if (hashSet.contains(curStr)) {  //先hashcode比较在equal 所以比直接==快
+                rst.add(curStr);
+            }
+            hashSet.add(curStr);
+        }
+
+        return new ArrayList<>(rst);
+    }
+
+    @Test
+    public void test2415() throws IOException {
+        FileInputStream fis = new FileInputStream("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\algorithm\\aa.txt");
+        byte[] buf=new byte[64];
+        int len;
+        StringBuffer sb=new StringBuffer();
+        while ((len=fis.read(buf))!=-1){
+            sb.append(new String(buf,0,len));
+        }
+        System.out.println(sb.toString());
+        findRepeatedDnaSequences(sb.toString()).forEach(System.out::println);
+    }
+
+    //两个整数的 汉明距离 指的是这两个数字的二进制数对应位不同的数量。
+    //
+    //计算一个数组中，任意两个数之间汉明距离的总和。
+    //
+    //示例:
+    //
+    //输入: 4, 14, 2
+    //
+    //输出: 6
+    //
+    //解释: 在二进制表示中，4表示为0100，14表示为1110，2表示为0010。（这样表示是为了体现后四位之间关系）
+    //所以答案为：
+    //HammingDistance(4, 14) + HammingDistance(4, 2) + HammingDistance(14, 2) = 2 + 2 + 2 = 6.
+    //注意:
+    //思路
+    // 当然一开始想到的是将任意两个元素所有位比较一遍，得到汉明距离，然后再将这些距离都加起来。
+    // 但是稍微学过一点数据结构和算法的都能想到这样做会有大量的重复比较，举个例子，a、b、c三个数，
+    // 假设a最低位为1，b为0，c为1，在a与b、a与c比较完最低位之后，
+    // 与c没有就没有必要再比较最低位了（因为a与c相同，a与b不同，那么c与b一定不同）。
+    // 所以换个思路，对于二进制数来说每一位不是0就是1，如果在总数为n个的数组中有a个元素的第i位为1，
+    // 则第i位为0的有n-i个元素，按照排列组合的知识，就第i位来说，从这a个元素里任取一个，
+    // 它与这n-a个元素中的任一个元素距离都是1，而这样的组合一共有a*(n-a)个。
+    // 将i从第0位到最高位时的a*(n-a)加起来就是总的距离。
+    // 还有一个问题是如何判断已经移动到最高位了（这里最高位不是int的位数，
+    // 而是使得数组中所有元素都为0时，所需要向右移动的最小位数），每次将各个元素除以2，
+    // 相当于右移，移动到元素值全部为0时，就结束了
+    public int totalHammingDistance(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int max=nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            max=Math.max(max,nums[i]);
+        }
+        int highOneV = Integer.highestOneBit(max);
+        int h=0;
+        while ((highOneV>>>h)!=0){
+            h++;
+        }
+        int sum=0,oneCnt=0, offset=0;
+        int length = nums.length;
+        while (offset<h||oneCnt!=0){
+            oneCnt=0;
+            for (int i = 0; i < length; i++) {
+                if ( ((nums[i] >>> (offset))&1)==1) {
+                   oneCnt++;
+                }
+            }
+            offset++;
+            sum+=(oneCnt*(length -oneCnt));
+        }
+        return sum;
+    }
+
+    //汉明距离
+    public int hammingDistance(int x, int y) {
+        int n=x^y;
+        int count=0;
+        for(int i=0;i<32;i++){
+            if((n&1)==1){
+                count++;
+            }
+            n>>=1;
+        }
+        return count;
+    }
+
+    @Test
+    public void test2479() {
+        System.out.println(totalHammingDistance(new int[]{1337,7331}));
     }
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
