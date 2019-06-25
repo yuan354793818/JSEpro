@@ -429,5 +429,10 @@ public class JunitTest {
     public void test429() {
         System.out.println(Integer.highestOneBit(65));
     }
+
+    @Test
+    public void test434() {
+        System.out.println(Integer.MAX_VALUE);
+    }
 }
 

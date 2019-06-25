@@ -1,8 +1,12 @@
 package noclassify;
 
-import java.lang.reflect.Field;
+import org.junit.Test;
 
-public class GetBeanAllFields {
+import java.lang.reflect.Field;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class CheapUtils {
     public static void main(String[] args) {
         System.out.println(getFieldString(Assets.class,"a."));
     }
@@ -30,6 +34,26 @@ public class GetBeanAllFields {
             }
         }
         return sb.toString();
+    }
+
+
+    /** 给一组单词添加引号或者括号
+     * @param str
+     * @return
+     */
+    public static  String wordsAddQuotation(String str,String preAndPost){
+        Pattern pattern=Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher(str);
+        StringBuilder sb=new StringBuilder();
+        while (matcher.find()){
+          sb.append(preAndPost+matcher.group(0)+preAndPost+",");
+        }
+        return sb.toString().substring(0,sb.lastIndexOf(","));
+    }
+
+    @Test
+    public void test49() {
+        System.out.println(wordsAddQuotation("software,invisible_assets,non_patents,copyright,chartered_right,patent,trademark","\'"));
     }
 
 }
