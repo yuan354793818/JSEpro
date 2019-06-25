@@ -2,7 +2,8 @@ package algorithm;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -2351,6 +2352,7 @@ public class 算法 {
         }
         return rst;
     }
+
     @Test
     public void test2353() {
         System.out.println(maxProduct(new String[]{"a","ab","abc","d","cd","bcd","abcd"}));
@@ -2508,6 +2510,47 @@ public class 算法 {
     @Test
     public void test2479() {
         System.out.println(totalHammingDistance(new int[]{1337,7331}));
+    }
+
+    //给定范围 [m, n]，其中 0 <= m <= n <= 2147483647，返回此范围内所有数字的按位与（包含 m, n 两端点）。
+    //
+    //示例 1: 
+    //
+    //输入: [5,7]
+    //输出: 4
+    //示例 2:
+    //
+    //输入: [0,1]
+    //输出: 0
+    //减治法，最高位不同则肯定为0，若相同则结果加上最高位后，除开最高位后继续比较
+    public int rangeBitwiseAnd(int m, int n) {
+        int i = Integer.highestOneBit(n);
+        if (i>m&&i>0){
+            return 0;
+        }else if (m==i){
+            return m;
+        }else {
+            m&=(i-1);
+            n&=(i-1);
+            return i+rangeBitwiseAnd(m,n);
+        }
+    }
+
+    //n的二进制位比m二进制最左边的1高时，&的结果必然为0； 由这个思想启发，二进制最高位相同时，这个1会保存，然后比较右一位，
+    // 如果剩下的最高位不同则为0，以此类推 结果一定是 最高位1 ～ 中间对为相同 ～最低位1
+    public int rangeBitwiseAnd_Else(int m, int n) {
+        int offset = 0;
+        for (; m != n; ++offset) {
+            m >>= 1;
+            n >>= 1;
+        }
+        return n << offset;
+    }
+
+    @Test
+    public void test2539() {
+        System.out.println(rangeBitwiseAnd(2147483646
+                ,2147483647));
     }
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
