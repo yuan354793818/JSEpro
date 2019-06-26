@@ -1658,17 +1658,17 @@ public class 算法 {
 
     //给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
     public boolean isPowerOfTwo(int n) {
-        int count=0;
+        int count = 0;
         while (n > 0) {
             count += (n & 1);
-            n>>=1;
+            n >>= 1;
         }
-        return count==1;
+        return count == 1;
     }
 
     // 减一相与为0
     public boolean isPowerOfTwo_unlimited(int n) {
-        return (n>0)&&((((n-1)&n)==0));
+        return (n > 0) && ((((n - 1) & n) == 0));
     }
 
     //求最大容量水桶
@@ -1679,15 +1679,15 @@ public class 算法 {
     // 距离一定减小，而求面积的另外一个乘数一定小于等于值小的值，因此面积一定减小，
     // 而我们要求最大的面积，因此值大的指针不动，而值小的指针向内移动遍历
     public int maxArea(int[] height) {
-        int left=0,right=height.length-1;
-        int maxArea=0;
+        int left = 0, right = height.length - 1;
+        int maxArea = 0;
         while (left < right) {
             int lHigh = height[left];
             int rHigh = height[right];
-            maxArea=Math.max(maxArea,Math.min(lHigh, rHigh)*(right-left));
-            if (lHigh > rHigh){
+            maxArea = Math.max(maxArea, Math.min(lHigh, rHigh) * (right - left));
+            if (lHigh > rHigh) {
                 right--;
-            }else {
+            } else {
                 left++;
             }
         }
@@ -1713,7 +1713,7 @@ public class 算法 {
     public String longestPalindrome(String s) {
         String longestStr = "";
         for (int i = 0; i < s.length(); i++) {
-            for (int j = i+1; j < s.length()+1; j++) {
+            for (int j = i + 1; j < s.length() + 1; j++) {
                 String curStr = s.substring(i, j);
                 if (isPalindrome(curStr)) {
                     longestStr = curStr.length() > longestStr.length() ? curStr : longestStr;
@@ -1760,31 +1760,31 @@ public class 算法 {
             return s;
         }
         int len = s.length();
-        int colNum=0;
-        while (len>0){
-            len-=numRows;
+        int colNum = 0;
+        while (len > 0) {
+            len -= numRows;
             colNum++;
-            for (int i = 0; i < numRows-2; i++) {
-                if (len<1)
+            for (int i = 0; i < numRows - 2; i++) {
+                if (len < 1)
                     break;
-                len-=1;
+                len -= 1;
                 colNum++;
             }
         }
-        char [][] matrix=new char[numRows][colNum];
-        int x=0,y=0,cur=0;
-        while (cur<s.length()) {
+        char[][] matrix = new char[numRows][colNum];
+        int x = 0, y = 0, cur = 0;
+        while (cur < s.length()) {
             for (int i = 0; i < numRows; i++) {
-                if (cur>s.length()-1)
+                if (cur > s.length() - 1)
                     break;
-                matrix[x++][y]=s.charAt(cur++);
+                matrix[x++][y] = s.charAt(cur++);
             }
-            x-=2;
+            x -= 2;
             y++;
             for (int i = 0; i < numRows - 2; i++) {
-                if (cur>s.length()-1)
+                if (cur > s.length() - 1)
                     break;
-                matrix[x--][y++]=s.charAt(cur++);
+                matrix[x--][y++] = s.charAt(cur++);
             }
         }
 
@@ -1792,7 +1792,7 @@ public class 算法 {
         for (int i = 0; i < numRows; i++) {
             for (int j = 0; j < colNum; j++) {
                 char c = matrix[i][j];
-                if (c !='\0'){
+                if (c != '\0') {
                     rst.append(c);
                 }
             }
@@ -1815,15 +1815,15 @@ public class 算法 {
             int bc = Integer.bitCount(i);
             boolean is = true;
             if (bc != 2) {
-                if (bc!=1&&bc % 2 != 0) {
+                if (bc != 1 && bc % 2 != 0) {
                     for (int j = 3; j <= Math.sqrt(bc); j++) {
                         if (bc % j == 0) {
                             is = false;
                             break;
                         }
                     }
-                }else {
-                    is=false;
+                } else {
+                    is = false;
                 }
             }
             if (is) {
@@ -1836,7 +1836,7 @@ public class 算法 {
     @Test
     public void test1831() {
         int i = countPrimeSetBits(6
-                ,10);
+                , 10);
         System.out.println(i
         );
     }
@@ -1857,9 +1857,9 @@ public class 算法 {
     //输入: [4,1,2,1,2]
     //输出: 4
     public int singleNumber(int[] nums) {
-        int rst=0;
+        int rst = 0;
         for (int i : nums) {
-            rst^=i;
+            rst ^= i;
         }
         return rst;
     }
@@ -1880,20 +1880,20 @@ public class 算法 {
     //7的二进制数是: 111
     public boolean hasAlternatingBits(int n) {
         int i = (Integer.highestOneBit(n) << 1) - 1;
-        int a= 0x55555555&i;
-        int b=0xAAAAAAAA&i;
-        if ((n^a)==0) {
+        int a = 0x55555555 & i;
+        int b = 0xAAAAAAAA & i;
+        if ((n ^ a) == 0) {
             return true;
         }
-        if ((n^b)==0) {
+        if ((n ^ b) == 0) {
             return true;
         }
         return false;
     }
 
     public boolean hasAlternatingBits_Plus(int n) {
-        int temp=n^(n>>1);
-        return (temp&(temp+1))==0;
+        int temp = n ^ (n >> 1);
+        return (temp & (temp + 1)) == 0;
     }
     //        int temp=n^(n>>1);
     //        return (temp&(temp+1))==0;
@@ -1923,25 +1923,25 @@ public class 算法 {
         return help(S, 0);
     }
 
-    public List<String> help(String s,int offset){
-        if(offset>s.length()-1){
+    public List<String> help(String s, int offset) {
+        if (offset > s.length() - 1) {
             List<String> l = new ArrayList<>();
             l.add(s);
             return l;
         }
-        while (s.charAt(offset)>47&&s.charAt(offset)<58){
+        while (s.charAt(offset) > 47 && s.charAt(offset) < 58) {
             offset++;
-            if (offset>s.length()-1){
+            if (offset > s.length() - 1) {
                 List<String> l = new ArrayList<>();
                 l.add(s);
                 return l;
             }
         }
         char[] chars = s.toCharArray();
-        if (chars[offset]>96){
-            chars[offset]= (char) (chars[offset]-32);
-        }else if (chars[offset]<91){
-            chars[offset]= (char) (chars[offset]+32);
+        if (chars[offset] > 96) {
+            chars[offset] = (char) (chars[offset] - 32);
+        } else if (chars[offset] < 91) {
+            chars[offset] = (char) (chars[offset] + 32);
         }
         String s1 = String.valueOf(chars);
         List<String> help1 = help(s, offset + 1);
@@ -1957,14 +1957,14 @@ public class 算法 {
 
     //binary diff
     public char findTheDifference(String s, String t) {
-        int sSum=0,tSum=0;
+        int sSum = 0, tSum = 0;
         for (char c : s.toCharArray()) {
-            sSum+=c;
+            sSum += c;
         }
         for (char c : t.toCharArray()) {
-            tSum+=c;
+            tSum += c;
         }
-        return (char) (tSum-sSum);
+        return (char) (tSum - sSum);
     }
 
     //不使用运算符 + 和 - ​​​​​​​，计算两整数 ​​​​​​​a 、b ​​​​​​​之和。
@@ -1981,21 +1981,21 @@ public class 算法 {
     //思路 ： 两个整数a, b; a ^ b是无进位的相加； a&b<<1得到每一位的进位；
     //       让无进位相加的结果与进位不断的异或， 直到进位为0；
     public int getSum(int a, int b) {
-        int carry=0,sum=0;
+        int carry = 0, sum = 0;
         do {
-            sum=a^b;
-            carry=(a&b)<<1;
+            sum = a ^ b;
+            carry = (a & b) << 1;
             if (carry != 0) {
-                a=sum;
-                b=carry;
+                a = sum;
+                b = carry;
             }
-        }while (carry!=0);
-       return sum;
+        } while (carry != 0);
+        return sum;
     }
 
     @Test
     public void test1885() {
-        System.out.println(getSum(3,36));
+        System.out.println(getSum(3, 36));
     }
 
     //给定一个包含 0, 1, 2, ..., n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。
@@ -2008,17 +2008,17 @@ public class 算法 {
     // 1^1^2^2^3 = 3
     // 异或
     public int missingNumber(int[] nums) {
-        int res=nums.length;
+        int res = nums.length;
         for (int i = 0; i < nums.length; i++) {
-            res^=nums[i];
-            res^=i;
+            res ^= nums[i];
+            res ^= i;
         }
         return res;
     }
 
     @Test
     public void test2007() {
-        System.out.println(missingNumber(new int[]{0,2,3,4,1,6,7,8}));
+        System.out.println(missingNumber(new int[]{0, 2, 3, 4, 1, 6, 7, 8}));
     }
 
     //给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。
@@ -2044,17 +2044,17 @@ public class 算法 {
     //再然后根据上图a,c,结果b 三者的关系写出结果a的逻辑
     //结果a = a & ~c & (~结果b) + ~a & c & (~结果b) = (~结果b) & (a^c)
     public int singleNumber2(int[] nums) {
-        int a=0,b=0;            //b代表 出现一次的bit  a代表出现两次bit
+        int a = 0, b = 0;            //b代表 出现一次的bit  a代表出现两次bit
         for (int c : nums) {
-            b=b^c&~a;
-            a=a^c&~b;
+            b = b ^ c & ~a;
+            a = a ^ c & ~b;
         }
         return b;
     }
 
     @Test
     public void test2054() {
-        int i = singleNumber2(new int[]{3, 3, 3, 7, 5, 5,5,2,2});
+        int i = singleNumber2(new int[]{3, 3, 3, 7, 5, 5, 5, 2, 2});
         System.out.println(i);
     }
 
@@ -2069,17 +2069,17 @@ public class 算法 {
     //结果输出的顺序并不重要，对于上面的例子， [5, 3] 也是正确答案。
     //你的算法应该具有线性时间复杂度。你能否仅使用常数空间复杂度来实现？
     public int[] singleNumber_two(int[] nums) {
-        int twone=0;
+        int twone = 0;
         for (int i : nums) {
-            twone^=i;
+            twone ^= i;
         }
-        int diff=twone&-twone; //最右边的1
-        int [] res=new int[2];
-        for(int i:nums){
-            if ((diff&i)==0){    //按该不同位将其分为该位为1或0的两组，
-                res[0]^=i;      //再次异或
-            }else {
-                res[1]^=i;
+        int diff = twone & -twone; //最右边的1
+        int[] res = new int[2];
+        for (int i : nums) {
+            if ((diff & i) == 0) {    //按该不同位将其分为该位为1或0的两组，
+                res[0] ^= i;      //再次异或
+            } else {
+                res[1] ^= i;
             }
         }
         return res;
@@ -2097,30 +2097,30 @@ public class 算法 {
     //输出: false
     // 思路  2的幂 且 奇数未为1
     public boolean isPowerOfFour(int num) {
-        if(num<=0||(num&-num)!=num){
+        if (num <= 0 || (num & -num) != num) {
             return false;
         }
-        return (num&0x55555555)==num; // 或者 num%3==1 : 4^n=(3+1)^n=3x+1
+        return (num & 0x55555555) == num; // 或者 num%3==1 : 4^n=(3+1)^n=3x+1
     }
 
     //从低4位开始取 （较慢）
     public String toHex(int num) {
-        char[] charNums=new char[6];
-        for (int i = 0,j=97; i < charNums.length; i++,j++) {
-            charNums[i]= (char) j;
+        char[] charNums = new char[6];
+        for (int i = 0, j = 97; i < charNums.length; i++, j++) {
+            charNums[i] = (char) j;
         }
-        StringBuilder sb=new StringBuilder(8);
+        StringBuilder sb = new StringBuilder(8);
         for (int i = 0; i < 8; i++) {
-            int x= num & 15;
+            int x = num & 15;
             if (x - 9 > 0) {
-                sb.insert(0,charNums[x-10]);
-            }else {
-                sb.insert(0,x);
+                sb.insert(0, charNums[x - 10]);
+            } else {
+                sb.insert(0, x);
             }
-            num>>>=4;
+            num >>>= 4;
         }
-        int i=0;
-        while (i<7&&sb.charAt(i) == '0') {
+        int i = 0;
+        while (i < 7 && sb.charAt(i) == '0') {
             i++;
         }
         return sb.substring(i);
@@ -2132,28 +2132,28 @@ public class 算法 {
     }
 
     //从高4位开始取 （快）
-    public String toHexRe(int num){
-        boolean mark=false;
-        StringBuilder sb=new StringBuilder(8);
-        for (int i = 7; i >-1; i--) {
-            int x = (num >>> 4 * i)&15;
+    public String toHexRe(int num) {
+        boolean mark = false;
+        StringBuilder sb = new StringBuilder(8);
+        for (int i = 7; i > -1; i--) {
+            int x = (num >>> 4 * i) & 15;
             if (x - 9 > 0) {
-                sb.append((char)(x+87));
+                sb.append((char) (x + 87));
                 if (!mark) {
-                    mark=true;
+                    mark = true;
                 }
-            }else if (x==0){
+            } else if (x == 0) {
                 if (mark) {
                     sb.append('0');
                 }
-            }else {
+            } else {
                 sb.append(x);
                 if (!mark) {
-                    mark=true;
+                    mark = true;
                 }
             }
         }
-        return sb.length()==0?"0":sb.toString();
+        return sb.length() == 0 ? "0" : sb.toString();
     }
 
 
@@ -2165,12 +2165,12 @@ public class 算法 {
 
     //位移法
     public int reverseBits(int n) {
-        int res=0;
-        int i=32;
-        while (i-->0){
-            res<<=1; //位移31次，这一次空移
-            res+=n&1; //加32次
-            n>>=1;   
+        int res = 0;
+        int i = 32;
+        while (i-- > 0) {
+            res <<= 1; //位移31次，这一次空移
+            res += n & 1; //加32次
+            n >>= 1;
         }
         return res;
     }
@@ -2201,8 +2201,8 @@ public class 算法 {
         List<List<Integer>> rst = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
             List<List<Integer>> subRst = new ArrayList<>();
-            for (List<Integer> list:rst) {
-                List<Integer> subl=new ArrayList<>();
+            for (List<Integer> list : rst) {
+                List<Integer> subl = new ArrayList<>();
                 subl.add(nums[i]);
                 subl.addAll(list);
                 subRst.add(subl);
@@ -2219,7 +2219,7 @@ public class 算法 {
 
     @Test
     public void test2209() {
-        subsets(new int[]{1, 2, 3}).forEach(ins->{
+        subsets(new int[]{1, 2, 3}).forEach(ins -> {
             ins.forEach(System.out::print);
             System.out.println();
         });
@@ -2231,7 +2231,7 @@ public class 算法 {
     // 就构成了所有子集的选取情况。比如 0 0 1 表示取第1个元素，0 1 1 表示取前两个元素。
     public List<List<Integer>> subsetsByBitOperation(int[] nums) {
         List<List<Integer>> rst = new ArrayList<>();
-        for (int i = 0; i < Math.pow(2,nums.length); i++) {
+        for (int i = 0; i < Math.pow(2, nums.length); i++) {
             List<Integer> onePos = readOnePos(i, nums.length);
             List<Integer> subRst = new ArrayList<>();
             for (int p : onePos) {
@@ -2244,13 +2244,13 @@ public class 算法 {
 
 
     //读取1所在位置
-    public List<Integer> readOnePos(int n,int len){
-        List<Integer> rst=new ArrayList<>();
+    public List<Integer> readOnePos(int n, int len) {
+        List<Integer> rst = new ArrayList<>();
         for (int i = 0; i < len; i++) {
-            if ((n&1)==1){
+            if ((n & 1) == 1) {
                 rst.add(i);
             }
-            n>>>=1;
+            n >>>= 1;
         }
         return rst;
     }
@@ -2285,20 +2285,20 @@ public class 算法 {
     // 而且i & (i - 1)的1的个数已经在前面算过了，
     // 所以i的1的个数就是 i & (i - 1)的1的个数加上1
     public int[] countBits(int num) {
-        int[] rst=new int[num+1];
-        for (int i = 1; i < num+1; i++) {
-            rst[i]=rst[i&(i-1)]+1;
+        int[] rst = new int[num + 1];
+        for (int i = 1; i < num + 1; i++) {
+            rst[i] = rst[i & (i - 1)] + 1;
         }
         return rst;
     }
-    
+
     //i >> 1会把最低位去掉，因此i >> 1 也是比i小的，同样也是在前面的数组里算过。
     // 当 i 的最低位是0，则 i 中1的个数和i >> 1中1的个数相同；
     // 当i的最低位是1，i 中1的个数是 i >> 1中1的个数再加1
-    public int[] countBitsTwo(int num){
-        int[] rst=new int[num+1];
-        for (int i = 1; i < num+1; i++) {
-            rst[i]=rst[i>>>1]+(i&1);
+    public int[] countBitsTwo(int num) {
+        int[] rst = new int[num + 1];
+        for (int i = 1; i < num + 1; i++) {
+            rst[i] = rst[i >>> 1] + (i & 1);
         }
         return rst;
     }
@@ -2329,14 +2329,14 @@ public class 算法 {
     //
     // 解答 将单词转为26位bit 相与为0则为不重复
     public int maxProduct(String[] words) {
-        int maxl=0,len=words.length;
-        int[] wordsBit=new int[len];
+        int maxl = 0, len = words.length;
+        int[] wordsBit = new int[len];
         for (int i = 0; i < len; i++) {
-            wordsBit[i]=wordsTo26bit(words[i]);
+            wordsBit[i] = wordsTo26bit(words[i]);
         }
-        for (int i = 0; i < len-1; i++) {
-            for (int j = i+1; j < len; j++) {
-                if ((wordsBit[i]&wordsBit[j])==0){
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                if ((wordsBit[i] & wordsBit[j]) == 0) {
                     maxl = Math.max(maxl, words[i].length() * words[j].length());
                 }
             }
@@ -2345,17 +2345,17 @@ public class 算法 {
     }
 
     public int wordsTo26bit(String s) {
-        int i=0,rst=0;
+        int i = 0, rst = 0;
         for (char c : s.toCharArray()) {
-            i=c-'a';
-            rst|=(1<<i);
+            i = c - 'a';
+            rst |= (1 << i);
         }
         return rst;
     }
 
     @Test
     public void test2353() {
-        System.out.println(maxProduct(new String[]{"a","ab","abc","d","cd","bcd","abcd"}));
+        System.out.println(maxProduct(new String[]{"a", "ab", "abc", "d", "cd", "bcd", "abcd"}));
     }
 
     //给定一个非空数组，数组中元素为 a0, a1, a2, … , an-1，其中 0 ≤ ai < 231 。
@@ -2374,21 +2374,21 @@ public class 算法 {
     //
     // 找到最大数，然后找到最大数最高位相同的数的集合，然后每个数和nums相与
     public int findMaximumXOR(int[] nums) {
-        int max=nums[0];
+        int max = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            max=Math.max(max,nums[i]);
+            max = Math.max(max, nums[i]);
         }
-        List<Integer> highNums=new ArrayList<>();
-        int highBitPos=Integer.highestOneBit(max);
+        List<Integer> highNums = new ArrayList<>();
+        int highBitPos = Integer.highestOneBit(max);
         for (int i = 0; i < nums.length; i++) {
-            if (Integer.highestOneBit(nums[i])==highBitPos){
+            if (Integer.highestOneBit(nums[i]) == highBitPos) {
                 highNums.add(nums[i]);
             }
         }
-        int maxXOR=0;
+        int maxXOR = 0;
         for (int i = 0; i < highNums.size(); i++) {
             for (int j = 0; j < nums.length; j++) {
-                maxXOR=Math.max(maxXOR,highNums.get(i)^nums[j]);
+                maxXOR = Math.max(maxXOR, highNums.get(i) ^ nums[j]);
             }
         }
         return maxXOR;
@@ -2396,7 +2396,7 @@ public class 算法 {
 
     @Test
     public void test2381() {
-        System.out.println(findMaximumXOR(new int[]{2,10,8}));
+        System.out.println(findMaximumXOR(new int[]{2, 10, 8}));
     }
 
     //所有 DNA 由一系列缩写为 A，C，G 和 T 的核苷酸组成，例如：“ACGAATTCCG”。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
@@ -2430,11 +2430,11 @@ public class 算法 {
     @Test
     public void test2415() throws IOException {
         FileInputStream fis = new FileInputStream("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\algorithm\\aa.txt");
-        byte[] buf=new byte[64];
+        byte[] buf = new byte[64];
         int len;
-        StringBuffer sb=new StringBuffer();
-        while ((len=fis.read(buf))!=-1){
-            sb.append(new String(buf,0,len));
+        StringBuffer sb = new StringBuffer();
+        while ((len = fis.read(buf)) != -1) {
+            sb.append(new String(buf, 0, len));
         }
         System.out.println(sb.toString());
         findRepeatedDnaSequences(sb.toString()).forEach(System.out::println);
@@ -2470,46 +2470,46 @@ public class 算法 {
         if (nums.length == 0) {
             return 0;
         }
-        int max=nums[0];
+        int max = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            max=Math.max(max,nums[i]);
+            max = Math.max(max, nums[i]);
         }
         int highOneV = Integer.highestOneBit(max);
-        int h=0;
-        while ((highOneV>>>h)!=0){
+        int h = 0;
+        while ((highOneV >>> h) != 0) {
             h++;
         }
-        int sum=0,oneCnt=0, offset=0;
+        int sum = 0, oneCnt = 0, offset = 0;
         int length = nums.length;
-        while (offset<h||oneCnt!=0){
-            oneCnt=0;
+        while (offset < h || oneCnt != 0) {
+            oneCnt = 0;
             for (int i = 0; i < length; i++) {
-                if ( ((nums[i] >>> (offset))&1)==1) {
-                   oneCnt++;
+                if (((nums[i] >>> (offset)) & 1) == 1) {
+                    oneCnt++;
                 }
             }
             offset++;
-            sum+=(oneCnt*(length -oneCnt));
+            sum += (oneCnt * (length - oneCnt));
         }
         return sum;
     }
 
     //汉明距离
     public int hammingDistance(int x, int y) {
-        int n=x^y;
-        int count=0;
-        for(int i=0;i<32;i++){
-            if((n&1)==1){
+        int n = x ^ y;
+        int count = 0;
+        for (int i = 0; i < 32; i++) {
+            if ((n & 1) == 1) {
                 count++;
             }
-            n>>=1;
+            n >>= 1;
         }
         return count;
     }
 
     @Test
     public void test2479() {
-        System.out.println(totalHammingDistance(new int[]{1337,7331}));
+        System.out.println(totalHammingDistance(new int[]{1337, 7331}));
     }
 
     //给定范围 [m, n]，其中 0 <= m <= n <= 2147483647，返回此范围内所有数字的按位与（包含 m, n 两端点）。
@@ -2525,14 +2525,14 @@ public class 算法 {
     //减治法，最高位不同则肯定为0，若相同则结果加上最高位后，除开最高位后继续比较
     public int rangeBitwiseAnd(int m, int n) {
         int i = Integer.highestOneBit(n);
-        if (i>m&&i>0){
+        if (i > m && i > 0) {
             return 0;
-        }else if (m==i){
+        } else if (m == i) {
             return m;
-        }else {
-            m&=(i-1);
-            n&=(i-1);
-            return i+rangeBitwiseAnd(m,n);
+        } else {
+            m &= (i - 1);
+            n &= (i - 1);
+            return i + rangeBitwiseAnd(m, n);
         }
     }
 
@@ -2550,7 +2550,7 @@ public class 算法 {
     @Test
     public void test2539() {
         System.out.println(rangeBitwiseAnd(2147483646
-                ,2147483647));
+                , 2147483647));
     }
 
 
@@ -2587,36 +2587,48 @@ public class 算法 {
     // 13 14 7 8 4 2 1
     // 15 16 8 4 2 1
     // 15 14 7 8 4 2 1
+    //注意由于有n+1的操作，所以当n为INT_MAX的时候，就有可能溢出
     public int integerReplacement(int n) {
         if (n == 2147483647) {           //   防止栈溢出
             return 32;
         }
         if (n == 1) {
             return 0;
-        }else if ((n&1)==0){
-            return 1+integerReplacement(n>>1);
-        }else {
-            return 1+Math.min(integerReplacement(n+1),integerReplacement(n-1)); //两种选择，不是左边好就是右边
+        } else if ((n & 1) == 0) {
+            return 1 + integerReplacement(n >> 1);
+        } else {
+            return 1 + Math.min(integerReplacement(n + 1), integerReplacement(n - 1)); //两种选择，不是左边好就是右边
         }
     }
+
+    // 由于递归存在多条路径，存在重复访问同一个n的情况，为了避免重复递归的现象，将之前递归过的数值储存在哈希表中
+    private HashMap<Integer, Integer> preRst = new HashMap<>();
 
     public int integerReplacement_Beta1(int n) {
+        if (preRst.containsKey(n)) {
+            return preRst.get(n);
+        }
         if (n == 1) {
             return 0;
-        }else if ((n&1)==0){
-            return 1+integerReplacement(n>>1);
-        }else {
-            //注意由于有n+1的操作，所以当n为INT_MAX的时候，就有可能溢出，所以我们可以先将n转为长整型，然后再进行运算
-            long l=n;
-            return 2+Math.min(integerReplacement((int) ((l+1)/2)),integerReplacement((int) ((l-1)/2)));
+        } else if ((n & 1) == 0) {
+            int subRst = integerReplacement(n >> 1) + 1;
+            preRst.put(n, subRst);
+            return subRst;
+        } else {
+            int add = integerReplacement((n >> 1) + 1) + 2; //由于n+1是偶数 则 (n+1)/2 等价 n/2+1
+            int del = integerReplacement(n - 1) + 1;  // 不用(n-1)/2 +1 这样可以利用缓存,否则偶数缓存没用
+            int small = Math.min(add, del);
+            preRst.put(n, small);  //只能放小的
+            return small ;
         }
     }
 
-    public int integerReplacement_Unlimited(int n){
+    // 暂时没看明白
+    public int integerReplacement_Unlimited(int n) {
         int count = 0;
-        while(n != 1) {
+        while (n != 1) {
             if (n == 3) {
-                count+=2;
+                count += 2;
                 break;
             }
 
@@ -2624,10 +2636,10 @@ public class 算法 {
                 return 32;
             }
 
-            if ((n&1) == 0) {
+            if ((n & 1) == 0) {
                 n >>= 1;
             } else {
-                if ((n&2) == 2) {
+                if ((n & 2) == 2) {
                     n++;
                 } else {
                     n--;
