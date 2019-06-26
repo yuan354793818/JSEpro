@@ -2552,6 +2552,97 @@ public class 算法 {
         System.out.println(rangeBitwiseAnd(2147483646
                 ,2147483647));
     }
+
+
+    //给定一个正整数 n，你可以做如下操作：
+    //
+    //1. 如果 n 是偶数，则用 n / 2替换 n。
+    //2. 如果 n 是奇数，则可以用 n + 1或n - 1替换 n。
+    //n 变为 1 所需的最小替换次数是多少？
+    //
+    //示例 1:
+    //
+    //输入:
+    //8
+    //
+    //输出:
+    //3
+    //
+    //解释:
+    //8 -> 4 -> 2 -> 1
+    //示例 2:
+    //
+    //输入:
+    //7
+    //
+    //输出:
+    //4
+    //
+    //解释:
+    //7 -> 8 -> 4 -> 2 -> 1
+    //或
+    //7 -> 6 -> 3 -> 2 -> 1
+    //
+    // 13 12 6 3 2 1
+    // 13 14 7 8 4 2 1
+    // 15 16 8 4 2 1
+    // 15 14 7 8 4 2 1
+    public int integerReplacement(int n) {
+        if (n == 2147483647) {           //   防止栈溢出
+            return 32;
+        }
+        if (n == 1) {
+            return 0;
+        }else if ((n&1)==0){
+            return 1+integerReplacement(n>>1);
+        }else {
+            return 1+Math.min(integerReplacement(n+1),integerReplacement(n-1)); //两种选择，不是左边好就是右边
+        }
+    }
+
+    public int integerReplacement_Beta1(int n) {
+        if (n == 1) {
+            return 0;
+        }else if ((n&1)==0){
+            return 1+integerReplacement(n>>1);
+        }else {
+            //注意由于有n+1的操作，所以当n为INT_MAX的时候，就有可能溢出，所以我们可以先将n转为长整型，然后再进行运算
+            long l=n;
+            return 2+Math.min(integerReplacement((int) ((l+1)/2)),integerReplacement((int) ((l-1)/2)));
+        }
+    }
+
+    public int integerReplacement_Unlimited(int n){
+        int count = 0;
+        while(n != 1) {
+            if (n == 3) {
+                count+=2;
+                break;
+            }
+
+            if (n == 2147483647) {
+                return 32;
+            }
+
+            if ((n&1) == 0) {
+                n >>= 1;
+            } else {
+                if ((n&2) == 2) {
+                    n++;
+                } else {
+                    n--;
+                }
+            }
+            count++;
+        }
+        return count;
+    }
+
+    @Test
+    public void test2599() {
+        System.out.println(integerReplacement(2147483647));
+    }
+
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;
