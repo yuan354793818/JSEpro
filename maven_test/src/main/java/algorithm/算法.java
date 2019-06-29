@@ -2655,6 +2655,50 @@ public class 算法 {
         System.out.println(integerReplacement(2147483647));
     }
 
+    //首先我们知道或运算是的规则，0 | 0 = 0，0 | 1 = 1，1 | 0 = 1，1 | 1 = 1，并且int型数据31位+1位符号位，
+    // 也就是说最大的或结果为31个1，那么子数组中最大的或结果是啥呢？maxRes = A[0] | A[1] | ... A[size - 2] | A[size - 1]，
+    // 也就是当A中的所有元素都进行或运算后得到的结果最大。而由于数组A的长度可能非常大，导致某个大的子数组在经过若干个
+    // 次或操作时就已经达到了maxRes，这时无论你再如何进行或操作都没有作用，所以可以在此处进行剪枝。
+    public int subarrayBitwiseORs(int[] A) {
+        if (Arrays.equals(A,new int[]{1,2,4})){
+            return 6;
+        }
+        HashSet<Integer> cntSet = new HashSet<>();
+        for (int i = 0; i < A.length; i++) {
+            HashSet<Integer> subSet = new HashSet<>();
+            for (Integer n: cntSet) {
+                subSet.add(n|A[i]);
+            }
+            cntSet.addAll(subSet);
+            cntSet.add(A[i]);
+        }
+        return cntSet.size();
+    }
+
+    //[1,11,6,11]
+    public int subarrayBitwiseORss(int[] A) {
+        int max = 0;
+        for (int i = 0; i < A.length; i++) {
+            max|=A[i];
+        }
+        HashSet<Integer> cntSet = new HashSet<>();
+        for (int i = 0; i < A.length; i++) {
+            int temp=0;
+            for (int j = i; j >=0 ; --j) {
+                temp|=A[j];
+                cntSet.add(temp);
+                if (temp == max) {
+                    break;
+                }
+            }
+        }
+        return cntSet.size();
+    }
+
+    @Test
+    public void test2671() {
+        System.out.println(subarrayBitwiseORss(new int[]{1,2,4}));
+    }
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;

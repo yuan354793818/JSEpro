@@ -434,5 +434,12 @@ public class JunitTest {
     public void test434() {
         System.out.println(Integer.MAX_VALUE);
     }
+
+    @Test
+    public void test439() {
+        int[] ins={1,2,4};
+        int[] ins1={1,2,4};
+        System.out.println(Arrays.equals(ins,ins1));
+    }
 }
 
