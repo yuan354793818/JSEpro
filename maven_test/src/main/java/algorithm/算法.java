@@ -2603,20 +2603,21 @@ public class 算法 {
 
     // 由于递归存在多条路径，存在重复访问同一个n的情况，为了避免重复递归的现象，将之前递归过的数值储存在哈希表中
     private HashMap<Integer, Integer> preRst = new HashMap<>();
-
+    private int cftCnt=0;
     public int integerReplacement_Beta1(int n) {
         if (preRst.containsKey(n)) {
+            cftCnt++;
             return preRst.get(n);
         }
         if (n == 1) {
             return 0;
         } else if ((n & 1) == 0) {
-            int subRst = integerReplacement(n >> 1) + 1;
+            int subRst = integerReplacement_Beta1(n >> 1) + 1;
             preRst.put(n, subRst);
             return subRst;
         } else {
-            int add = integerReplacement((n >> 1) + 1) + 2; //由于n+1是偶数 则 (n+1)/2 等价 n/2+1
-            int del = integerReplacement(n - 1) + 1;  // 不用(n-1)/2 +1 这样可以利用缓存,否则偶数缓存没用
+            int add = integerReplacement_Beta1((n >> 1) + 1) + 2; //由于n+1是偶数 则 (n+1)/2 等价 n/2+1
+            int del = integerReplacement_Beta1(n - 1) + 1;  // 不用(n-1)/2 +1 这样可以利用缓存,否则偶数缓存没用
             int small = Math.min(add, del);
             preRst.put(n, small);  //只能放小的
             return small ;
@@ -2652,7 +2653,8 @@ public class 算法 {
 
     @Test
     public void test2599() {
-        System.out.println(integerReplacement(2147483647));
+        System.out.println(integerReplacement_Beta1(324234234));
+        System.out.println(cftCnt);
     }
 
     //首先我们知道或运算是的规则，0 | 0 = 0，0 | 1 = 1，1 | 0 = 1，1 | 1 = 1，并且int型数据31位+1位符号位，
@@ -2727,7 +2729,11 @@ public class 算法 {
     }
 
     private  HashMap<Integer,Integer> bufMap=new HashMap<>();
+    private  int cnt=0; //计算递归调用次数或者循环计算次数
+    // 凑出最小张数money   递归  DP
+    // 思维由结果向前
     public int leastPieceOfMoney(int m) {
+        cnt++;
         if (m==1||m==5||m==11) {
             System.out.println(" no buf m is "+m);
             return 1;
@@ -2749,9 +2755,44 @@ public class 算法 {
 
     @Test
     public void test2743() {
-        System.out.println(leastPieceOfMoney(99));
+        System.out.println(leastPieceOfMoney(15));
+        System.out.println(cnt);
     }
 
+    // 凑出最小张数money   循环
+    // 先从小到大算出各money least pieces
+    // 思维由前向结果
+    // 复杂度n
+    public int leastPieceOfMoney_Cycle(int m) {
+        int rst[] = new int[m+1];
+        rst[0]=0;
+        int cost;
+        for (int i = 1; i < m+1; i++) {
+            cost= Integer.MAX_VALUE;
+            if (i>=1){
+                cost=Math.min(cost,rst[i-1]+1);
+                cnt++;
+            }
+            if (i>=5){
+                cost=Math.min(cost,rst[i-5]+1);
+                cnt++;
+            }
+            if (i>=11){
+                cost=Math.min(cost,rst[i-11]+1);
+                cnt++;
+            }
+            rst[i]=cost;
+        }
+        return rst[m];
+    }
+
+    @Test
+    public void test2780() {
+        System.out.println(leastPieceOfMoney_Cycle(15));
+        System.out.println(cnt);
+    }
+
+    // 凑出所有张数组合money 最大集
     public List<List<Integer>> allPieceOfMoney(int m) {
         List<List<Integer>> list = new ArrayList<>();
         if (m == 0) {
@@ -2806,7 +2847,101 @@ public class 算法 {
             System.out.println();
         });
     }
-    //  [1,3,5,6], 5
+
+    // 最长上升子序列 DP     O(n2)
+    // 求数组中以每个元素结尾的最长序列大小 称 子最长上升子序列大小
+    // 每个子最长上升子序列大小都与前面的 子最长上升子序列 有关
+    // 如 当前元素大于 前面的元素 则说明 当前可能f(x) = f(p)+1
+    // 需要遍历 当前元素之前的所有元素 以获取 实际最大的f(x)
+    public int longestIncreasingSubsequence(int [] nums){
+        int length = nums.length;
+        int[] rst = new int[length];
+        Arrays.fill(rst, 1);
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j]<nums[i])
+                    rst[i]=Math.max(rst[i],rst[j]+1);
+            }
+        }
+        int max=0;
+        for (int n : rst) {
+            max = Math.max(max, n);
+        }
+        return max;
+    }
+    //这道题有两种做法，一种是DP也就是动态规划，很简单，第i个元素之前的最小上升子序列的长度无非就是max(dp[i],dp[j]+1),
+    // 那么另一种做法就是二分查找法，也很简单，无非就是再新建一个数组，然后第一个数先放进去，然后第二个数和第一个数比较，
+    // 如果说大于第一个数，那么就接在他后面，如果小于第一个数，那么就替换，一般的，如果有i个数，那么每进来一个新的数，
+    // 都要用二分查找法来得知要替换在哪个位置的数。因为有个for循环，所以是O(N),在加上循环里有个二分查找，所以最后是O(NlogN)的时间复杂度。
+    //
+    //哼，别看这么简单，可我根本写不出来后一种，是的，我就是这样的！爱咋咋地！！！
+
+    // 1 5 3 4 6 13 5 8 10
+    // 由于只需要长度不需要结果集，内循环改为二分插入
+    public int longestIncreasingSubsequence_binarySearch(int [] nums){
+        if (nums.length == 0) {
+            return 0;
+        }
+        int length = nums.length;
+        int[] rst = new int[length];
+        Arrays.fill(rst, Integer.MAX_VALUE);
+        int end=1;
+        rst[0]=nums[0];
+        for (int i = 0; i < length; i++) {
+            int x = binarySearch(rst, 0, end, nums[i]);
+            rst[x]=nums[i];
+            if (x>end){
+                end++;
+            }
+        }
+        int i=0;
+        for (; i <length ; i++) {
+            if (rst[i] == Integer.MAX_VALUE) {
+                break;
+            }
+        }
+        return i;
+    }
+    @Test
+    public void test2870() {
+        System.out.println(longestIncreasingSubsequence_binarySearch(new int[]{1,5,3,4,6,13,5,8}));
+    }
+
+    /**
+     * 返回应该插入位置，原位向后移动
+     * @param nums
+     * @param start
+     * @param end
+     * @param target
+     * @return
+     */
+    public int binarySearch(int[] nums,int start,int end,int target){
+        if (start < 0||end>nums.length) {
+            return -1;
+        }
+        if (nums[start] >= target) {
+            return start;
+        }
+        if (nums[end] <= target) {
+            return end+1;
+        }
+        int mid,index=-1,i;
+        while (start<end-1){
+            i = start + end;
+            mid=(i&1)==1?i/2+1:i/2;
+            if (nums[mid] > target) {
+                end=mid;
+            } else if (nums[mid] < target) {
+                start=mid;
+            }else {
+                index=mid;
+                break;
+            }
+        }
+        return index==-1?end:index;
+    }
+    //  [1,3,5,6], 4
+    // 二分插入位置
     public static int searchInsert(int[] nums, int target) {
         int start = 0;
         int end = nums.length - 1;
@@ -2838,8 +2973,8 @@ public class 算法 {
 
     @Test
     public void test2() {
-        int[] nums = {1, 3, 5, 6, 9};
-        System.out.println(searchInsert(nums, 5));
+        int[] nums = {1, 3, 5, 7, 9};
+        System.out.println(binarySearch(nums, 1,3,5));
     }
 
     // 0 1->2->3->4 5 6, 你应该返回 2->1->4->3 6 5. java中链表关键是修改next

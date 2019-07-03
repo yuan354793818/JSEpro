@@ -13,6 +13,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Test;
+import sun.reflect.CallerSensitive;
+import sun.reflect.Reflection;
 
 import java.awt.print.PrinterJob;
 import java.io.*;
@@ -440,6 +442,20 @@ public class JunitTest {
         int[] ins={1,2,4};
         int[] ins1={1,2,4};
         System.out.println(Arrays.equals(ins,ins1));
+    }
+
+    @Test
+    public void test446() {
+
+    }
+
+
+    public static void main(String[] args) {
+       new JunitTest().fun();
+    }
+    @CallerSensitive
+    public void fun() {
+        System.out.println(Reflection.getCallerClass());
     }
 }
 

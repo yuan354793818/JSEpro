@@ -2,7 +2,9 @@ package noclassify;
 
 import org.junit.Test;
 
+import java.io.*;
 import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,22 +40,76 @@ public class CheapUtils {
 
 
     /** 给一组单词添加引号或者括号
-     * @param str
+     * @param
      * @return
      */
-    public static  String wordsAddQuotation(String str,String preAndPost){
-        Pattern pattern=Pattern.compile("\\w+");
-        Matcher matcher = pattern.matcher(str);
-        StringBuilder sb=new StringBuilder();
-        while (matcher.find()){
-          sb.append(preAndPost+matcher.group(0)+preAndPost+",");
+    public static boolean wordsAddQuotation(String path,String preAndPost,boolean hasSpliter) throws IOException {
+        BufferedReader brd = null;
+        brd = new BufferedReader(new FileReader(path));
+        StringBuilder sb = new StringBuilder();
+        String buf;
+        if (hasSpliter) {
+            while ((buf = brd.readLine()) != null) {
+                sb.append(buf);
+            }
+            Pattern pattern = Pattern.compile("\\w+");
+            Matcher matcher = pattern.matcher(sb.toString());
+            StringBuilder rsb = new StringBuilder();
+            while (matcher.find()) {
+                rsb.append(preAndPost).append(matcher.group(0)).append(preAndPost).append(",");
+                rsb.append(System.lineSeparator());
+            }
+            sb.delete(0, sb.length());
+            sb.append(rsb);
+        }else {
+            while ((buf = brd.readLine()) != null) {
+                sb.append(preAndPost).append(buf).append(preAndPost);
+                sb.append(",");
+                sb.append(System.lineSeparator());
+            }
         }
-        return sb.toString().substring(0,sb.lastIndexOf(","));
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        FileOutputStream fw = new FileOutputStream(path);
+        fw.write(sb.toString().getBytes());
+    //        用Writer会被截断，原因不明
+    //        int i=0;
+    //        for ( ; i < sb.length()-100; i+=100) {
+    //            fw.write(rStr,i,100);
+    //        }
+    //        if (i > sb.length()) {
+    //            fw.write(rStr,i,sb.length());
+    //        }
+        return true;
     }
 
     @Test
-    public void test49() {
-        System.out.println(wordsAddQuotation("software,invisible_assets,non_patents,copyright,chartered_right,patent,trademark","\'"));
+    public void test49() throws IOException {
+        wordsAddQuotation("E:\\JavaEEworkspace\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\noclassify\\collection sql.txt",
+                "'",false);
     }
 
+
+    public static HashSet getDiffString(String p1, String p2) throws IOException {
+        BufferedReader br1=new BufferedReader(new FileReader(p1));
+        BufferedReader br2=new BufferedReader(new FileReader(p2));
+        HashSet<String> rst = new HashSet<>();
+        String buf;
+        while ((buf=br1.readLine())!=null){
+            rst.add(buf.trim());
+        }
+        while ((buf=br2.readLine())!=null){
+            if (rst.contains(buf.trim())) {
+                rst.remove(buf.trim());
+            }
+        }
+        return rst;
+    }
+
+
+    @Test
+    public void test80() throws IOException {
+        System.out.println(getDiffString("E:\\JavaEEworkspace\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\noclassify\\collection sql.txt",
+                "E:\\JavaEEworkspace\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\noclassify\\collection sql2.txt")
+                .size());
+    }
 }
