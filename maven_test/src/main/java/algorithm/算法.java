@@ -2699,6 +2699,113 @@ public class 算法 {
     public void test2671() {
         System.out.println(subarrayBitwiseORss(new int[]{1,2,4}));
     }
+
+    //爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。
+    //
+    //最初，黑板上有一个数字 N 。在每个玩家的回合，玩家需要执行以下操作：
+    //
+    //选出任一 x，满足 0 < x < N 且 N % x == 0 。
+    //用 N - x 替换黑板上的数字 N 。
+    //如果玩家无法执行这些操作，就会输掉游戏。
+    //
+    //只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。
+    //
+    // 
+    //
+    //示例 1：
+    //
+    //输入：2
+    //输出：true
+    //解释：爱丽丝选择 1，鲍勃无法进行操作。
+    //示例 2：
+    //
+    //输入：3
+    //输出：false
+    //解释：爱丽丝选择 1，鲍勃也选择 1，然后爱丽丝无法进行操作。
+    public boolean divisorGame(int N) {
+        return (N&1)==1;
+    }
+
+    private  HashMap<Integer,Integer> bufMap=new HashMap<>();
+    public int leastPieceOfMoney(int m) {
+        if (m==1||m==5||m==11) {
+            System.out.println(" no buf m is "+m);
+            return 1;
+        }
+        if (bufMap.containsKey(m)) {
+            System.out.println(" from buf m is "+m);
+            return bufMap.get(m);
+        }
+        int leastP= Integer.MAX_VALUE;
+        if (m>1)
+            leastP=Math.min(leastP,leastPieceOfMoney(m-1)+1);
+        if (m>5)
+            leastP=Math.min(leastP,leastPieceOfMoney(m-5)+1);
+        if (m>11)
+            leastP=Math.min(leastP,leastPieceOfMoney(m-11)+1);
+        bufMap.put(m, leastP);
+        return leastP;
+    }
+
+    @Test
+    public void test2743() {
+        System.out.println(leastPieceOfMoney(99));
+    }
+
+    public List<List<Integer>> allPieceOfMoney(int m) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (m == 0) {
+            return list;
+        }
+        if (m == 1) {
+            ArrayList<Integer> list1 = new ArrayList<>();
+            list1.add(1);
+            list.add(list1);
+            return list;
+        }
+        if (m>1) {
+            List<List<Integer>> subL1 = allPieceOfMoney(m - 1);
+            subL1.forEach(sL->{
+                sL.add(1);
+            });
+            list.addAll(subL1);
+        }
+        if (m>=5){
+            List<List<Integer>> subL1 = allPieceOfMoney(m - 5);
+            if (subL1.size() == 0) {
+                List<Integer> sl = new ArrayList<>();
+                sl.add(5);
+                subL1.add(sl);
+            }else {
+                subL1.forEach(sL->{
+                    sL.add(5);
+                });
+            }
+            list.addAll(subL1);
+        }
+        if (m>=11) {
+            List<List<Integer>> subL1 = allPieceOfMoney(m - 11);
+            if (subL1.size() == 0) {
+                List<Integer> sl = new ArrayList<>();
+                sl.add(11);
+                subL1.add(sl);
+            }else {
+                subL1.forEach(sL->{
+                    sL.add(11);
+                });
+            }
+            list.addAll(subL1);
+        }
+        return list;
+    }
+
+    @Test
+    public void test2791() {
+        allPieceOfMoney(15).forEach(pl->{
+            pl.forEach(s-> System.out.print(s+" "));
+            System.out.println();
+        });
+    }
     //  [1,3,5,6], 5
     public static int searchInsert(int[] nums, int target) {
         int start = 0;
