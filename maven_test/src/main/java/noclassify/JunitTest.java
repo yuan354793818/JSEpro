@@ -455,7 +455,7 @@ public class JunitTest {
     }
     @CallerSensitive
     public void fun() {
-        System.out.println(Reflection.getCallerClass());
+        System.out.println(Reflection.getCallerClass(1));
     }
 }
 
