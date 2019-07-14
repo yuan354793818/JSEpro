@@ -457,5 +457,10 @@ public class JunitTest {
     public void fun() {
         System.out.println(Reflection.getCallerClass(1));
     }
+
+    @Test
+    public void test462() {
+
+    }
 }
 
