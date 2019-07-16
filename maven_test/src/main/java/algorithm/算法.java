@@ -3132,6 +3132,31 @@ public class 算法 {
         System.out.println(rob(new int[]{2,7,9,3,1}));
     }
 
+    //给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+    //
+    //说明：每次只能向下或者向右移动一步。
+    //
+    //示例:
+    //
+    //输入:
+    //[
+    //  [1,3,1],
+    //  [1,5,1],
+    //  [4,2,1]
+    //]
+    //输出: 7
+    //解释: 因为路径 1→3→1→1→1 的总和最小。
+    public int minPathSum(int[][] grid) {
+        int x=grid[0].length;
+        int y=grid.length;
+        int buf[][] = new int[y][x];
+        int xi=0,yi=0;
+        while (true) {
+            for (int i = xi; i <x ; i++) {
+
+            }
+        }
+    }
 
     //  [1,3,5,6], 4
     // 二分插入位置
