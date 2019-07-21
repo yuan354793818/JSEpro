@@ -44,4 +44,17 @@
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>demoServlet</servlet-name>
+        <servlet-class>com.test.DemoServlet</servlet-class>
+        <init-param>
+            <param-name>configfile</param-name>
+            <param-value>/WEB-INF/config/sfw.properties</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>demoServlet</servlet-name>
+        <url-pattern>/demo</url-pattern>
+    </servlet-mapping>
 </web-app>

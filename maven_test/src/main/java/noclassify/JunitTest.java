@@ -18,11 +18,15 @@ import sun.reflect.Reflection;
 
 import java.awt.print.PrinterJob;
 import java.io.*;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JunitTest {
     @Test
@@ -458,9 +462,74 @@ public class JunitTest {
         System.out.println(Reflection.getCallerClass(1));
     }
 
+
+    @Test
+    public void test464() {
+        System.out.println(ClassLoader.getSystemResource("").getFile());
+    }
+
+    @Test
+    public void test468() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("ssss", null);
+        System.out.println();
+    }
+
+    @Test
+    public void test475() {
+        File f=new File("E:\\JavaEEworkspace\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\blank");
+        File[] files = f.listFiles();
+        System.out.println(files.length);
+    }
+
     @Test
     public void test462() {
+        Pattern pattern=Pattern.compile("(?<!\\.)assets(\\.[a-zA-Z_]{2,30}){2,}");
+        Matcher matcher = pattern.matcher("var action = \"assets.common.assets_SortGb\";");
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
 
+    @Test
+    public void test493() {
+        String s = "assets.cache.dep.detail";
+        if (s.startsWith("assets.cache")){
+            System.out.println("'"+s+"' : '"+s.replace("assets.cache","assets.common.cache")+"'");
+        }
+    }
+
+    @Test
+    public void test501() {
+        Type genericSuperclass = BB.class.getGenericSuperclass();
+        ParameterizedType pt = (ParameterizedType) genericSuperclass;
+        System.out.println(pt.getActualTypeArguments()[0]);
+
+
+        AA<String> aa=new AA<String>(){};
+        int a=1;
+    }
+
+
+    @Test
+    public void test515() {
+        Pattern pattern = Pattern.compile("\\w+");
+        Matcher matcher = pattern.matcher("assets.cache.getAssetsAdvanceScrapOpen");
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+            System.out.println(matcher.start());
+            System.out.println(matcher.end());
+        }
     }
 }
+
+
+class AA<T>{
+    T t;
+}
+
+class BB<T> extends AA<T>{
+
+}
+
 

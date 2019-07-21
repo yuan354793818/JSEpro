@@ -2700,7 +2700,7 @@ public class 算法 {
 
     @Test
     public void test2671() {
-        System.out.println(subarrayBitwiseORss(new int[]{1,2,4}));
+        System.out.println(subarrayBitwiseORss(new int[]{1, 2, 4}));
     }
 
     //爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。
@@ -2726,16 +2726,17 @@ public class 算法 {
     //输出：false
     //解释：爱丽丝选择 1，鲍勃也选择 1，然后爱丽丝无法进行操作。
     public boolean divisorGame(int N) {
-        return (N&1)==1;
+        return (N & 1) == 1;
     }
 
-    private  HashMap<Integer,Integer> bufMap=new HashMap<>();
-    private  int cnt=0; //计算递归调用次数或者循环计算次数
+    private HashMap<Integer, Integer> bufMap = new HashMap<>();
+    private int cnt = 0; //计算递归调用次数或者循环计算次数
+
     // 凑出最小张数money   递归  DP
     // 思维由结果向前
     public int leastPieceOfMoney(int m) {
         //cnt++;
-        if (m==1||m==5||m==11) {
+        if (m == 1 || m == 5 || m == 11) {
             //System.out.println(" no buf m is "+m);
             return 1;
         }
@@ -2743,13 +2744,13 @@ public class 算法 {
             //System.out.println(" from buf m is "+m);
             return bufMap.get(m);
         }
-        int leastP= Integer.MAX_VALUE;
-        if (m>1)
-            leastP=Math.min(leastP,leastPieceOfMoney(m-1)+1);
-        if (m>5)
-            leastP=Math.min(leastP,leastPieceOfMoney(m-5)+1);
-        if (m>11)
-            leastP=Math.min(leastP,leastPieceOfMoney(m-11)+1);
+        int leastP = Integer.MAX_VALUE;
+        if (m > 1)
+            leastP = Math.min(leastP, leastPieceOfMoney(m - 1) + 1);
+        if (m > 5)
+            leastP = Math.min(leastP, leastPieceOfMoney(m - 5) + 1);
+        if (m > 11)
+            leastP = Math.min(leastP, leastPieceOfMoney(m - 11) + 1);
         bufMap.put(m, leastP);
         return leastP;
     }
@@ -2765,24 +2766,24 @@ public class 算法 {
     // 思维由前向结果
     // 复杂度n
     public int leastPieceOfMoney_Cycle(int m) {
-        int rst[] = new int[m+1];
-        rst[0]=0;
+        int rst[] = new int[m + 1];
+        rst[0] = 0;
         int cost;
-        for (int i = 1; i < m+1; i++) {
-            cost= Integer.MAX_VALUE;
-            if (i>=1){
-                cost=Math.min(cost,rst[i-1]+1);
+        for (int i = 1; i < m + 1; i++) {
+            cost = Integer.MAX_VALUE;
+            if (i >= 1) {
+                cost = Math.min(cost, rst[i - 1] + 1);
                 //cnt++;
             }
-            if (i>=5){
-                cost=Math.min(cost,rst[i-5]+1);
+            if (i >= 5) {
+                cost = Math.min(cost, rst[i - 5] + 1);
                 //cnt++;
             }
-            if (i>=11){
-                cost=Math.min(cost,rst[i-11]+1);
+            if (i >= 11) {
+                cost = Math.min(cost, rst[i - 11] + 1);
                 //cnt++;
             }
-            rst[i]=cost;
+            rst[i] = cost;
         }
         return rst[m];
     }
@@ -2805,34 +2806,34 @@ public class 算法 {
             list.add(list1);
             return list;
         }
-        if (m>1) {
+        if (m > 1) {
             List<List<Integer>> subL1 = allPieceOfMoney(m - 1);
-            subL1.forEach(sL->{
+            subL1.forEach(sL -> {
                 sL.add(1);
             });
             list.addAll(subL1);
         }
-        if (m>=5){
+        if (m >= 5) {
             List<List<Integer>> subL1 = allPieceOfMoney(m - 5);
             if (subL1.size() == 0) {
                 List<Integer> sl = new ArrayList<>();
                 sl.add(5);
                 subL1.add(sl);
-            }else {
-                subL1.forEach(sL->{
+            } else {
+                subL1.forEach(sL -> {
                     sL.add(5);
                 });
             }
             list.addAll(subL1);
         }
-        if (m>=11) {
+        if (m >= 11) {
             List<List<Integer>> subL1 = allPieceOfMoney(m - 11);
             if (subL1.size() == 0) {
                 List<Integer> sl = new ArrayList<>();
                 sl.add(11);
                 subL1.add(sl);
-            }else {
-                subL1.forEach(sL->{
+            } else {
+                subL1.forEach(sL -> {
                     sL.add(11);
                 });
             }
@@ -2843,8 +2844,8 @@ public class 算法 {
 
     @Test
     public void test2791() {
-        allPieceOfMoney(15).forEach(pl->{
-            pl.forEach(s-> System.out.print(s+" "));
+        allPieceOfMoney(15).forEach(pl -> {
+            pl.forEach(s -> System.out.print(s + " "));
             System.out.println();
         });
     }
@@ -2854,17 +2855,17 @@ public class 算法 {
     // 每个子最长上升子序列大小都与前面的 子最长上升子序列 有关
     // 如 当前元素大于 前面的元素 则说明 当前可能f(x) = f(p)+1
     // 需要遍历 当前元素之前的所有元素 以获取 实际最大的f(x)
-    public int longestIncreasingSubsequence(int [] nums){
+    public int longestIncreasingSubsequence(int[] nums) {
         int length = nums.length;
         int[] rst = new int[length];
         Arrays.fill(rst, 1);
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[j]<nums[i])
-                    rst[i]=Math.max(rst[i],rst[j]+1);
+                if (nums[j] < nums[i])
+                    rst[i] = Math.max(rst[i], rst[j] + 1);
             }
         }
-        int max=0;
+        int max = 0;
         for (int n : rst) {
             max = Math.max(max, n);
         }
@@ -2879,33 +2880,34 @@ public class 算法 {
 
     // 1 5 3 4 6 13 5 8 10
     // 由于只需要长度不需要结果集，内循环改为二分插入
-    public int longestIncreasingSubsequence_binarySearch(int [] nums){
+    public int longestIncreasingSubsequence_binarySearch(int[] nums) {
         if (nums.length == 0) {
             return 0;
         }
         int length = nums.length;
         int[] rst = new int[length];
         Arrays.fill(rst, Integer.MAX_VALUE);
-        int end=1;
-        rst[0]=nums[0];
+        int end = 1;
+        rst[0] = nums[0];
         for (int i = 0; i < length; i++) {
             int x = binarySearch(rst, 0, end, nums[i]);
-            rst[x]=nums[i];
-            if (x>end){
+            rst[x] = nums[i];
+            if (x > end) {
                 end++;
             }
         }
-        int i=0;
-        for (; i <length ; i++) {
+        int i = 0;
+        for (; i < length; i++) {
             if (rst[i] == Integer.MAX_VALUE) {
                 break;
             }
         }
         return i;
     }
+
     @Test
     public void test2870() {
-        System.out.println(longestIncreasingSubsequence_binarySearch(new int[]{1,5,3,4,6,13,5,8}));
+        System.out.println(longestIncreasingSubsequence_binarySearch(new int[]{1, 5, 3, 4, 6, 13, 5, 8}));
     }
 
     /**
@@ -2917,30 +2919,30 @@ public class 算法 {
      * @param target
      * @return
      */
-    public int binarySearch(int[] nums,int start,int end,int target){
-        if (start < 0||end>nums.length) {
+    public int binarySearch(int[] nums, int start, int end, int target) {
+        if (start < 0 || end > nums.length) {
             return -1;
         }
         if (nums[start] >= target) {
             return start;
         }
         if (nums[end] <= target) {
-            return end+1;
+            return end + 1;
         }
-        int mid,index=-1,i;
-        while (start<end-1){
+        int mid, index = -1, i;
+        while (start < end - 1) {
             i = start + end;
-            mid=(i&1)==1?i/2+1:i/2;
+            mid = (i & 1) == 1 ? i / 2 + 1 : i / 2;
             if (nums[mid] > target) {
-                end=mid;
+                end = mid;
             } else if (nums[mid] < target) {
-                start=mid;
-            }else {
-                index=mid;
+                start = mid;
+            } else {
+                index = mid;
                 break;
             }
         }
-        return index==-1?end:index;
+        return index == -1 ? end : index;
     }
 
     //给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -2964,10 +2966,10 @@ public class 算法 {
     // 思路 ： 遍历
     //   第n天前最大利润为当天利润减去前n天最小买入
     public int maxProfit(int[] prices) {
-        if (prices.length <=1) {
+        if (prices.length <= 1) {
             return 0;
         }
-        int max=0,min=prices[0];
+        int max = 0, min = prices[0];
         for (int i = 1; i < prices.length; i++) {
             if (prices[i] - min > 0) {
                 max = Math.max(max, prices[i] - min);
@@ -2990,12 +2992,12 @@ public class 算法 {
 
     public int maxProfit2_byCommon(int[] prices) {
         int len = prices.length;
-        if(len==0){
+        if (len == 0) {
             return 0;
         }
         int dp_i_0 = 0, dp_i_1 = -prices[0];
         for (int i = 1; i < len; i++) {
-            int temp=dp_i_0;
+            int temp = dp_i_0;
             dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
             dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
         }
@@ -3004,7 +3006,7 @@ public class 算法 {
 
     @Test
     public void test2973() {
-        System.out.println(maxProfit(new int[]{7,4,5,3,6,4}));
+        System.out.println(maxProfit(new int[]{7, 4, 5, 3, 6, 4}));
     }
 
     @Test
@@ -3025,15 +3027,15 @@ public class 算法 {
     //解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]
     public int maxProfit3(int[] prices) {
         int len = prices.length;
-        if (len <=1) {
+        if (len <= 1) {
             return 0;
         }
-        int dp_i_0=0,dp_i_1=-prices[0],dp_pre_0=0;
+        int dp_i_0 = 0, dp_i_1 = -prices[0], dp_pre_0 = 0;
         for (int i = 1; i < len; i++) {
-            int temp=dp_i_0;
+            int temp = dp_i_0;
             dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
             dp_i_1 = Math.max(dp_i_1, dp_pre_0 - prices[i]);
-            dp_pre_0=temp;
+            dp_pre_0 = temp;
         }
         return dp_i_0;
     }
@@ -3043,15 +3045,15 @@ public class 算法 {
     //你可以无限次地完成交易，但是你每次交易都需要付手续费。如果你已经购买了一个股票，在卖出它之前你就不能再继续购买股票了。
     //
     //返回获得利润的最大值。
-    public int maxProfit4(int[] prices,int fee) {
+    public int maxProfit4(int[] prices, int fee) {
         int len = prices.length;
-        if(len==0){
+        if (len == 0) {
             return 0;
         }
         int dp_i_0 = 0, dp_i_1 = -prices[0];
         for (int i = 1; i < len; i++) {
-            int temp=dp_i_0;
-            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]-fee);
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i] - fee);
             dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
         }
         return dp_i_0;
@@ -3059,12 +3061,12 @@ public class 算法 {
 
     @Test
     public void test3119() {
-        System.out.println(maxProfit4(new int[]{1, 3, 2, 8, 4, 9},2));
+        System.out.println(maxProfit4(new int[]{1, 3, 2, 8, 4, 9}, 2));
     }
 
-    public int maxProfit_k(int[] prices,int max_k) {
+    public int maxProfit_k(int[] prices, int max_k) {
         int len = prices.length;
-        if(len<=1){
+        if (len <= 1) {
             return 0;
         }
         //一次交易由买入和卖出构成，至少需要两天。所以说有效的限制 k 应该不超过 n/2，
@@ -3074,22 +3076,132 @@ public class 算法 {
         }
         int[][][] dp = new int[len][max_k + 1][2];
         for (int i = 0; i < len; i++) {
-            for (int k=max_k; k>=1 ; k--) {    //或者 int k = 0; k < len; k++   因为只是需要穷举而已，以0开头或k开头都一样，只是为了表示状态
+            for (int k = max_k; k >= 1; k--) {    //或者 int k = 0; k < len; k++   因为只是需要穷举而已，以0开头或k开头都一样，只是为了表示状态
                 if (i == 0) {
-                    dp[i][k][0]=0;
+                    dp[i][k][0] = 0;
                     dp[i][k][1] = -prices[i];
                     continue;
                 }
-                dp[i][k][0]= Math.max(dp[i-1][k][0],dp[i-1][k][1]+prices[i]);
+                dp[i][k][0] = Math.max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i]);
                 dp[i][k][1] = Math.max(dp[i - 1][k][1], dp[i - 1][k - 1][0] - prices[i]);    //k-1 改为 k+1
             }
         }
-        return dp[len-1][max_k][0];   // max_k 改为 0
+        return dp[len - 1][max_k][0];   // max_k 改为 0
     }
 
     @Test
     public void test3144() {
-        System.out.println(maxProfit_k(new int[]{1, 3, 2, 8,},2));
+        System.out.println(maxProfit_k(new int[]{1, 3, 2, 8,}, 2));
+    }
+
+    //假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+    //
+    //每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+    //
+    //注意：给定 n 是一个正整数。
+    //
+    //示例 1：
+    //
+    //输入： 2
+    //输出： 2
+    //解释： 有两种方法可以爬到楼顶。
+    //1.  1 阶 + 1 阶
+    //2.  2 阶
+    //示例 2：
+    //
+    //输入： 3
+    //输出： 3
+    //解释： 有三种方法可以爬到楼顶。
+    //1.  1 阶 + 1 阶 + 1 阶
+    //2.  1 阶 + 2 阶
+    //3.  2 阶 + 1 阶
+    //
+    // f(n)=f(n-1)+f(n+2)
+    //递归法超时
+    public int climbStairs_recur(int n) {
+        if (n==0)
+            return 1;
+        int c1=0,c2=0;
+        if (n-1>=0)
+            c1=climbStairs_recur(n-1);
+        if (n-2>=0)
+            c2=climbStairs_recur(n-2);
+        return c1+c2;
+    }
+
+    // DP
+    // 1 2 3
+    public int climbStairs(int n){
+        if (n == 0) {
+            return 0;
+        }
+        int n_1=1,n_2=1;
+        for (int i = 2; i <= n; i++) {
+            int tmp=n_1;
+            n_1+=n_2;
+            n_2=tmp;
+        }
+        return n_1;
+    }
+
+    @Test
+    public void test3136() {
+        System.out.println(climbStairs(44));
+    }
+
+    //数组的每个索引做为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost[i](索引从0开始)。
+    //
+    //每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。
+    //
+    //您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。
+    //
+    //示例 1:
+    //
+    //输入: cost = [10, 15, 20]
+    //输出: 15
+    //解释: 最低花费是从cost[1]开始，然后走两步即可到阶梯顶，一共花费15。
+    // 示例 2:
+    //
+    //输入: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+    //输出: 6
+    //解释: 最低花费方式是从cost[0]开始，逐个经过那些1，跳过cost[3]，一共花费6。
+    //注意：
+    //
+    //cost 的长度将会在 [2, 1000]。
+    //每一个 cost[i] 将会是一个Integer类型，范围为 [0, 999]。
+    public int minCostClimbingStairs(int[] cost) {
+        int len = cost.length ;
+        if (len<2){
+            return 0;
+        }
+        int[] accCost = new int[len];
+        accCost[0]=cost[0];
+        accCost[1]=cost[1];
+        for (int i = 2; i < len; i++) {
+            accCost[i]=cost[i]+Math.min(accCost[i-1],accCost[i-2]);
+        }
+        return Math.min(accCost[len-2],accCost[len-1]);
+    }
+
+    // f(n)=cost[n]+min(f(n-1),f(n-2))
+    public int minCostClimbingStairs_abstract(int[] cost) {
+        int len = cost.length ;
+        if (len<2){
+            return 0;
+        }
+        int a_0 = cost[0];
+        int a_1 = cost[1];
+        for (int i = 2; i < len; i++) {
+            int tmp=a_1;
+            a_1=cost[i]+Math.min(a_1,a_0);
+            a_0=tmp;
+        }
+        return Math.min(a_1,a_0);
+    }
+
+    @Test
+    public void test3184() {
+        System.out.println(minCostClimbingStairs_abstract(new int[]{1, 100, 1, 1, 1, 100, 1, 1, 100, 1}));
     }
 
     //你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
@@ -3109,6 +3221,7 @@ public class 算法 {
     //解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
     //     偷窃到的最高金额 = 2 + 9 + 1 = 12 。
     //
+    //    思路： f(n)= max(f(n-1),f(n-2)+nums[n]);
     public int rob(int[] nums) {
         int len = nums.length;
         if (len==  0) {
@@ -3193,7 +3306,7 @@ public class 算法 {
     @Test
     public void test2() {
         int[] nums = {1, 3, 5, 7, 9};
-        System.out.println(binarySearch(nums, 1,3,5));
+        System.out.println(binarySearch(nums, 1, 3, 5));
     }
 
 

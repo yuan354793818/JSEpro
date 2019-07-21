@@ -9,6 +9,7 @@
 <c:if test="${!bb}">
     <c:out value="sdsd"></c:out>
     ${pageScope.entrySet()}
+    ${fn:contains('sds', 'sdsd')}
 </c:if>
 </body>
 </html>

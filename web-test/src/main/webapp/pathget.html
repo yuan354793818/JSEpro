@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script>
+
+
+    var pathsEntry={
+        'assets.acceptance.common.assetsSortGbAll' : 'assets.acceptance.common.assetsSortGbAll',
+        'assets.bills.acceptBill.tagPrint' : 'assets.bills.acceptBill.tagPrint',
+        'assets.cache.getAssetsAdvanceScrapOpen' : 'assets.common.cache.getAssetsAdvanceScrapOpen',
+        'assets.cache.getAssetsDepreciationYear' : 'assets.common.cache.getAssetsDepreciationYear',
+        'assets.cache.getAssetsSort' : 'assets.common.cache.getAssetsSort',
+        'assets.cache.getAssetsSortAdvanceScrapOpen' : 'assets.common.cache.getAssetsSortAdvanceScrapOpen',
+        'assets.cache.getAssetsSortDepreciationYear' : 'assets.common.cache.getAssetsSortDepreciationYear',
+        'assets.cache.getAssetsSortGb' : 'assets.common.cache.getAssetsSortGb',
+        'assets.cache.getAssetsSortGbAdvanceScrapOpe' : 'assets.common.cache.getAssetsSortGbAdvanceScrapOpe',
+        'assets.cache.getAssetsSortGbDepreciationYear' : 'assets.common.cache.getAssetsSortGbDepreciationYear',
+        'assets.cache.getAssetsType' : 'assets.common.cache.getAssetsType',
+        'assets.cache.getAssetsTypeAdvanceScrapOpen' : 'assets.common.cache.getAssetsTypeAdvanceScrapOpen',
+        'assets.cache.getAssetsTypeDepreciationYear' : 'assets.common.cache.getAssetsTypeDepreciationYear',
+        'assets.cache.getBusiness' : 'assets.common.cache.getBusiness',
+        'assets.cache.getSystemConfig' : 'assets.common.cache.getSystemConfig',
+        'assets.cache.getSystemConfigValue' : 'assets.common.cache.getSystemConfigValue',
+        'assets.cache.listAssetsSort' : 'assets.common.cache.listAssetsSort',
+        'assets.cache.listAssetsSortGb' : 'assets.common.cache.listAssetsSortGb',
+        'assets.cache.listAssetsType' : 'assets.common.cache.listAssetsType',
+        'assets.cache.listBusiness' : 'assets.common.cache.listBusiness',
+        'assets.cache.listBusinessByProduct' : 'assets.common.cache.listBusinessByProduct',
+        'assets.cache.listSystemConfig' : 'assets.common.cache.listSystemConfig',
+        'assets.cache.listSystemConfigByProduct' : 'assets.common.cache.listSystemConfigByProduct',
+        'assets.cache.reload' : 'assets.common.cache.reload',
+        'assets.cache.reloadAssetsCache' : 'assets.common.cache.reloadAssetsCache',
+        'assets.cache.reloadAssetsSort' : 'assets.common.cache.reloadAssetsSort',
+        'assets.cache.reloadAssetsSortGb' : 'assets.common.cache.reloadAssetsSortGb',
+        'assets.cache.reloadAssetsType' : 'assets.common.cache.reloadAssetsType',
+        'assets.cache.reloadBusiness' : 'assets.common.cache.reloadBusiness',
+        'assets.cache.reloadSystemConfig' : 'assets.common.cache.reloadSystemConfig',
+        'assets.common.allTeachersAuto' : 'assets.common.allTeachersAuto',
+        'assets.common.assets.detail' : 'assets.common.assets.detail',
+        'assets.common.assets.detailBooks' : 'assets.common.assets.detailBooks',
+        'assets.common.assets.detailDomain' : 'assets.common.assets.detailDomain',
+        'assets.common.assets.detailEresources' : 'assets.common.assets.detailEresources',
+        'assets.common.assets.detailHouse' : 'assets.common.assets.detailHouse',
+        'assets.common.assets.detailInvestment' : 'assets.common.assets.detailInvestment',
+        'assets.common.assets.detailPlants' : 'assets.common.assets.detailPlants',
+        'assets.common.assets.detailTrademark' : 'assets.common.assets.detailTrademark',
+        'assets.common.assets.getType' : 'assets.common.assets.getType',
+        'assets.common.assetsSortAuto' : 'assets.common.assetsSortAuto',
+        'assets.common.assetsSortAutoAll' : 'assets.common.assetsSortAutoAll',
+        'assets.common.assetsSortGb' : 'assets.common.assetsSortGb',
+        'assets.common.assetsSortGbAll' : 'assets.common.assetsSortGbAll',
+        'assets.common.autocompleteTeacher' : 'assets.common.autocompleteTeacher',
+        'assets.common.baseRoomAuto' : 'assets.common.baseRoomAuto',
+        'assets.common.business.accept.businessConvert' : 'assets.common.business.accept.businessConvert',
+        'assets.common.business.accept.uploadImage' : 'assets.common.business.accept.uploadImage',
+        'assets.common.business.acceptfrom.list' : 'assets.common.business.acceptfrom.list',
+        'assets.common.business.pick' : 'assets.common.business.pick',
+        'assets.common.business.pickAttach' : 'assets.common.business.pickAttach',
+        'assets.common.business.pickBooks' : 'assets.common.business.pickBooks',
+        'assets.common.business.pickDomain' : 'assets.common.business.pickDomain',
+        'assets.common.business.pickHouse' : 'assets.common.business.pickHouse',
+        'assets.common.business.pickInvestment' : 'assets.common.business.pickInvestment',
+        'assets.common.business.pickPlant' : 'assets.common.business.pickPlant',
+        'assets.common.business.pickTrademark' : 'assets.common.business.pickTrademark',
+        'assets.common.business.repair.uploadImage' : 'assets.common.business.repair.uploadImage',
+        'assets.common.business.repairupdate.uploadImage' : 'assets.common.business.repairupdate.uploadImage',
+        'assets.common.business.scrap.uploadImage' : 'assets.common.business.scrap.uploadImage',
+        'assets.common.business.uploadDisposalFile' : 'assets.common.business.uploadDisposalFile',
+        'assets.common.commonSortMultiSelect' : 'assets.common.commonSortMultiSelect',
+        'assets.common.commonSortMultiSelectGb' : 'assets.common.commonSortMultiSelectGb',
+        'assets.common.commonSortSelect' : 'assets.common.commonSortSelect',
+        'assets.common.commonSortSelectGb' : 'assets.common.commonSortSelectGb',
+        'assets.common.dep.detail' : 'assets.common.dep.detail',
+        'assets.common.depTeachersAuto' : 'assets.common.depTeachersAuto',
+        'assets.common.exportResources' : 'assets.common.exportResources',
+        'assets.common.financeUncollectedAssets' : 'assets.common.financeUncollectedAssets',
+        'assets.common.financeUncollectedBusiness' : 'assets.common.financeUncollectedBusiness',
+        'assets.common.getBusinessNum' : 'assets.common.getBusinessNum',
+        'assets.common.getGzCodeBystandardSortCode' : 'assets.common.getGzCodeBystandardSortCode',
+        'assets.common.getRole' : 'assets.common.getRole',
+        'assets.common.getWorkingInfo' : 'assets.common.getWorkingInfo',
+        'assets.common.merge.merge_request' : 'assets.common.merge.merge_request',
+        'assets.common.queryAssetsBelongByRole' : 'assets.common.queryAssetsBelongByRole',
+        'assets.common.queryAssetsTypesByBusiness' : 'assets.common.queryAssetsTypesByBusiness',
+        'assets.common.queryAssetsTypesByRole' : 'assets.common.queryAssetsTypesByRole',
+        'assets.common.queryFinanceEnabledBusiness' : 'assets.common.queryFinanceEnabledBusiness',
+        'assets.common.room.detail' : 'assets.common.room.detail',
+        'assets.common.snapDate_autocomplete' : 'assets.common.snapDate_autocomplete',
+        'assets.division.accept.projectList' : 'assets.division.accept.projectList',
+        'assets.division.accept.requesteresources.revise' : 'assets.division.accept.requesteresources.revise',
+        'assets.division.accept.revise' : 'assets.division.accept.revise',
+        'assets.division.accept.reviseVerify' : 'assets.division.accept.reviseVerify',
+        'assets.division.assets.list' : 'assets.division.assets.list',
+        'assets.division.assets.modify' : 'assets.division.assets.modify',
+        'assets.division.assets.modify_house' : 'assets.division.assets.modify_house',
+        'assets.division.assets.modify_plant' : 'assets.division.assets.modify_plant',
+        'assets.division.change.housechange.transProject' : 'assets.division.change.housechange.transProject',
+        'assets.division.check.plan.list' : 'assets.division.check.plan.list',
+        'assets.division.collection.dropCollection.drop_collection' : 'assets.division.collection.dropCollection.drop_collection',
+        'assets.division.database.detail' : 'assets.division.database.detail',
+        'assets.division.depreciation.modify' : 'assets.division.depreciation.modify',
+        'assets.division.nav_report' : 'assets.division.nav_report',
+        'assets.finance.audit_finance_tc_disposal' : 'assets.finance.audit_finance_tc_disposal',
+        'assets.finance.back' : 'assets.finance.back',
+        'assets.finance.change' : 'assets.finance.change',
+        'assets.finance.disposal' : 'assets.finance.disposal',
+        'assets.finance.importCheck.modify_voucher' : 'assets.finance.importCheck.modify_voucher',
+        'assets.finance.import_finance_data' : 'assets.finance.import_finance_data',
+        'assets.finance.list_import' : 'assets.finance.list_import',
+        'assets.finance.refreshFinance' : 'assets.finance.refreshFinance',
+        'assets.finance.refreshFinanceState' : 'assets.finance.refreshFinanceState',
+        'assets.finance.request' : 'assets.finance.request',
+        'assets.finance.requestfunds' : 'assets.finance.requestfunds',
+        'assets.finance.stockRequest' : 'assets.finance.stockRequest',
+        'assets.finance.submitFinance' : 'assets.finance.submitFinance',
+        'assets.financeCheck.queryImportList' : 'assets.financeCheck.queryImportList',
+        'assets.financeCheck.queryImportListGb' : 'assets.financeCheck.queryImportListGb',
+        'assets.financeCheck.updateVoucher' : 'assets.financeCheck.updateVoucher',
+        'assets.financeCheck.updateVoucherGb' : 'assets.financeCheck.updateVoucherGb',
+        'assets.financeUncollected.rejectProcess' : 'assets.financeUncollected.rejectProcess',
+        'assets.manager.accept.assetsList' : 'assets.manager.accept.assetsList',
+        'assets.manager.check.list' : 'assets.manager.check.list',
+        'assets.outlayInfo.refreshOutlayInfo' : 'assets.outlayInfo.refreshOutlayInfo',
+        'assets.personal.accept.copyAcceptance' : 'assets.personal.accept.copyAcceptance',
+        'assets.personal.argument.request' : 'assets.personal.argument.request',
+        'assets.personal.confirm' : 'assets.personal.confirm',
+        'assets.personal.requestdep.requestdep.request' : 'assets.personal.requestdep.requestdep.request',
+        'assets.personal.selfcheck' : 'assets.personal.selfcheck',
+        'assets.process.accept.acceptance.audit_finance_request' : 'assets.process.accept.acceptance.audit_finance_request',
+        'assets.process.accept.acceptance.audit_finance_tc_request' : 'assets.process.accept.acceptance.audit_finance_tc_request',
+        'assets.process.accept.acceptance.audit_upload' : 'assets.process.accept.acceptance.audit_upload',
+        'assets.process.disposal.backstock.audit_finance' : 'assets.process.disposal.backstock.audit_finance',
+        'assets.process.disposal.scrap.audit_upload' : 'assets.process.disposal.scrap.audit_upload',
+        'assets.process.repair.repair.acceptance_apply' : 'assets.process.repair.repair.acceptance_apply',
+        'assets.public.detail' : 'assets.public.detail',
+        'assets.query.assetsModify.saveDivision' : 'assets.query.assetsModify.saveDivision',
+        'assets.query.assetsModify.saveManager' : 'assets.query.assetsModify.saveManager',
+        'assets.query.assetsModify.savePersonal' : 'assets.query.assetsModify.savePersonal',
+        'assets.query.division.assets.batchmodify' : 'assets.query.division.assets.batchmodify',
+        'assets.query.division.assets.modify' : 'assets.query.division.assets.modify',
+        'assets.query.division.assets.modify_house' : 'assets.query.division.assets.modify_house',
+        'assets.query.division.assets.modify_plant' : 'assets.query.division.assets.modify_plant',
+        'assets.query.manager.assets.modify' : 'assets.query.manager.assets.modify',
+        'assets.query.personal.assets.batchmodify' : 'assets.query.personal.assets.batchmodify',
+        'assets.query.personal.assets.modify' : 'assets.query.personal.assets.modify',
+    };
+
+    function getRealPath(path) {
+        var is6=0;//SystemConfigCache.getConfigValue.("version_is_6",0);
+        if (is6){
+            if (pathsEntry[path]){
+                return pathsEntry[path];
+            }else{
+                return path;
+            }
+        }else{
+            if (pathsEntry[path]) {
+                return path;
+            }else {
+                for (var i in pathsEntry){
+                    if (pathsEntry[i]==path){
+                        return i;
+                    }
+                }
+                return path;
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+<div non-numeric="true">sdsds</div>
+<form id="form1">
+    <input type="submit" onkeyup="" value="ojk"/>
+    <input style="text-align: center"/>
+</form>
+</body>
+</html>

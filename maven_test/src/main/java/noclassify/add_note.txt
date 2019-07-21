@@ -1,10 +1,10 @@
-
-//类中定义如下，不使用的对象，可以起到在该类被回收前做一些事，原理：回收前肯定得先把内部没用的引用回收
- private final Object threadReaper = new Object() {
-        protected void finalize() throws Throwable {
-            synchronized(queue) {
-                thread.newTasksMayBeScheduled = false;
-                queue.notify(); // In case queue is empty.
-            }
-        }
-    };
+function modify(code,type){
+	var category = type;
+	if(category == 'house' || category == 'land'){
+		window.open("e?page="+getRealPath("assets.division.assets.modify_house")+"&codes="+ code);
+	}else if(category == 'plant'){
+		window.open("e?page="+getRealPath("assets.division.assets.modify_plant")+"&codes="+ code);
+	}else{
+		window.open("e?page="+getRealPath("assets.division.assets.modify")+"&codes=" + code);	
+	}
+}
