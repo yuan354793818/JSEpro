@@ -3119,27 +3119,27 @@ public class 算法 {
     // f(n)=f(n-1)+f(n+2)
     //递归法超时
     public int climbStairs_recur(int n) {
-        if (n==0)
+        if (n == 0)
             return 1;
-        int c1=0,c2=0;
-        if (n-1>=0)
-            c1=climbStairs_recur(n-1);
-        if (n-2>=0)
-            c2=climbStairs_recur(n-2);
-        return c1+c2;
+        int c1 = 0, c2 = 0;
+        if (n - 1 >= 0)
+            c1 = climbStairs_recur(n - 1);
+        if (n - 2 >= 0)
+            c2 = climbStairs_recur(n - 2);
+        return c1 + c2;
     }
 
     // DP
     // 1 2 3
-    public int climbStairs(int n){
+    public int climbStairs(int n) {
         if (n == 0) {
             return 0;
         }
-        int n_1=1,n_2=1;
+        int n_1 = 1, n_2 = 1;
         for (int i = 2; i <= n; i++) {
-            int tmp=n_1;
-            n_1+=n_2;
-            n_2=tmp;
+            int tmp = n_1;
+            n_1 += n_2;
+            n_2 = tmp;
         }
         return n_1;
     }
@@ -3170,33 +3170,33 @@ public class 算法 {
     //cost 的长度将会在 [2, 1000]。
     //每一个 cost[i] 将会是一个Integer类型，范围为 [0, 999]。
     public int minCostClimbingStairs(int[] cost) {
-        int len = cost.length ;
-        if (len<2){
+        int len = cost.length;
+        if (len < 2) {
             return 0;
         }
         int[] accCost = new int[len];
-        accCost[0]=cost[0];
-        accCost[1]=cost[1];
+        accCost[0] = cost[0];
+        accCost[1] = cost[1];
         for (int i = 2; i < len; i++) {
-            accCost[i]=cost[i]+Math.min(accCost[i-1],accCost[i-2]);
+            accCost[i] = cost[i] + Math.min(accCost[i - 1], accCost[i - 2]);
         }
-        return Math.min(accCost[len-2],accCost[len-1]);
+        return Math.min(accCost[len - 2], accCost[len - 1]);
     }
 
     // f(n)=cost[n]+min(f(n-1),f(n-2))
     public int minCostClimbingStairs_abstract(int[] cost) {
-        int len = cost.length ;
-        if (len<2){
+        int len = cost.length;
+        if (len < 2) {
             return 0;
         }
         int a_0 = cost[0];
         int a_1 = cost[1];
         for (int i = 2; i < len; i++) {
-            int tmp=a_1;
-            a_1=cost[i]+Math.min(a_1,a_0);
-            a_0=tmp;
+            int tmp = a_1;
+            a_1 = cost[i] + Math.min(a_1, a_0);
+            a_0 = tmp;
         }
-        return Math.min(a_1,a_0);
+        return Math.min(a_1, a_0);
     }
 
     @Test
@@ -3224,25 +3224,25 @@ public class 算法 {
     //    思路： f(n)= max(f(n-1),f(n-2)+nums[n]);
     public int rob(int[] nums) {
         int len = nums.length;
-        if (len==  0) {
+        if (len == 0) {
             return 0;
         }
-        if(len ==  1){
+        if (len == 1) {
             return nums[0];
         }
-        int r_0=nums[0];
-        int r_1=Math.max(nums[0],nums[1]);
-        for (int i = 2; i <len; i++) {
-            int tmp=r_1;
-            r_1=Math.max(r_0+nums[i],r_1);
-            r_0=tmp;
+        int r_0 = nums[0];
+        int r_1 = Math.max(nums[0], nums[1]);
+        for (int i = 2; i < len; i++) {
+            int tmp = r_1;
+            r_1 = Math.max(r_0 + nums[i], r_1);
+            r_0 = tmp;
         }
         return r_1;
     }
 
     @Test
     public void test3124() {
-        System.out.println(rob(new int[]{2,7,9,3,1}));
+        System.out.println(rob(new int[]{2, 7, 9, 3, 1}));
     }
 
     //给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
@@ -3260,42 +3260,43 @@ public class 算法 {
     //输出: 7
     //解释: 因为路径 1→3→1→1→1 的总和最小。
     public int minPathSum(int[][] grid) {
-        int y=grid.length;
+        int y = grid.length;
         if (y == 0) {
             return 0;
         }
-        int x=grid[0].length;
-        if (x==0){
+        int x = grid[0].length;
+        if (x == 0) {
             return 0;
         }
-        int xi=0,yi=0;
+        int xi = 0, yi = 0;
         while (true) {
-            for (int i = xi+1; i <x ; i++) {
+            for (int i = xi + 1; i < x; i++) {
                 if (yi != 0) {
-                    grid[yi][i]=Math.min(grid[yi][i-1]+grid[yi][i],grid[yi-1][i]+grid[yi][i]);
-                }else {
-                    grid[yi][i]=grid[yi][i-1]+grid[yi][i];
+                    grid[yi][i] = Math.min(grid[yi][i - 1] + grid[yi][i], grid[yi - 1][i] + grid[yi][i]);
+                } else {
+                    grid[yi][i] = grid[yi][i - 1] + grid[yi][i];
                 }
             }
-            for (int i = yi+1; i < y; i++) {
+            for (int i = yi + 1; i < y; i++) {
                 if (xi != 0) {
-                    grid[i][xi]=Math.min(grid[i-1][xi]+grid[i][xi],grid[i][xi-1]+grid[i][xi]);
-                }else {
-                    grid[i][xi]=grid[i-1][xi]+grid[i][xi];
+                    grid[i][xi] = Math.min(grid[i - 1][xi] + grid[i][xi], grid[i][xi - 1] + grid[i][xi]);
+                } else {
+                    grid[i][xi] = grid[i - 1][xi] + grid[i][xi];
                 }
             }
-            if (xi==x-1||yi==y-1){
+            if (xi == x - 1 || yi == y - 1) {
                 break;
             }
-            xi++;yi++;
-            grid[xi][yi]=Math.min(grid[xi-1][yi]+grid[xi][yi],grid[xi][yi-1]+grid[xi][yi]);
+            xi++;
+            yi++;
+            grid[xi][yi] = Math.min(grid[xi - 1][yi] + grid[xi][yi], grid[xi][yi - 1] + grid[xi][yi]);
         }
-        return grid[y-1][x-1];
+        return grid[y - 1][x - 1];
     }
 
     @Test
     public void test3180() {
-        System.out.println(minPathSum(new int[][]{{1,3,1},{1,5,1},{4,2,1}}));
+        System.out.println(minPathSum(new int[][]{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}));
     }
 
     //标签：动态规划
@@ -3310,15 +3311,97 @@ public class 算法 {
     //
     public int numTrees(int n) {
         int[] dp = new int[n + 1];
-        dp[0]=1;
-        dp[1]=1;
-        for (int i = 2; i < n+1; i++) {
-            for (int j =0; j <i; j++) {
-                dp[i] += dp[j] * dp[i - j-1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i < n + 1; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] += dp[j] * dp[i - j - 1];
             }
         }
         return dp[n];
     }
+
+
+    //亚历克斯和李用几堆石子在做游戏。偶数堆石子排成一行，每堆都有正整数颗石子 piles[i] 。
+    //
+    //游戏以谁手中的石子最多来决出胜负。石子的总数是奇数，所以没有平局。
+    //
+    //亚历克斯和李轮流进行，亚历克斯先开始。 每回合，玩家从行的开始或结束处取走整堆石头。 这种情况一直持续到没有更多的石子堆为止，此时手中石子最多的玩家获胜。
+    //
+    //假设亚历克斯和李都发挥出最佳水平，当亚历克斯赢得比赛时返回 true ，当李赢得比赛时返回 false 。
+    //
+    // 
+    //
+    //示例：
+    //
+    //输入：[5,3,4,5]
+    //输出：true
+    //解释：
+    //亚历克斯先开始，只能拿前 5 颗或后 5 颗石子 。
+    //假设他取了前 5 颗，这一行就变成了 [3,4,5] 。
+    //如果李拿走前 3 颗，那么剩下的是 [4,5]，亚历克斯拿走后 5 颗赢得 10 分。
+    //如果李拿走后 5 颗，那么剩下的是 [3,4]，亚历克斯拿走后 4 颗赢得 9 分。
+    //这表明，取前 5 颗石子对亚历克斯来说是一个胜利的举动，所以我们返回 true 。
+    // 
+    //
+    //提示：
+    //
+    //2 <= piles.length <= 500
+    //piles.length 是偶数。
+    //1 <= piles[i] <= 500
+    //sum(piles) 是奇数。
+    // 5 3 6 8 2 5
+    private int[] piles;
+
+    public boolean stoneGame_1(int[] piles) {
+        this.piles = piles;
+        int sum=0;
+        for (int i : piles) {
+            sum+=i;
+        }
+        int i = help_stoneGame(0, piles.length - 1, true);
+        return i > sum / 2;
+    }
+
+    private int help_stoneGame(int start, int end, boolean mypace) {
+        int i;
+        int j;
+        if (mypace) {
+            if (end==start){
+                return piles[end];
+            }
+            i = help_stoneGame(start + 1, end, false) + piles[start];
+            j = help_stoneGame(start, end - 1, false) + piles[end];
+        } else {
+            if (end==start){
+                return 0;
+            }
+            i = help_stoneGame(start + 1, end, true);
+            j = help_stoneGame(start, end - 1, true);
+        }
+        return Math.max(i, j);
+    }
+    @Test
+    public void test3380() {
+        System.out.println(stoneGame_1(new int[]{5,3,4,5}));
+    }
+
+    public boolean stoneGame(int[] piles) {
+        this.piles = piles;
+        return help_stoneGame2(0, piles.length - 1);
+    }
+    // 5 6 3 5
+    private boolean help_stoneGame2(int start, int end){
+        if (end - start == 1) {
+            return true;
+        }
+        return !(help_stoneGame2(start + 1, end)& help_stoneGame2(start , end-1));
+    }
+    @Test
+    public void test3397(){
+        System.out.println(stoneGame(new int[]{5,3,4,5,8,6,3,7,1,3,8,3,1,2,7,2,9,6,7,5,8,3,4,7,9,1,2,8,4,3,8,3}));
+    }
+
 
     //  [1,3,5,6], 4
     // 二分插入位置
@@ -3357,7 +3440,6 @@ public class 算法 {
         int[] nums = {1, 3, 5, 7, 9};
         System.out.println(binarySearch(nums, 1, 3, 5));
     }
-
 
 
     // 0 1->2->3->4 5 6, 你应该返回 2->1->4->3 6 5. java中链表关键是修改next
