@@ -9,7 +9,7 @@
     <script>
         $(function () {
             if (/(iPhone|iPad|iPod|iOS|Android)/i.test('iOS')) { //移动端
-                alert(navigator.userAgent);
+                //alert(navigator.userAgent);
             }
         });
 
@@ -34,13 +34,14 @@
             var result = tmp(message);
             $("body").html(result);
         }
+
     </script>
 </head>
 <body>
 <button onclick="dofun()">dofun</button>
 <script type="text/x-dot-template" id="testTpl">
     <div>{{= it.msg }}</div>
-    <div>{{= it.code }}</div>
+    <div style="display: none;background-color: gray">{{= it.code }}</div>
 </script>
 <i>sdsds</i>
 </body>

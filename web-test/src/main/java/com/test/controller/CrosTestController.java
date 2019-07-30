@@ -36,7 +36,6 @@ public class CrosTestController {
     @ResponseBody
     public String checkCookie(@CookieValue(name = "myname",required = true) String cookie) {
         System.out.println("catch cookie : "+cookie);
-
         return "success";
     }
 }

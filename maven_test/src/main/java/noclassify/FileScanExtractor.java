@@ -129,8 +129,6 @@ class MyFileScaner extends FileScanExtractor<HashSet> {
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-        }else {
-            rst = (T) new HashSet<String>();
         }
 
         this.dirOrfile = dirOrfile;

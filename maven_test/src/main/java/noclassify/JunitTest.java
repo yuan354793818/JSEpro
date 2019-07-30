@@ -1,5 +1,6 @@
 package noclassify;
 
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpResponse;
@@ -10,6 +11,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
 import org.junit.Test;
@@ -18,8 +21,6 @@ import sun.reflect.Reflection;
 
 import java.awt.print.PrinterJob;
 import java.io.*;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.net.*;
 import java.text.ParseException;
@@ -501,13 +502,7 @@ public class JunitTest {
 
     @Test
     public void test501() {
-        Type genericSuperclass = BB.class.getGenericSuperclass();
-        ParameterizedType pt = (ParameterizedType) genericSuperclass;
-        System.out.println(pt.getActualTypeArguments()[0]);
 
-
-        AA<String> aa=new AA<String>(){};
-        int a=1;
     }
 
 
@@ -521,15 +516,159 @@ public class JunitTest {
             System.out.println(matcher.end());
         }
     }
+
+
+    public <T>  void getField(T t){
+        System.out.println(t.getClass());
+    }
+
+    @Test
+    public void test531() {
+        getField(new Assets());
+    }
+
+
+    @Test
+    public void test537() throws IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost("https://www.baidu.com");
+        CloseableHttpResponse execute = httpclient.execute(httppost);
+        System.out.println(EntityUtils.toString(execute.getEntity(),"UTF-8"));
+    }
+    
+    @Test
+    public void test547(){
+        String[] tmpReportTypes =new String[]{};
+        String reportTypes=null;
+        for(String s:tmpReportTypes) {
+
+        }
+        System.out.println(tmpReportTypes.length);
+    }
+
+
+    @Test
+    public void test556() {
+        String s="sdsds";
+        String[] ss= {"aaaa", "bbbb"};
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("sd", s);
+        map.put("aa",ss);
+        map.put("null",null);
+        System.out.println(map.get("ss"));
+    }
+    private Object getRealString(Object obj) {
+        if (obj!=null) {
+            if (obj instanceof String) {
+                return ((String) obj).trim();
+            }else if (obj instanceof String[]) {
+                StringBuilder sb=new StringBuilder();
+                for(String s:(String[])obj){
+                    sb.append(s.trim()).append(",");
+                }
+                sb.deleteCharAt(sb.lastIndexOf(","));
+                return sb.toString();
+            }else {
+                return obj;
+            }
+        }else {
+            return null;
+        }
+    }
+
+    @Test
+    public void test585() {
+        String s="sdsds";
+        String[] ss= {"aaaa", "bbbb"};
+        System.out.println(getRealString(s));
+        System.out.println(getRealString(ss));
+        Object realString = getRealString(null);
+        System.out.println(realString);
+    }
+
+
+    @Test
+    public void test597() {
+        System.out.println(", ,".split(",").length);
+    }
+
+    @Test
+    public void test602() {
+        List<String> ll = new ArrayList<>();
+        ll.add("sdsd");
+        ll.add("111");
+        ll.add("xxx");
+        String string = ll.toString();
+        System.out.println(string.replace('[','\0'));
+    }
+
+    @Test
+    public void test612() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("sdasdsad,");
+        System.out.println(sb.deleteCharAt(sb.length()));
+    }
+
+    @Test
+    public void test618() {
+        List<String> ll = new ArrayList<>();
+        ll.add("sdsd");
+        ll.add("111");
+        ll.add("xxx");
+        String[] strings = ll.toArray(new String[]{});
+        for (String s : strings) {
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    public void test632() {
+        java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        String format = nf.format(350158);
+        System.out.println(format);
+    }
+
+    /**
+     *  putAll 传引用
+     */
+    @Test
+    public void test640() {
+        Map<String,Object> map1=new HashMap<>();
+        map1.put("oneman",new AA());
+        Map<String,Object> map2=new HashMap<>();
+        map2.putAll(map1);
+        ((AA)map2.get("oneman")).name="sdsdsd";
+        map2.put("oneman", new AA());
+        System.out.println(((AA)map2.get("oneman")).name);
+        System.out.println(((AA)map1.get("oneman")).name);
+    }
+
+
+    @Test
+    public void test648() {
+        List<String> rst=new ArrayList<>();
+        String[] strings = rst.toArray(new String[]{});
+        System.out.println(strings.length);
+    }
+
+    @Test
+    public void test655() {
+        Object a=null;
+        String a1 = (String) a;
+    }
+
+    @Test
+    public void test661() {
+       // System.out.println(UUID.randomUUID().toString().replace('-','\0'));
+        System.out.println( Md5Crypt.md5Crypt("yuanjiayu".getBytes()));
+
+    }
+
 }
 
 
-class AA<T>{
-    T t;
+class AA{
+    public String name="yjy";
 }
-
-class BB<T> extends AA<T>{
-
-}
-
 

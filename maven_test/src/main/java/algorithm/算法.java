@@ -3363,6 +3363,7 @@ public class 算法 {
         return i > sum / 2;
     }
 
+    // 复杂度 2^n
     private int help_stoneGame(int start, int end, boolean mypace) {
         int i;
         int j;
@@ -3402,6 +3403,79 @@ public class 算法 {
         System.out.println(stoneGame(new int[]{5,3,4,5,8,6,3,7,1,3,8,3,1,2,7,2,9,6,7,5,8,3,4,7,9,1,2,8,4,3,8,3}));
     }
 
+
+    //给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。
+    //
+    //例如，给定三角形：
+    //
+    //[
+    //     [2],       0
+    //    [3,4],     0,1    5,6
+    //   [6,5,7],   0,1,2   11,10,13
+    //  [4,1,8,3]  0,1,2,3
+    //]
+    //自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。
+    //
+    //说明：
+    //
+    //如果你可以只使用 O(n) 的额外空间（n 为三角形的总行数）来解决这个问题，那么你的算法会很加分。
+    public int minimumTotal(List<List<Integer>> triangle) {
+        for (int i = 1; i < triangle.size(); i++) {
+            List<Integer> sub = triangle.get(i);
+            List<Integer> preSub = triangle.get(i-1);
+            for (int j = 0; j <sub.size() ; j++) {
+                if (j == 0) {
+                    sub.set(0,preSub.get(0)+sub.get(0));
+                }else if (j==sub.size()-1){
+                    sub.set(j,preSub.get(j-1)+sub.get(j));
+                }else {
+                    sub.set(j, Math.min(preSub.get(j - 1), preSub.get(j)) + sub.get(j));
+                }
+            }
+        }
+        int min= Integer.MAX_VALUE;
+        List<Integer> endList = triangle.get(triangle.size() - 1);
+        for (Integer anEndList : endList) {
+            min = Math.min(min, anEndList);
+        }
+        return min;
+    }
+
+    //给定一个整数 n，生成所有由 1 ... n 为节点所组成的二叉搜索树。
+    //
+    //示例:
+    //
+    //输入: 3
+    //输出:
+    //[
+    //  [1,null,3,2],
+    //  [3,2,null,1],
+    //  [3,1,null,null,2],
+    //  [2,1,3],
+    //  [1,null,2,null,3]
+    //]
+    //解释:
+    //以上的输出对应以下 5 种不同结构的二叉搜索树：
+    //
+    //   1         3     3      2      1
+    //    \       /     /      / \      \
+    //     3     2     1      1   3      2
+    //    /     /       \                 \
+    //   2     1         2                 3
+    //
+    public List<TreeNode> generateTrees(int n) {
+
+    }
+
+    public TreeNode clone(TreeNode n,int offset){
+        if (n == null) {
+            return null;
+        }
+        TreeNode node=new TreeNode(n.val+offset);
+        node.left=clone(n.left,offset);
+        node.right=clone(n.right,offset);
+        return node;
+    }
 
     //  [1,3,5,6], 4
     // 二分插入位置
