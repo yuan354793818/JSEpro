@@ -3463,10 +3463,33 @@ public class 算法 {
     //    /     /       \                 \
     //   2     1         2                 3
     //
+    // 动态规划
     public List<TreeNode> generateTrees(int n) {
-
+        ArrayList<TreeNode>[] dp=new ArrayList[n+1];
+        dp[0]=new ArrayList<TreeNode>();
+        if (n == 0) {
+            return dp[0];
+        }
+        dp[0].add(null);
+        for (int len = 1; len <=n; len++) {
+            dp[len] = new ArrayList<TreeNode>();
+            for (int root = 1; root <=len; root++) {
+                int left=root-1; //左子树长度
+                int right=len-root; //右子树长度
+                for (TreeNode l:dp[left]){
+                    for (TreeNode r:dp[right]){
+                        TreeNode node = new TreeNode(root);
+                        node.left = l; //   clone(l,0);    搜索二叉树左边小不用加
+                        node.right = clone(r, root); //右边大  加上root，保证右边所有比root大
+                        dp[len].add(node);
+                    }
+                }
+            }
+        }
+        return dp[n];
     }
 
+    //克隆一颗树
     public TreeNode clone(TreeNode n,int offset){
         if (n == null) {
             return null;
@@ -3476,6 +3499,57 @@ public class 算法 {
         node.right=clone(n.right,offset);
         return node;
     }
+    //递归---------
+    //
+    //所以如果求 1...n 的所有可能。
+    //
+    //我们只需要把 1 作为根节点，[ ] 空作为左子树，[ 2 ... n ] 的所有可能作为右子树。
+    //
+    //2 作为根节点，[ 1 ] 作为左子树，[ 3...n ] 的所有可能作为右子树。
+    //
+    //3 作为根节点，[ 1 2 ] 的所有可能作为左子树，[ 4 ... n ] 的所有可能作为右子树，然后左子树和右子树两两组合。
+    //
+    //4 作为根节点，[ 1 2 3 ] 的所有可能作为左子树，[ 5 ... n ] 的所有可能作为右子树，然后左子树和右子树两两组合。
+    //
+    //...
+    //
+    //n 作为根节点，[ 1... n ] 的所有可能作为左子树，[ ] 作为右子树。
+    //
+    //至于，[ 2 ... n ] 的所有可能以及 [ 4 ... n ] 以及其他情况的所有可能，可以利用上边的方法，把每个数字作为根节点，然后把所有可能的左子树和右子树组合起来即可。
+    //
+    public List<TreeNode> generateTrees_recur(int n) {
+        if (n == 0) {
+            return new ArrayList<>();
+        }
+        return help_generateTrees(1, n);
+    }
+
+    public List<TreeNode> help_generateTrees(int start,int end){
+        List<TreeNode> rst = new ArrayList<>();
+        if (start > end) {
+            rst.add(null);
+            return rst;
+        }
+        if (start == end) {
+            rst.add(new TreeNode(start));
+            return rst;
+        }
+        for (int i = start ; i <= end; i++) {
+            List<TreeNode> left = help_generateTrees(start, i - 1);
+            List<TreeNode> right = help_generateTrees(i + 1, end);
+            for (TreeNode l:left){
+                for (TreeNode r : right) {
+                    TreeNode node = new TreeNode(i);
+                    node.left=l;
+                    node.right=r;
+                    rst.add(node);
+                }
+            }
+        }
+        return rst;
+    }
+
+
 
     //  [1,3,5,6], 4
     // 二分插入位置
