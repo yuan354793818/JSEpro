@@ -23,6 +23,7 @@ import java.awt.print.PrinterJob;
 import java.io.*;
 import java.math.BigDecimal;
 import java.net.*;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -662,7 +663,13 @@ public class JunitTest {
     public void test661() {
        // System.out.println(UUID.randomUUID().toString().replace('-','\0'));
         System.out.println( Md5Crypt.md5Crypt("yuanjiayu".getBytes()));
+    }
 
+    @Test
+    public void test668() {
+        DecimalFormat decimalFormat = new DecimalFormat();
+        String format = decimalFormat.format(2 / 61);
+        System.out.println(format);
     }
 
 }

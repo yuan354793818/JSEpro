@@ -40,6 +40,57 @@ public class CheapUtils {
         return sb.toString();
     }
 
+    /** 下划线转驼峰 sec_xxx --> secXxx
+     * @param s
+     * @param titleCase  首字母是否大写
+     * @return
+     */
+    public static String mapUnderscoreToCamelCase(String s,boolean titleCase){
+        s=s.toLowerCase();
+        StringBuilder fieldStr = new StringBuilder();
+        boolean upperCase=titleCase;
+        for (char c : s.toCharArray()) {
+            if (c=='_') {
+                upperCase=true;
+            } else {
+                if (upperCase) {
+                    fieldStr.append(Character.toUpperCase(c));
+                    upperCase=false;
+                }else {
+                    fieldStr.append(c);
+                }
+            }
+        }
+        return fieldStr.toString();
+    }
+
+    @Test
+    public void test66() {
+        System.out.println(mapUnderscoreToCamelCase("JHSBDS_SDSD_SDSDSD",true));
+    }
+
+    /**
+     * 驼峰转下划线
+     * @param s
+     * @return
+     */
+    public static String camelCaseToMapUnderscore(String s){
+        StringBuilder fieldStr = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (c > 64 && c < 91) {
+                fieldStr.append('_').append(Character.toLowerCase(c));
+            } else {
+                fieldStr.append(c);
+            }
+        }
+        return fieldStr.toString();
+    }
+
+    @Test
+    public void test85() {
+        System.out.println(camelCaseToMapUnderscore("assetsTypeSort"));
+    }
+
     @Test
     public void test43() {
         System.out.println(getFieldString(Assets.class, ":", false));
