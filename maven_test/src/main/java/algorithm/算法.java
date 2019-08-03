@@ -3601,6 +3601,64 @@ public class 算法 {
         return A[0][0];
     }
 
+    //给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。
+    //
+    //具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被计为是不同的子串。
+    //
+    //示例 1:
+    //
+    //输入: "abc"
+    //输出: 3
+    //解释: 三个回文子串: "a", "b", "c".
+    //示例 2:
+    //
+    //输入: "aaa"
+    //输出: 6
+    //说明: 6个回文子串: "a", "a", "a", "aa", "aa", "aaa".
+    //注意:
+    //
+    //输入的字符串长度不会超过1000。
+    //在真实的面试中遇到过这道题？
+
+    //暴力算法
+    public int countSubstrings(String s) {
+        int cnt=s.length();
+        for (int i = 2; i <= s.length(); i++) {
+            for (int j = 0,k=i; k <= s.length(); j++,k++) {
+                StringBuilder substring = new StringBuilder(s.substring(j, k));
+                if (substring.toString().equals(substring.reverse().toString())){
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
+    }
+
+    //中心扩展法
+    // 思路：遍历扩展，奇数个扩展，偶数个扩展 ，绝对不可能有扩展重叠
+    public int countSubstrings_centralExpansion(String s) {
+        int cnt=0;
+        for (int i = 0; i < s.length(); i++) {
+            cnt+=expansion(s,i,i);
+            cnt+=expansion(s,i,i+1);
+        }
+        return cnt;
+    }
+
+    //扩展方法
+    public int expansion(String s,int start,int end){
+        int cnt=0;
+        while (start>=0&&end<s.length()&&s.charAt(start--)==s.charAt(end++)){
+            cnt++;
+        }
+        return cnt;
+    }
+    
+    @Test
+    public void test3618(){
+        System.out.println(countSubstrings_centralExpansion("abaaba"));
+    }
+
     //  [1,3,5,6], 4
     // 二分插入位置
     public static int searchInsert(int[] nums, int target) {

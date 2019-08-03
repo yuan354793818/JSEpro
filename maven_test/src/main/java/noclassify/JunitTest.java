@@ -672,6 +672,15 @@ public class JunitTest {
         System.out.println(format);
     }
 
+
+    @Test
+    public void test677() {
+        BigDecimal b=new BigDecimal(145435454);
+        BigDecimal v=new BigDecimal(343.2343);
+        System.out.println(new DecimalFormat("#0.00").format(b));
+        System.out.println(b.add(v));
+    }
+
 }
 
 
