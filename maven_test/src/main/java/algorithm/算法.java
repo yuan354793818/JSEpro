@@ -3659,6 +3659,33 @@ public class 算法 {
         System.out.println(countSubstrings_centralExpansion("abaaba"));
     }
 
+    //A = [1, 2, 3, 4]            1,2,3,4,6,8,10
+    //
+    // 返回: 3, A 中有三个子等差数组: [1, 2, 3], [2, 3, 4] 以及自身 [1, 2, 3, 4]。
+    // 思路：
+    //  发现当整个数组为(1, 2, 3, 4, 5, 6)的时候,我们先取出前三个,(1, 2, 3)的等差数列的个数为1,(1, 2, 3, 4)的等差数列的个数为3,(1, 2, 3, 4, 5)的等差数列的个数为6,
+    //  (1, 2, 3, 4, 5, 6)的等差数列个数为10,以此类推我们可以很容易的发现在一个等差数列中加入一个数字,如果还保持着等差数列的特性,每次的增量都会加1
+    //  当+1不是等差数列则增量置零
+    public int numberOfArithmeticSlices(int[] A) {
+        int cnt=0;
+        int times=0;
+        for (int i = 0; i < A.length-2; i++) {
+            if (A[i + 1] - A[i] == A[i + 2] - A[i + 1]) {
+                times++;
+                cnt+=times;
+            }else {
+                times=0;
+            }
+        }
+        return cnt;
+    }
+
+    @Test
+    public void test3678(){
+        System.out.println(numberOfArithmeticSlices(new int[]{1,2,3,4,6,8,10}));
+    }
+
+
     //  [1,3,5,6], 4
     // 二分插入位置
     public static int searchInsert(int[] nums, int target) {
