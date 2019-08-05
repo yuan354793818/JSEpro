@@ -3635,7 +3635,7 @@ public class 算法 {
     }
 
     //中心扩展法
-    // 思路：遍历扩展，奇数个扩展，偶数个扩展 ，绝对不可能有扩展重叠
+    // 思路：遍历扩展，奇数个扩展，偶数个扩展 ，##绝对不可能有扩展重叠
     public int countSubstrings_centralExpansion(String s) {
         int cnt=0;
         for (int i = 0; i < s.length(); i++) {
