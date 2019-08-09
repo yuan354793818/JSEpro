@@ -2,19 +2,21 @@ package reflect;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 /**
  * Created by YJY on 2018/9/23.
  */
 public class ProxyDemo {
     public static void main(String[] args) {
-            Student student=new Student();
-            InvocationHandlerDemo ihd=new InvocationHandlerDemo(student);
-            Person proxy= (Person) Proxy.newProxyInstance(Student.class.getClassLoader(),student.getClass().getInterfaces(),ihd);
-            proxy.work();
-            proxy.run();
+//            Student student=new Student();
+//            InvocationHandlerDemo ihd=new InvocationHandlerDemo(student);
+//            Person proxy= (Person) Proxy.newProxyInstance(Student.class.getClassLoader(),Student.class.getInterfaces(),ihd);
+//            proxy.work();
+//            proxy.run();
+//
 
+        System.out.println(Arrays.toString(Student.class.getInterfaces()));
     }
 }
 

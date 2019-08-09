@@ -1,0 +1,237 @@
+//资产变动业务表
+public class AssetsChange {
+
+	//编号
+	private String id;
+	//业务申请人编号
+	private String baseTeacherNoRequest;
+	//申请时间
+	private Date requestTime;
+	//资产类型
+	private String assetsType;
+	//业务主题
+	private String subject;
+	//在办资产数量
+	private Integer num;
+	//在办资产总金额
+	private Integer money;
+	//资产单位
+	private String baseDepCode;
+	//变动原因
+	private String cause;
+	//申请类型（个人，单位，主管）
+	private String requestType;
+	//（领用人变更）新领用工人编号
+	private String newBaseTeacherNo;
+	//审核取消资产数量
+	private Integer cancelNum;
+	//业务类型代码
+	private String businessCode;
+	//业务申请人名称
+	private String baseTeacherNameRequest;
+	//（领用人变更）新领用工人名称
+	private String newBaseTeacherName;
+	//申请单位名称
+	private String baseDepName;
+	//（价值增减）经费项目号
+	private String outlayCardNo;
+	//（价值增减）经费名称
+	private String outlayCardName;
+	//（价值增减）经费科目
+	private String outlaySubject;
+	//（价值增减）变动总金额
+	private Integer changeprice;
+	//（调拨）调入单位编号
+	private String newBaseDepCode;
+	//（调拨）调入单位名称
+	private String newBaseDepName;
+	//（价值增减）发票号
+	private String invoiceNo;
+	//（价值增减）合同号
+	private String shBargainNo;
+	//（价值增减）经手人
+	private String purchaser;
+	//业务类别
+	private String businessType;
+	//附件资料信息
+	private String fileList;
+	//业务是否包含贵重仪器设备
+	private Integer isLarge;
+	//（报废）残值所在校区
+	private String recycleCampus;
+	//（报废）残值回收联系人(维修经办人)
+	private String recycleContacter;
+	//（报废）残值回收联系电话(维修经办人联系电话)
+	private String recycleTel;
+	//（报废）残值回收模式：1、单位集中回收
+	private Integer recycleType;
+	//（报废）鉴定意见
+	private String suggestion;
+	//（报废）报废汽车回收证明
+	private String carScrapImageList;
+	//（报废）机动车注销证明书
+	private String carCancelImageList;
+	//（报失）丢失日期
+	private Date lostTime;
+	//（报失）是否备案
+	private Integer registered;
+	//（报失）1、需要赔付0、不需赔付
+	private Integer iscompensate;
+	//（报失）赔付比例
+	private Integer percent;
+	//（报失）报损类别
+	private Integer lostType;
+	//（报失）主要证据及相关资料
+	private String otherCause;
+	//（报失）责任认定
+	private String duty;
+	//（报失）赔付金额
+	private Integer compensateMoney;
+	//（退库）退库类型
+	private Integer backstockType;
+	//（退库）财务报账状态0未报账1已报账
+	private Integer financeState;
+	//（转出）转出类型
+	private String flittingoutType;
+	//（转出）转入单位（接收方）
+	private String department;
+	//联系方式
+	private String tel;
+	//联系人
+	private String linkman;
+	//数据删除状态，1、已删除0、正常
+	private Integer deleteStatus;
+	//转出联系方式
+	private String flttel;
+	//转出联系人（维修派工人员）
+	private String fltlinkman;
+	//维修方式1、用户自行维修，2、统一维修
+	private String repairType;
+	//实际维修商
+	private String repairFacilitator;
+	//维修服务商电话
+	private String facilitatoTel;
+	//推荐服务商电话
+	private String repairTelephone;
+	//维修经费编号
+	private String outlayCode;
+	//维修经费名称
+	private String outlayName;
+	//维修内容描述
+	private String repairDescreption;
+	//期望维修方式1、用户自行维修，2、统一维修
+	private String expectRepairType;
+	//其中期望统一支付金额
+	private Integer publicMoney;
+	//预估维修费用总金额
+	private Integer predictMoney;
+	//审核同意支付维修金额(统一支付部分)
+	private Integer auditCost;
+	//实际支付维修费用总金额
+	private Integer repairTotalCost;
+	//实际支付维修金
+	private Integer repairTotalCostPublic;
+	//大仪基金所出经费
+	private Integer largeFundMoney;
+	//维修厂商来源
+	private String facilitatorSource;
+	//维修合同号
+	private String repairBargainNo;
+	//维修方案
+	private String repairPlan;
+	//验收结论
+	private String acceptanceOpion;
+	//故障时间及描述
+	private String fault;
+	//拟送修单位
+	private String repairDepartment;
+	//用于迁移数据
+	private Integer idOld;
+	//业务中资产最大单价
+	private Integer maxPrice;
+	//资产归属
+	private String belong;
+	//维修完成时间
+	private Date completeTime;
+	//预计维修完成时间
+	private Date predictTime;
+	//（报失）主管部门意见
+	private String otherAdvice;
+	//论证报告照片
+	private String argumentImageList;
+	//（维修）统付经费项目号
+	private String divisionOutlayCardNo;
+	//财务报账人
+	private String financeBaseTeacherNo;
+	//财务报账费用项代码
+	private String financeOutlaySubject;
+	//财务报账费用项名称
+	private String financeOutlaySubjectName;
+	//(报废)是否提前报废1、提前报废0、不是提前报废。
+	private Integer advanceScrap;
+	//报废技术鉴定表照片
+	private String scrapRequestImageList;
+	//其他照片（备用字段）
+	private String imageListOther;
+	//财务附件张数
+	private Integer financeAddition;
+	//报废鉴定意见
+	private String expertOpinion;
+	//(财务)单据号
+	private String financeBill;
+	//经费金额
+	private Integer outlayMoney;
+	//存放库房（报废）
+	private String warehouse;
+	//业务中是否包含汽车
+	private Integer isCar;
+	//（调拨）调入调出单位是否不同学院
+	private String isdifferentcollege;
+	//（附件转移）新主件资产编号
+	private String targetAssetsCode;
+	//验收建账业务号（财务未报销退库）
+	private String requestBpmNo;
+	//经费负责人编号
+	private String outlayPrincipalNo;
+	//经费负责人名称
+	private String outlayPrincipalName;
+	//(财务)审核时间
+	private Date financeDate;
+	//维修历史（手动输入的）
+	private String repairHistoryInput;
+	//(财务)特殊情况说明
+	private String financeRemark;
+	//(财务)预约窗口,数据字典finance.arrange_place
+	private String financeArrangePlace;
+	//（退库）是否跨账期1、跨账期0、当前账期
+	private Integer spanAccount;
+	//数据来源编号
+	private String dataId;
+	//（报废）资产回收方式
+	private Integer retrieveMode;
+	private String imageList;
+	//填表人名称
+	private String recorderUserName;
+	//填表人email
+	private String recorderUserEmail;
+	//填表人手机号
+	private String recorderUserMobile;
+	//填表人userId
+	private String recorderUserId;
+	//主经费财务报账费用类别编码
+	private String financeExpenseCategoryCode;
+	//主经费财务报账费用类别名称
+	private String financeExpenseCategoryName;
+	//经费所属单位编码
+	private String outlayBaseDepCode;
+	//经费所属单位名称
+	private String outlayBaseDepName;
+	//（退库）是否跨月1、跨月0、当月
+	private Integer spanMonth;
+	//(财务)报销总金额(财务付款信息页面手动填写的总金额)
+	private Integer financeMoney;
+	//财务审核人
+	private String financeAssessor;
+	//维修进度
+	private String repairProgress;
+}
