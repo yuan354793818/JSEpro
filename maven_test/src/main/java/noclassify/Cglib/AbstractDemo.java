@@ -1,4 +1,4 @@
-package noclassify;
+package noclassify.Cglib;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Arrays;
 
 public class AbstractDemo {
     public static void main(String[] args) {
@@ -24,38 +23,22 @@ public class AbstractDemo {
     @Test
     public void test18() throws IllegalAccessException, InstantiationException {
         CGlibAdvice advice=new CGlibAdvice();
-        MonoPlay monoPlay= (MonoPlay) advice.getInstance( MonoImpl.class.newInstance());
+        MonoImpl monoPlay= (MonoImpl) advice.getInstance( MonoImpl.class.newInstance());
+       monoPlay.run();
     }
 
     @Test
     public void test29() {
-        System.out.println(Arrays.toString(MonoPlay.class.getInterfaces()));
+//        System.out.println(Arrays.toString(AbstractMono.class.getInterfaces()));
+//        System.out.println(MonoImpl.class.getSuperclass());
+
+        MonoPlay l=new MonoImpl();
+        l.run();
     }
 }
 
 
-class MonoImpl extends  AbstractDemo{
 
-}
-
-class AbstractMono implements MonoPlay {
-
-    @Override
-    public void run() {
-
-    }
-
-}
-
-
-interface MonoPlay {
-    void run();
-}
-
-
-interface MonoGo{
-    void dosm();
-}
 
 class CGlibAdvice implements MethodInterceptor{
 
@@ -65,18 +48,17 @@ class CGlibAdvice implements MethodInterceptor{
         this.target=target;
         Class<?> aClass = this.target.getClass();
         Enhancer enhancer=new Enhancer();
-        if (aClass.getSuperclass()!=Object.class){
-            Class<?>[] interfaces = aClass.getSuperclass().getInterfaces();
-            enhancer.setSuperclass(getInstance(aClass.getSuperclass().newInstance()).getClass());
-        }else {
-            enhancer.setSuperclass(aClass);
-        }
+        enhancer.setSuperclass(aClass);
         enhancer.setCallback(this);
         return enhancer.create();
     }
 
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
+        System.out.println(">>>>>>>>>>>>");
+        //methodProxy.invoke();
+        methodProxy.invoke(target,objects);
+        System.out.println("<<<<<<<<<<<<");
         return null;
     }
 }

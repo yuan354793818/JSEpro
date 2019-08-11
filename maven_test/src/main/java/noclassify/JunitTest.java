@@ -690,13 +690,15 @@ public class JunitTest {
 
     @Test
     public void test692() {
-
-        System.out.println(8.0/3*7/2*6/1);
+        System.out.println(Arrays.toString(AA.class.getInterfaces()));
     }
 }
 
 
-class AA{
+class AA implements  jjjj{
     public String name="yjy";
 }
 
+interface  jjjj{
+
+}
