@@ -687,6 +687,12 @@ public class JunitTest {
         System.out.println(isok);
     }
 
+
+    @Test
+    public void test692() {
+
+        System.out.println(8.0/3*7/2*6/1);
+    }
 }
 
 

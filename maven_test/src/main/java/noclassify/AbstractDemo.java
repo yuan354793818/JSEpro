@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class AbstractDemo {
     public static void main(String[] args) {
-        MonoPlay p = (MonoPlay) Proxy.newProxyInstance(AbstractMono.class.getClassLoader(), AbstractMono.class.getSuperclass(), new InvocationHandler() {
+        MonoPlay p = (MonoPlay) Proxy.newProxyInstance(AbstractMono.class.getClassLoader(), new Class[]{AbstractMono.class.getSuperclass()}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 return null;
