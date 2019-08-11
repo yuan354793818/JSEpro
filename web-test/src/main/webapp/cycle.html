@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cycle</title>
+    <script type="text/javascript" src="jquery-3.3.1.js"></script>
+    <script>
+    var itv={sd:''};
+    $(function () {
+        var  vl='sdsd';
+         itv.sd=self.setInterval('f(\'sd\')',1000);
+    });
+    var cnt=0;
+     function f(type) {
+         if (cnt>3){
+             clearInterval(itv[type]);
+         }
+         cnt++;
+         console.log(type+' cnt is '+cnt);
+     }
+
+     var strs=[{zl,},{},{}]
+    </script>
+</head>
+<body>
+<div style="color:indianred;border-width: 1px;"></div>
+
+</body>
+</html>

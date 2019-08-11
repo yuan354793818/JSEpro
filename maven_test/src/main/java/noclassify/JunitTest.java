@@ -681,6 +681,12 @@ public class JunitTest {
         System.out.println(b.add(v));
     }
 
+    public  boolean isok;
+    @Test
+    public void test685() {
+        System.out.println(isok);
+    }
+
 }
 
 

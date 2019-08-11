@@ -1,211 +1,76 @@
-fields.append("insert into JYBJK_GAMS_ASSETCARD(");    values.append(" select ");
-fields.append("TOURSYRQ,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("JIXS,");     values.append("e.provider,");
-fields.append("HETBH,");     values.append("substr(e.sh_bargain_no,1,50),");
-fields.append("FAPH,");     values.append("substr(e.invoice_no,1,200),");
-fields.append("DANGAH,");     values.append("e.dangah,");
-fields.append("SHIYXZ,");     values.append("null,");
-fields.append("CANGPND,");     values.append("e.Cangpnd,");
-fields.append("CAIGZZXSID,");     values.append("e.cgzzxs,");
-fields.append("PINGGJZ,");     values.append("0,");
-fields.append("KUAIJPZH,"); //10     values.append("nvl(e.Finance_Bill,'*'),"); //10
-fields.append("DANJ,");     values.append("case when js.cardclass in ('01','02','03','15') then decode(nvl(nvl(e.JIANZMJ, e.TUDMJ), 0),0,(e.price + nvl(e.attach_price,0)),((price + (attach_price))/nvl(nvl(e.JIANZMJ, e.TUDMJ), 0))) when  js.cardclass = '08' then (e.price + nvl(e.attach_price,0))/nvl(e.book_num,1) else e.price + nvl(e.attach_price,0) end,");
-fields.append("BILLTIME,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("ORGUNIT,");     values.append(":org_code,");
-fields.append("AUDITSTATE,");     values.append("2,");
-fields.append("COPYORGUNIT,");     values.append("null,");
-fields.append("WORKFLOWSTATE,");     values.append("0,");
-fields.append("ISLOCKED,");     values.append("0,");
-fields.append("LOCKER,");     values.append("00000000000000000000000000000000,");
-fields.append("LOCKERGROUP,");     values.append("00000000000000000000000000000000,");
-fields.append("CREATER,"); //20     values.append(" :universityName,"); //20
-fields.append("CREATETIME,");     values.append("to_char(sysdate, 'yyyy-mm-dd'),");
-fields.append("AUDITOR,");     values.append(" :universityName ,");
-fields.append("AUDITTIME,");     values.append("to_char(sysdate, 'yyyy-mm-dd'),");
-fields.append("MODIFIER,");     values.append(" :universityName ,");
-fields.append("MODIFYTIME,");     values.append("to_char(e.modify_time, 'yyyy-mm-dd'),");
-fields.append("ISCOPYED,");     values.append("0,");
-fields.append("GUANLBMID,");     values.append("e.base_dep_code,");
-fields.append("BILLCODE,");     values.append("e.code,");
-fields.append("QINGCBH,");     values.append("null,");
-fields.append("ZICMC,"); //30     values.append("e.name,"); //30
-fields.append("JIAZ,");     values.append("e.price + nvl(e.attach_price,0),");
-fields.append("SHUL,");     values.append("decode(js.cardclass,'08',nvl(book_num,1),e.num) num,");
-fields.append("CARDSTATE,");     values.append("case when state in ('1','2','3','4','8','9','A','B','C') then '00' else '10' end,");
-fields.append("ZICFLID,");     values.append("decode(js.code,'6050100','6050101','6050601','6050633','6050200','605020Z','6050300','6050500','6050400','6050300','6050500','6050411','6050602','6050420','6050603','6050730','6050700','6050740',js.code) ,");
-fields.append("RECID,");     values.append("sec_base.md5(:universityEnName || e.code || to_char(sysdate,'yyyymmddhhmiss')),");
-fields.append("RECVER,");     values.append("1,");
-fields.append("BILLDEFINE,");     values.append("js.cardclass,");
-fields.append("ZUOLWZ,");     values.append("e.ZUOLWZ,");
-fields.append("ZHUCDJRQ,");     values.append("null,");
-fields.append("CHUSZYMJ,"); //40     values.append("nvl(e.ZIYMJ,0),"); //40
-fields.append("CHUBS,");     values.append("null,");
-fields.append("BAOCNX,");     values.append("e.Baocnx,");
-fields.append("CHUBRQ,");     values.append("to_char(e.chubrq,'yyyy-MM-dd'),");
-fields.append("CHUSZZNF,");     values.append("nvl(e.Chuszznf,0),");
-fields.append("YUJSMZL,");     values.append("case when nvl(e.leijzj,0)=0 then 0 else nvl(e.depreciation_month,0) end,");
-fields.append("GANGSK,");     values.append("e.GANGSK,");
-fields.append("ZZSPRQ,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("SUBMITUNIT,");     values.append(":org_code",");
-fields.append("SUBMITUSER,");     values.append("e.base_teacher_no_keeper,");
-fields.append("ZIYJZ,"); //50     values.append("nvl(ZIYJZ,0),"); //50
-fields.append("CHUJJZ,");     values.append("nvl(CHUJJZ,0),");
-fields.append("CHUZJZ,");     values.append("nvl(CHUZJZ,0),");
-fields.append("DUIWTZJZ,");     values.append("NVL(DUIWTZJZ,0),");
-fields.append("DANBJZ,");     values.append("0,");
-fields.append("QITJZ,");     values.append("nvl(QITJZ,0),");
-fields.append("XCFS,");     values.append("null,");
-fields.append("SHIYFXID,");     values.append("'01',");
-fields.append("SHIYBMID,");     values.append("nvl(e.base_dep_code,'*'),");
-fields.append("SHIYRID,");     values.append("e.base_teacher_no_keeper,");
-fields.append("CHEPH,"); //60     values.append("e.cheph,"); //60
-fields.append("FADJH,");     values.append("e.fadjh,");
-fields.append("BAOXJZRQ,");     values.append("to_char(e.service_date, 'yyyy-mm-dd'),");
-fields.append("SHIYMJ,");     values.append("nvl(e.tudmj,0),");
-fields.append("JIANZJGID,");     values.append("e.jianzjg ,");
-fields.append("SHOUQGGZ,");     values.append("null,");
-fields.append("FAMR,");     values.append("e.famr,");
-fields.append("ZHENGSH,");     values.append("e.zhengsh,");
-fields.append("FAMMC,");     values.append("e.FAMMC,");
-fields.append("EXCEPTIONFLAG,");     values.append("0,");
-fields.append("ISLASTEST,"); //70     values.append("1,"); //70
-fields.append("MIANJ,");     values.append("nvl(nvl(e.JIANZMJ, e.TUDMJ),0),");
-fields.append("DILYTID,");     values.append("null,"); -- dilytid
-fields.append("SHEBYTID,");     values.append("select name from sec_base.system_option where system_field_id = 1013 and code = e.direction),");
-fields.append("CHELXSZSYR,");     values.append("e.CHELXSZSYR,");
-fields.append("AUDITSTATEJC,");     values.append("'2',");
-fields.append("QUANSZH,");     values.append("e.Quanszh,");
-fields.append("QUANSZM,");     values.append("e.Quanszm,");
-fields.append("ZHUANLH,");     values.append("e.ZHUANLH,");
-fields.append("PIZWH,");     values.append("e.PIZWH,");
-fields.append("JINGZ,"); //80     values.append("nvl(e.price + nvl(e.attach_price,0) - nvl(e.leijzj,0),0),"); //80
-fields.append("LEIJZJ,");     values.append("nvl(e.LEIJZJ,0),");
-fields.append("YITZJYS,");     values.append("nvl(e.yzjys,0),");
-fields.append("TANXZT,");     values.append("null,");
-fields.append("CZ_GOUZRQ,");     values.append("to_char(e.PURCHASE_DATE, 'yyyy-mm-dd'),");
-fields.append("ATTACHCOUNTIN,");     values.append("nvl(attach_num,0),");
-fields.append("ATTACHVALUEIN,");     values.append("nvl(attach_price,0),");
-fields.append("ATTACHCOUNTALL,");     values.append("nvl(attach_num,0),");
-fields.append("ATTACHVALUEALL,");     values.append("nvl(attach_price,0),");
-fields.append("KFF,");     values.append("null,");
-fields.append("YUANZCBH,"); //90     values.append("null,"); //90
-fields.append("CUNFDDID,");     values.append("e.base_dep_code,");
-fields.append("BIANZQKID,");     values.append("e.BIANZQK,");
-fields.append("YONGTFLID,");     values.append("e.YONGTFL,");
-fields.append("CHANQXSID,");     values.append("decode(chanqxs,'1','01','2','02','3','03'),");
-fields.append("QUANSXZID,");     values.append("decode(QUANSXZ,'1','01','2','02'),");
-fields.append("JIAZLXID,");     values.append("nvl(e.JIAZLX,'01'),");
-fields.append("ZIYMJ,");     values.append("nvl(e.ZIYMJ,0),");
-fields.append("CHUJMJ,");     values.append("nvl(e.CHUJMJ,0),");
-fields.append("TUDSYQR,");     values.append("null,");
-fields.append("FENTMJ,"); //100     values.append("nvl(fentmj,0),"); //100
-fields.append("DUYMJ,");     values.append("nvl(duymj,0),");
-fields.append("FEICZXZJ,");     values.append("nvl(e.QITJFLY,0),");
-fields.append("TUDSYQLXID,");     values.append("null,");
-fields.append("CHUZMJ,");     values.append("nvl(e.CHUZMJ,0),");
-fields.append("DUIWTZMJ,");     values.append("NVL(DUIWTZMJ,0),");
-fields.append("DANBMJ,");     values.append("0,");
-fields.append("QITMJ,");     values.append("nvl(e.QITMJ,0),");
-fields.append("JILDW,");     values.append("nvl(e.UNIT,'无'),");
-fields.append("LICENCEDATE,");     values.append("to_char(e.fazsj,'yyyy-mm-dd'),");
-fields.append("QUDRQ,"); //110     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),"); //110
-fields.append("CHELSBH,");     values.append("e.CHEJH,");
-fields.append("CHUZXSID,");     values.append("null,");
-fields.append("RUZKMID,");     values.append("'01',");
-fields.append("SHOUYNX,");     values.append("'0',");
-fields.append("ZICFLOLDID,");     values.append("null,");
-fields.append("YUEZJE,");     values.append("nvl(e.price + nvl(e.attach_price,0) / decode(YUJSMZL,0,null,YUJSMZL),0),");
-fields.append("SHUJLY,");     values.append("0,");
-fields.append("RUZXS,");     values.append("'01',");
-fields.append("BEIZ,");     values.append("null,");
-fields.append("GUIGXH,"); //120     values.append("e.model || e.spec,"); //120
-fields.append("ISDRAFT,");     values.append("0,");
-fields.append("UF_FIELD_SYYY,");     values.append("null,");
-fields.append("SORTGBID,");     values.append("e.finance_sort,");
-fields.append("CANZ,");     values.append("nvl(e.price + nvl(e.attach_price,0) - e.leijzj,0),");
-fields.append("CANZL,");     values.append("nvl(e.ZJCZL,0),");
-fields.append("JIANZZB,");     values.append("nvl((e.price + nvl(e.attach_price,0) / decode(YUJSMZL,0,null,YUJSMZL)),0),");
-fields.append("ZHEJFFID,");     values.append("case when nvl(e.leijzj,0)=0 then null else '02' end,");
-fields.append("ZHEJZTID,");     values.append("'02',");
-fields.append("BILLDEFINEID,");     values.append("null,");
-fields.append("SHENGCCJ,"); //130     values.append("substr(e.PRODUCER,1,60),"); //130
-fields.append("NEIBJYMJ,");     values.append("0,");
-fields.append("NEIBJYJZ,");     values.append("0,");
-fields.append("YUSXMBH,");     values.append("null,");
-fields.append("QUDJG,");     values.append("0,");
-fields.append("SHEJYT,");     values.append("null,");
-fields.append("CHUSCZMJ,");     values.append("0,");
-fields.append("CHUSCJMJ,");     values.append("0,");
-fields.append("CHUSDWTZMJ,");     values.append("0,");
-fields.append("CHUSDBMJ,");     values.append("0,");
-fields.append("CHUSZYJZ,"); //140     values.append("0,"); //140
-fields.append("CHUSCZJZ,");     values.append("0,");
-fields.append("CHELCD,");     values.append("null,");
-fields.append("CHUSCJJZ,");     values.append("0,");
-fields.append("CHUSDWTZJZ,");     values.append("0,");
-fields.append("CHUSDBJZ,");     values.append("0,");
-fields.append("CHUSQTJZ,");     values.append("0,");
-fields.append("PAIQL,");     values.append("e.PAIQL,");
-fields.append("ZHAOP,");     values.append("null,");
-fields.append("QUERJZ,");     values.append("0,");
-fields.append("CHANGD,"); //150     values.append("null,"); //150
-fields.append("WENWDJID,");     values.append("e.WENWDJ,");
-fields.append("JUNGRQ,");     values.append("to_char(e.JUNGRQ, 'yyyy-mm-dd'), ");
-fields.append("FWCHANQXSID,");     values.append("decode(e.CHANQXS,'1','0100','2','0200'),");
-fields.append("GZWCHANQXSID,");     values.append("decode(e.CHANQXS,'1','0101','2','0102','3','0300'),");
-fields.append("PINP,");     values.append("null,");
-fields.append("QUANSNX,");     values.append("1,");
-fields.append("TUDJCID,");     values.append("null,");
-fields.append("TDCHANQXSID,");     values.append("e.CHANQXS,");
-fields.append("CAIWRZRQ,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("CHUZRQ,"); //160     values.append("to_char(e.DISPDATE, 'yyyy-mm-dd'),"); //160
-fields.append("SHIYZKID,");     values.append("decode(e.state,'1','01','2','02','4','03','09'),");
-fields.append("SUBMITTIME,");     values.append("null,");
-fields.append("CREATEUSERID,");     values.append("null,");
-fields.append("OBJECTID,");     values.append("sec_base.md5(e.code||:universityEnName),");
-fields.append("YUANSJZRQ,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("JIZQJ,");     values.append("to_char(e.stock_date, 'yyyymm'),");
-fields.append("JIZRQ,");     values.append("to_char(e.stock_date, 'yyyy-mm-dd'),");
-fields.append("YEWXLH,");     values.append("1,");
-fields.append("QUDFSID,");     values.append("decode(e.source,'1','01','2','03','3','07','4','02','5','06','7','05'),");
-fields.append("ZHUCDJJG,"); //170     values.append("e.ZHUCDJJG,"); //170
-fields.append("CHUSQTMJ,");     values.append("0,");
-fields.append("CAIZXZJ,");     values.append("case when nvl(e.CAIZXJFLY,0)=0 and nvl(e.QITJFLY,0) = 0 then (e.price + nvl(e.attach_price,0)) else 0 end,");
-fields.append("LAIYD,");     values.append("null,");
-fields.append("YUEZJL,");     values.append("nvl((1 / decode(YUJSMZL,0,null,YUJSMZL)),0),");
-fields.append("DZFID,");     values.append(":dzfid,");
-fields.append("QUNUANMJ,");     values.append("0,");
-fields.append("IDX,");     values.append("ROWNUM,");
-fields.append("PEIZBZFLMC,");     values.append("equipment_standard_sort_code,");
-fields.append("XIAOJBGYF,");     values.append("nvl(ziymj_bang,0)+nvl(chuzmj_bang,0)+nvl(chujmj_bang,0)+nvl(xianzmj_bang,0)+nvl(qitmj_bang,0),");
-fields.append("XIAOJYWYF,"); //180     values.append("nvl(ziymj_yw,0)+nvl(chuzmj_yw,0)+nvl(chujmj_yw,0)+nvl(xianzmj_yw,0)+nvl(qitmj_yw,0),"); //180
-fields.append("XIAOJIQTYF,");     values.append("nvl(ziymj_qit,0)+nvl(chuzmj_qit,0)+nvl(chujmj_qit,0)+nvl(xianzmj_qit,0)+nvl(qitmj_qit,0),");
-fields.append("XIAOJIQZBDWSJSYMJ,");     values.append("nvl(shiymj_bang,0) + nvl(shiymj_yw,0) + nvl(shiymj_qit,0),");
-fields.append("BANGYFZYMJ,");     values.append("nvl(ziymj_bang,0),");
-fields.append("QIZBGSYFZYMJ,");     values.append("nvl(ziymj_bangs,0),");
-fields.append("YEWYFZYMJ,");     values.append("nvl(ziymj_yw,0),");
-fields.append("QITYFZYMJ,");     values.append("nvl(ziymj_qit,0),");
-fields.append("BANGYFQZBDWSJSYMJ,");     values.append("nvl(shiymj_bang,0),");
-fields.append("QIZBGSYFQZBDWSJSYMJ,");     values.append("nvl(shiymj_bangs,0),");
-fields.append("YEWYFQZBDWSJSYMJ,");     values.append("nvl(shiymj_yw,0),");
-fields.append("QITYFQZBDWSJSYMJ,"); //190     values.append("nvl(shiymj_qit,0),"); //190
-fields.append("BANGYFCZMJ,");     values.append("nvl(chuzmj_bang,0),");
-fields.append("QIZBGSYFCZMJ,");     values.append("nvl(chuzmj_bangs,0),");
-fields.append("YEWYFCZMJ,");     values.append("nvl(chuzmj_yw,0),");
-fields.append("QITYFCZMJ,");     values.append("nvl(chuzmj_qit,0),");
-fields.append("BANGYFCJMJ,");     values.append("nvl(chujmj_bang,0),");
-fields.append("QIZBGSYFCJMJ,");     values.append("nvl(chujmj_bangs,0),");
-fields.append("YEWYFCJMJ,");     values.append("nvl(chujmj_yw,0),");
-fields.append("QITYFCJMJ,");     values.append("nvl(chujmj_qit,0),");
-fields.append("BANGYFXZMJ,");     values.append("nvl(xianzmj_bang,0),");
-fields.append("QIZBGSYFXZMJ,"); //200     values.append("nvl(xianzmj_bangs,0),"); //200
-fields.append("YEWYFXZMJ,");     values.append("nvl(xianzmj_yw,0),");
-fields.append("QITYFXZMJ,");     values.append("nvl(xianzmj_qit,0),");
-fields.append("BANGYFQTMJ,");     values.append("nvl(qitmj_bang,0),");
-fields.append("QIZBGSYFQTMJ,");     values.append("nvl(qitmj_bangs,0),");
-fields.append("YEWYFQTMJ,");     values.append("nvl(qitmj_yw,0),");
-fields.append("QITYFQTMJ,");     values.append("nvl(qitmj_qit,0),");
-fields.append("QICPQL,");     values.append("paiql,");
-fields.append("NEWYONGTFLID,");     values.append("yongtfl,");
-fields.append("CHELPP,");     values.append("car_brand,");
-fields.append("CHELPPBZ)");     values.append("brand "); //210
+fields.append("insert into JYBJK_GAMS_ASSETCHANGE(");     values.append("  select ");
+fields.append("     DANJ,");     values.append("  case when js.cardclass in ('01','02','03') then decode(nvl(nvl(e.JIANZMJ,e.TUDMJ), 0),0,(e.price + nvl(e.attach_price,0)),((price + (attach_price))/nvl(nvl(e.JIANZMJ,e.TUDMJ), 0))) else e.price + nvl(e.attach_price,0) end,");
+fields.append("     BILLCODE,");     values.append("           nvl(a.jyb_assets_code,e.code),");
+fields.append("     JIAZ,");     values.append("           e.price + nvl(e.attach_price,0),");
+fields.append("     BILLDEFINE,");     values.append("           js.cardclass,");
+fields.append("     ZIYJZ,");     values.append("           nvl(ZIYJZ,0),");
+fields.append("     CHUJJZ,");     values.append("           nvl(CHUJJZ,0),");
+fields.append("     CHUZJZ,");     values.append("           nvl(CHUZJZ,0),");
+fields.append("     DUIWTZJZ,");     values.append("           NVL(DUIWTZJZ,0),");
+fields.append("     QITJZ,");     values.append("           nvl(QITJZ,0),");
+fields.append("     MIANJ,");     values.append("           nvl(nvl(e.JIANZMJ,e.TUDMJ),0),");//10
+fields.append("     JINGZ,");     values.append("           nvl(e.JINGZ,e.price + nvl(e.attach_price,0)),");
+fields.append("     ZIYMJ,");     values.append("           nvl(e.ZIYMJ,0),");
+fields.append("     CHUJMJ,");     values.append("           nvl(e.CHUJMJ,0),");
+fields.append("     FENTMJ,");     values.append("           nvl(fentmj,0),");
+fields.append("     DUYMJ,");     values.append("           nvl(duymj,0),");
+fields.append("     FEICZXZJ,");     values.append("           nvl(e.QITJFLY,0),");
+fields.append("     CHUZMJ,");     values.append("           nvl(e.CHUZMJ,0),");
+fields.append("     DUIWTZMJ,");     values.append("           NVL(DUIWTZMJ,0),");
+fields.append("     QITMJ,");     values.append("           nvl(e.QITMJ,0),");
+fields.append("     CAIZXZJ,");     values.append("           nvl(e.CAIZXJFLY,(e.price + nvl(e.attach_price,0))),");//20
+fields.append("     IDX,");     values.append("           ROWNUM,");
+fields.append("     DZFID,");     values.append("           :dzfid,");
+fields.append("     BILLTIME,");     values.append("           to_char(e.changetime,'yyyy-mm-dd'),");
+fields.append("     JIZRQ,");     values.append("           to_char(e.changetime,'yyyy-mm-dd'),");
+fields.append("     ZICFLID,");     values.append("           js.code,");
+fields.append("     CREATER,");     values.append("           :universityName,");
+fields.append("     SHEBYTID,");     values.append("           shebytid,");
+fields.append("     PEIZBZFLMC,");     values.append("           equipment_standard_sort_code,");
+fields.append("     QUDFSID,");     values.append("           decode(source,'1','01','2','03','3','07','4','02','5','06','7','05'),");
+fields.append("     KUAIJPZH,");     values.append("           nvl(e.finance_bill,'*'),");//30
+fields.append("     ZICMC,");     values.append("           e.name,");
+fields.append("     JIANZJGID,");     values.append("           jianzjg,");
+fields.append("     ZUOLWZ,");     values.append("           zuolwz,");
+fields.append("     TOURSYRQ,");     values.append("           to_char(e.stock_date, 'yyyy-mm-dd'),");
+fields.append("     FWCHANQXSID,");     values.append("           decode(chanqxs,'1','01','2','02','3','03'),");
+fields.append("     CHANQXSID,");     values.append("           decode(chanqxs,'1','01','2','02','3','03'),");
+fields.append("     QUANSXZID,");     values.append("           decode(QUANSXZ,'1','01','2','02'),");
+fields.append("     XIAOJBGYF,");     values.append("           nvl(ziymj_bang,jianzmj)+nvl(chuzmj_bang,0)+nvl(chujmj_bang,0)+nvl(xianzmj_bang,0)+nvl(qitmj_bang,0),");
+fields.append("     XIAOJYWYF,");     values.append("           nvl(ziymj_yw,0)+nvl(chuzmj_yw,0)+nvl(chujmj_yw,0)+nvl(xianzmj_yw,0)+nvl(qitmj_yw,0),");
+fields.append("     XIAOJIQTYF,");     values.append("           nvl(ziymj_qit,0)+nvl(chuzmj_qit,0)+nvl(chujmj_qit,0)+nvl(xianzmj_qit,0)+nvl(qitmj_qit,0),");//40
+fields.append("     XIAOJIQZBDWSJSYMJ,");     values.append("           nvl(shiymj_bang,0) + nvl(shiymj_yw,0) + nvl(shiymj_qit,0),");
+fields.append("     BANGYFZYMJ,");     values.append("           nvl(ziymj_bang,jianzmj),");
+fields.append("     QIZBGSYFZYMJ,");     values.append("           nvl(ziymj_bangs,0),");
+fields.append("     YEWYFZYMJ,");     values.append("           nvl(ziymj_yw,0),");
+fields.append("     QITYFZYMJ,");     values.append("           nvl(ziymj_qit,0),");
+fields.append("     BANGYFQZBDWSJSYMJ,");     values.append("           nvl(shiymj_bang,0),");
+fields.append("     QIZBGSYFQZBDWSJSYMJ,");     values.append("           nvl(shiymj_bangs,0),");
+fields.append("     YEWYFQZBDWSJSYMJ,");     values.append("           nvl(shiymj_yw,0),");
+fields.append("     QITYFQZBDWSJSYMJ,");     values.append("           nvl(shiymj_qit,0),");
+fields.append("     BANGYFCZMJ,");     values.append("           nvl(chuzmj_bang,0),");//50
+fields.append("     QIZBGSYFCZMJ,");     values.append("           nvl(chuzmj_bangs,0),");
+fields.append("     YEWYFCZMJ,");     values.append("           nvl(chuzmj_yw,0),");
+fields.append("     QITYFCZMJ,");     values.append("           nvl(chuzmj_qit,0),");
+fields.append("     BANGYFCJMJ,");     values.append("           nvl(chujmj_bang,0),");
+fields.append("     QIZBGSYFCJMJ,");     values.append("           nvl(chujmj_bangs,0),");
+fields.append("     YEWYFCJMJ,");     values.append("           nvl(chujmj_yw,0),");
+fields.append("     QITYFCJMJ,");     values.append("           nvl(chujmj_qit,0),");
+fields.append("     BANGYFXZMJ,");     values.append("           nvl(xianzmj_bang,0),");
+fields.append("     QIZBGSYFXZMJ,");     values.append("           nvl(xianzmj_bangs,0),");
+fields.append("     YEWYFXZMJ,");     values.append("           nvl(xianzmj_yw,0),");//60
+fields.append("     QITYFXZMJ,");     values.append("           nvl(xianzmj_qit,0),");
+fields.append("     BANGYFQTMJ,");     values.append("           nvl(qitmj_bang,0),");
+fields.append("     QIZBGSYFQTMJ,");     values.append("           nvl(qitmj_bangs,0),");
+fields.append("     YEWYFQTMJ,");     values.append("           nvl(qitmj_yw,0),");
+fields.append("     QITYFQTMJ,");     values.append("           nvl(qitmj_qit,0),");
+fields.append("     QICPQL,");     values.append("           paiql,");
+fields.append("     NEWYONGTFLID,");     values.append("           yongtfl,");
+fields.append("     YONGTFLID,");     values.append("           '03',");
+fields.append("     CHELPP,");     values.append("           car_brand,");
+fields.append("     CHELPPBZ,");     values.append("           brand,");//70
+fields.append("     CHELSBH,");     values.append("           chejh,");
+fields.append("     GUIGXH,");     values.append("           model|| '/'||spec,");
+fields.append("     CHEPH,");     values.append("           cheph,");
+fields.append("     BIANZQKID,");     values.append("           BIANZQK,");
+fields.append("     QUANSNX)");     values.append("           1");

@@ -3659,6 +3659,88 @@ public class 算法 {
         System.out.println(countSubstrings_centralExpansion("abaaba"));
     }
 
+
+    //输入: [2,3,4], [[1,1,0,4],[2,2,1,9]], [6,3,1]  28,25
+    //输出: 11          -1         -5
+    //解释:
+    //A，B，C的价格分别为¥2，¥3，¥4.
+    //你可以用¥4购买1A和1B，也可以用¥9购买2A，2B和1C。
+    //你需要买1A，2B和1C，所以你付了¥4买了1A和1B（大礼包1），以及¥3购买1B， ¥4购买1C。
+    //你不可以购买超出待购清单的物品，尽管购买大礼包2更加便宜。
+    //
+    //[2,5]
+    //[[3,0,5],[1,2,10]]
+    //[3,2]
+    // 递归
+    public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
+        int rst=0;
+        int len=price.size();
+        for (int i = 0; i < len; i++) {
+            rst+=price.get(i)*needs.get(i);
+        }
+        // 将没有优惠的礼包去除
+        for( Iterator<List<Integer>> iterator = special.iterator();iterator.hasNext();){
+            List<Integer> next = iterator.next();
+            int sum=0;
+            int i = 0;
+            for (; i < len; i++) {
+                sum+=price.get(i)*next.get(i);
+            }
+            int diff = next.get(i) - sum;
+            if (diff>0){
+                iterator.remove();
+            }else {
+                next.set(i,diff);
+            }
+        }
+        if (special.size()==0){
+            return 0;
+        }
+        return rst+help_bags(special, needs);
+    }
+
+    //  返回负数，意义为少花的金额
+    public int help_bags(List<List<Integer>> special, List<Integer> needs){
+        int diff=0;
+        int difIdx = special.get(0).size()-1;
+        for (int i = 0; i < special.size(); i++) {
+            boolean can = canDiff(special.get(i), needs);
+            if (can){
+                List<Integer> curNeeds=new ArrayList<>();
+                for (int j = 0; j < needs.size(); j++) {
+                    curNeeds.add(needs.get(j)-special.get(i).get(j));
+                }
+                // 取最小可能
+                diff=Math.min(diff,special.get(i).get(difIdx)+help_bags(special, curNeeds));
+            }
+        }
+        return diff;
+    }
+
+    // 查询是否能够买套餐不溢出
+    public boolean canDiff(List<Integer> bags,List<Integer> cnts){
+        for (int i = 0; i < cnts.size(); i++) {
+            if (cnts.get(i)-bags.get(i)<0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //    //[2,5]
+    //    //[[3,0,5],[1,2,10]]
+    //    //[3,2]
+    @Test
+    public void test3724() {
+        Integer[] ints = {2, 5};
+        List<Integer> price = Arrays.asList(ints);
+        List<List<Integer>> special = new ArrayList<>();
+        special.add(new ArrayList<>(Arrays.asList(new Integer[]{3,0,5})));
+        special.add(new ArrayList<>(Arrays.asList(new Integer[]{1,2,10})));
+        List<Integer> needs = Arrays.asList(new Integer[]{3,2});
+        System.out.println(shoppingOffers(price, special, needs));
+    }
+
     //A = [1, 2, 3, 4]            1,2,3,4,6,8,10
     //
     // 返回: 3, A 中有三个子等差数组: [1, 2, 3], [2, 3, 4] 以及自身 [1, 2, 3, 4]。

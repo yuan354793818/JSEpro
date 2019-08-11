@@ -8,6 +8,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/cglib/cglib-nodep/2.2/cglib-nodep-2.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.ideaLibSources/cglib-nodep-2.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
