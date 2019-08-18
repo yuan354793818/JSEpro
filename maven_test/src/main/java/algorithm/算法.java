@@ -3355,9 +3355,9 @@ public class 算法 {
 
     public boolean stoneGame_1(int[] piles) {
         this.piles = piles;
-        int sum=0;
+        int sum = 0;
         for (int i : piles) {
-            sum+=i;
+            sum += i;
         }
         int i = help_stoneGame(0, piles.length - 1, true);
         return i > sum / 2;
@@ -3368,13 +3368,13 @@ public class 算法 {
         int i;
         int j;
         if (mypace) {
-            if (end==start){
+            if (end == start) {
                 return piles[end];
             }
             i = help_stoneGame(start + 1, end, false) + piles[start];
             j = help_stoneGame(start, end - 1, false) + piles[end];
         } else {
-            if (end==start){
+            if (end == start) {
                 return 0;
             }
             i = help_stoneGame(start + 1, end, true);
@@ -3382,25 +3382,28 @@ public class 算法 {
         }
         return Math.max(i, j);
     }
+
     @Test
     public void test3380() {
-        System.out.println(stoneGame_1(new int[]{5,3,4,5}));
+        System.out.println(stoneGame_1(new int[]{5, 3, 4, 5}));
     }
 
     public boolean stoneGame(int[] piles) {
         this.piles = piles;
         return help_stoneGame2(0, piles.length - 1);
     }
+
     // 5 6 3 5
-    private boolean help_stoneGame2(int start, int end){
+    private boolean help_stoneGame2(int start, int end) {
         if (end - start == 1) {
             return true;
         }
-        return !(help_stoneGame2(start + 1, end)& help_stoneGame2(start , end-1));
+        return !(help_stoneGame2(start + 1, end) & help_stoneGame2(start, end - 1));
     }
+
     @Test
-    public void test3397(){
-        System.out.println(stoneGame(new int[]{5,3,4,5,8,6,3,7,1,3,8,3,1,2,7,2,9,6,7,5,8,3,4,7,9,1,2,8,4,3,8,3}));
+    public void test3397() {
+        System.out.println(stoneGame(new int[]{5, 3, 4, 5, 8, 6, 3, 7, 1, 3, 8, 3, 1, 2, 7, 2, 9, 6, 7, 5, 8, 3, 4, 7, 9, 1, 2, 8, 4, 3, 8, 3}));
     }
 
 
@@ -3422,18 +3425,18 @@ public class 算法 {
     public int minimumTotal(List<List<Integer>> triangle) {
         for (int i = 1; i < triangle.size(); i++) {
             List<Integer> sub = triangle.get(i);
-            List<Integer> preSub = triangle.get(i-1);
-            for (int j = 0; j <sub.size() ; j++) {
+            List<Integer> preSub = triangle.get(i - 1);
+            for (int j = 0; j < sub.size(); j++) {
                 if (j == 0) {
-                    sub.set(0,preSub.get(0)+sub.get(0));
-                }else if (j==sub.size()-1){
-                    sub.set(j,preSub.get(j-1)+sub.get(j));
-                }else {
+                    sub.set(0, preSub.get(0) + sub.get(0));
+                } else if (j == sub.size() - 1) {
+                    sub.set(j, preSub.get(j - 1) + sub.get(j));
+                } else {
                     sub.set(j, Math.min(preSub.get(j - 1), preSub.get(j)) + sub.get(j));
                 }
             }
         }
-        int min= Integer.MAX_VALUE;
+        int min = Integer.MAX_VALUE;
         List<Integer> endList = triangle.get(triangle.size() - 1);
         for (Integer anEndList : endList) {
             min = Math.min(min, anEndList);
@@ -3465,19 +3468,19 @@ public class 算法 {
     //
     // 动态规划
     public List<TreeNode> generateTrees(int n) {
-        ArrayList<TreeNode>[] dp=new ArrayList[n+1];
-        dp[0]=new ArrayList<TreeNode>();
+        ArrayList<TreeNode>[] dp = new ArrayList[n + 1];
+        dp[0] = new ArrayList<TreeNode>();
         if (n == 0) {
             return dp[0];
         }
         dp[0].add(null);
-        for (int len = 1; len <=n; len++) {
+        for (int len = 1; len <= n; len++) {
             dp[len] = new ArrayList<TreeNode>();
-            for (int root = 1; root <=len; root++) {
-                int left=root-1; //左子树长度
-                int right=len-root; //右子树长度
-                for (TreeNode l:dp[left]){
-                    for (TreeNode r:dp[right]){
+            for (int root = 1; root <= len; root++) {
+                int left = root - 1; //左子树长度
+                int right = len - root; //右子树长度
+                for (TreeNode l : dp[left]) {
+                    for (TreeNode r : dp[right]) {
                         TreeNode node = new TreeNode(root);
                         node.left = l; //   clone(l,0);    搜索二叉树左边小不用加
                         node.right = clone(r, root); //右边大  加上root，保证右边所有比root大
@@ -3490,15 +3493,16 @@ public class 算法 {
     }
 
     //克隆一颗树
-    public TreeNode clone(TreeNode n,int offset){
+    public TreeNode clone(TreeNode n, int offset) {
         if (n == null) {
             return null;
         }
-        TreeNode node=new TreeNode(n.val+offset);
-        node.left=clone(n.left,offset);
-        node.right=clone(n.right,offset);
+        TreeNode node = new TreeNode(n.val + offset);
+        node.left = clone(n.left, offset);
+        node.right = clone(n.right, offset);
         return node;
     }
+
     //递归---------
     //
     //所以如果求 1...n 的所有可能。
@@ -3524,7 +3528,7 @@ public class 算法 {
         return help_generateTrees(1, n);
     }
 
-    public List<TreeNode> help_generateTrees(int start,int end){
+    public List<TreeNode> help_generateTrees(int start, int end) {
         List<TreeNode> rst = new ArrayList<>();
         if (start > end) {
             rst.add(null);
@@ -3534,14 +3538,14 @@ public class 算法 {
             rst.add(new TreeNode(start));
             return rst;
         }
-        for (int i = start ; i <= end; i++) {
+        for (int i = start; i <= end; i++) {
             List<TreeNode> left = help_generateTrees(start, i - 1);
             List<TreeNode> right = help_generateTrees(i + 1, end);
-            for (TreeNode l:left){
+            for (TreeNode l : left) {
                 for (TreeNode r : right) {
                     TreeNode node = new TreeNode(i);
-                    node.left=l;
-                    node.right=r;
+                    node.left = l;
+                    node.right = r;
                     rst.add(node);
                 }
             }
@@ -3579,24 +3583,24 @@ public class 算法 {
         } else if (A.length == 1) {
             return A[0][0];
         }
-        int width=A[0].length;
-        int[] dp=A[A.length-1];
-        for (int i = A.length-2; i >=0; i--) {
-            for (int j = 0; j <width ; j++) {
+        int width = A[0].length;
+        int[] dp = A[A.length - 1];
+        for (int i = A.length - 2; i >= 0; i--) {
+            for (int j = 0; j < width; j++) {
                 int min;
-                if (j==0){
-                     min=Math.min(A[i+1][j],A[i+1][j+1]);
-                }else if (j==width-1){
-                     min=Math.min(A[i+1][j-1],A[i+1][j]);
-                }else {
-                    min=Math.min(A[i+1][j-1],A[i+1][j]);
-                    min=Math.min(min,A[i+1][j+1]);
+                if (j == 0) {
+                    min = Math.min(A[i + 1][j], A[i + 1][j + 1]);
+                } else if (j == width - 1) {
+                    min = Math.min(A[i + 1][j - 1], A[i + 1][j]);
+                } else {
+                    min = Math.min(A[i + 1][j - 1], A[i + 1][j]);
+                    min = Math.min(min, A[i + 1][j + 1]);
                 }
-                A[i][j]=min+A[i][j];
+                A[i][j] = min + A[i][j];
             }
         }
         for (int i = 1; i < width; i++) {
-            A[0][0]=Math.min(A[0][0],A[0][i]);
+            A[0][0] = Math.min(A[0][0], A[0][i]);
         }
         return A[0][0];
     }
@@ -3622,11 +3626,11 @@ public class 算法 {
 
     //暴力算法
     public int countSubstrings(String s) {
-        int cnt=s.length();
+        int cnt = s.length();
         for (int i = 2; i <= s.length(); i++) {
-            for (int j = 0,k=i; k <= s.length(); j++,k++) {
+            for (int j = 0, k = i; k <= s.length(); j++, k++) {
                 StringBuilder substring = new StringBuilder(s.substring(j, k));
-                if (substring.toString().equals(substring.reverse().toString())){
+                if (substring.toString().equals(substring.reverse().toString())) {
                     cnt++;
                 }
             }
@@ -3637,25 +3641,25 @@ public class 算法 {
     //中心扩展法
     // 思路：遍历扩展，奇数个扩展，偶数个扩展 ，绝对不可能有扩展重叠
     public int countSubstrings_centralExpansion(String s) {
-        int cnt=0;
+        int cnt = 0;
         for (int i = 0; i < s.length(); i++) {
-            cnt+=expansion(s,i,i);
-            cnt+=expansion(s,i,i+1);
+            cnt += expansion(s, i, i);
+            cnt += expansion(s, i, i + 1);
         }
         return cnt;
     }
 
     //扩展方法
-    public int expansion(String s,int start,int end){
-        int cnt=0;
-        while (start>=0&&end<s.length()&&s.charAt(start--)==s.charAt(end++)){
+    public int expansion(String s, int start, int end) {
+        int cnt = 0;
+        while (start >= 0 && end < s.length() && s.charAt(start--) == s.charAt(end++)) {
             cnt++;
         }
         return cnt;
     }
-    
+
     @Test
-    public void test3618(){
+    public void test3618() {
         System.out.println(countSubstrings_centralExpansion("abaaba"));
     }
 
@@ -3673,54 +3677,54 @@ public class 算法 {
     //[3,2]
     // 递归
     public int shoppingOffers(List<Integer> price, List<List<Integer>> special, List<Integer> needs) {
-        int rst=0;
-        int len=price.size();
+        int rst = 0;
+        int len = price.size();
         for (int i = 0; i < len; i++) {
-            rst+=price.get(i)*needs.get(i);
+            rst += price.get(i) * needs.get(i);
         }
         // 将没有优惠的礼包去除
-        for( Iterator<List<Integer>> iterator = special.iterator();iterator.hasNext();){
+        for (Iterator<List<Integer>> iterator = special.iterator(); iterator.hasNext(); ) {
             List<Integer> next = iterator.next();
-            int sum=0;
+            int sum = 0;
             int i = 0;
             for (; i < len; i++) {
-                sum+=price.get(i)*next.get(i);
+                sum += price.get(i) * next.get(i);
             }
             int diff = next.get(i) - sum;
-            if (diff>0){
+            if (diff > 0) {
                 iterator.remove();
-            }else {
-                next.set(i,diff);
+            } else {
+                next.set(i, diff);
             }
         }
-        if (special.size()==0){
+        if (special.size() == 0) {
             return 0;
         }
-        return rst+help_bags(special, needs);
+        return rst + help_bags(special, needs);
     }
 
     //  返回负数，意义为少花的金额
-    public int help_bags(List<List<Integer>> special, List<Integer> needs){
-        int diff=0;
-        int difIdx = special.get(0).size()-1;
+    public int help_bags(List<List<Integer>> special, List<Integer> needs) {
+        int diff = 0;
+        int difIdx = special.get(0).size() - 1;
         for (int i = 0; i < special.size(); i++) {
             boolean can = canDiff(special.get(i), needs);
-            if (can){
-                List<Integer> curNeeds=new ArrayList<>();
+            if (can) {
+                List<Integer> curNeeds = new ArrayList<>();
                 for (int j = 0; j < needs.size(); j++) {
-                    curNeeds.add(needs.get(j)-special.get(i).get(j));
+                    curNeeds.add(needs.get(j) - special.get(i).get(j));
                 }
                 // 取最小可能
-                diff=Math.min(diff,special.get(i).get(difIdx)+help_bags(special, curNeeds));
+                diff = Math.min(diff, special.get(i).get(difIdx) + help_bags(special, curNeeds));
             }
         }
         return diff;
     }
 
     // 查询是否能够买套餐不溢出
-    public boolean canDiff(List<Integer> bags,List<Integer> cnts){
+    public boolean canDiff(List<Integer> bags, List<Integer> cnts) {
         for (int i = 0; i < cnts.size(); i++) {
-            if (cnts.get(i)-bags.get(i)<0){
+            if (cnts.get(i) - bags.get(i) < 0) {
                 return false;
             }
         }
@@ -3735,9 +3739,9 @@ public class 算法 {
         Integer[] ints = {2, 5};
         List<Integer> price = Arrays.asList(ints);
         List<List<Integer>> special = new ArrayList<>();
-        special.add(new ArrayList<>(Arrays.asList(new Integer[]{3,0,5})));
-        special.add(new ArrayList<>(Arrays.asList(new Integer[]{1,2,10})));
-        List<Integer> needs = Arrays.asList(new Integer[]{3,2});
+        special.add(new ArrayList<>(Arrays.asList(new Integer[]{3, 0, 5})));
+        special.add(new ArrayList<>(Arrays.asList(new Integer[]{1, 2, 10})));
+        List<Integer> needs = Arrays.asList(new Integer[]{3, 2});
         System.out.println(shoppingOffers(price, special, needs));
     }
 
@@ -3749,22 +3753,22 @@ public class 算法 {
     //  (1, 2, 3, 4, 5, 6)的等差数列个数为10,以此类推我们可以很容易的发现在一个等差数列中加入一个数字,如果还保持着等差数列的特性,每次的增量都会加1
     //  当+1不是等差数列则增量置零
     public int numberOfArithmeticSlices(int[] A) {
-        int cnt=0;
-        int times=0;
-        for (int i = 0; i < A.length-2; i++) {
+        int cnt = 0;
+        int times = 0;
+        for (int i = 0; i < A.length - 2; i++) {
             if (A[i + 1] - A[i] == A[i + 2] - A[i + 1]) {
                 times++;
-                cnt+=times;
-            }else {
-                times=0;
+                cnt += times;
+            } else {
+                times = 0;
             }
         }
         return cnt;
     }
 
     @Test
-    public void test3678(){
-        System.out.println(numberOfArithmeticSlices(new int[]{1,2,3,4,6,8,10}));
+    public void test3678() {
+        System.out.println(numberOfArithmeticSlices(new int[]{1, 2, 3, 4, 6, 8, 10}));
     }
 
 
@@ -3797,34 +3801,67 @@ public class 算法 {
     //解法1数学 排列组合
     // 机器人一定会走m+n-2步，即从m+n-2中挑出m-1步向下走不就行了吗？即C（（m+n-2），（m-1））。
     public int uniquePaths(int m, int n) {
-        int x=m+n-2;
-        int y=Math.min(m,n)-1;
-        long rst=1;
-        long l=1;
-        for (int i = 1; i<=y; i++,x--) {
-            rst*=x;
-            l*=i;
+        int x = m + n - 2;
+        int y = Math.min(m, n) - 1;
+        long rst = 1;
+        long l = 1;
+        for (int i = 1; i <= y; i++, x--) {
+            rst *= x;
+            l *= i;
         }
-        return (int) (rst/l);
+        return (int) (rst / l);
     }
 
     @Test
-    public void test3812(){
-        System.out.println(uniquePaths_dp(10,10));
+    public void test3812() {
+        System.out.println(uniquePaths_dp(10, 10));
     }
 
     public int uniquePaths_dp(int m, int n) {
-        int [][] dp=new int[m][n];
+        int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (i==0||j==0){
-                    dp[i][j]=1;
-                }else {
-                    dp[i][j]=dp[i-1][j]+dp[i][j-1];
+                if (i == 0 || j == 0) {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
                 }
             }
         }
-        return dp[m-1][n-1];
+        return dp[m - 1][n - 1];
+    }
+
+
+    //给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
+    //
+    //示例 1:
+    //
+    //输入: n = 12
+    //输出: 3
+    //解释: 12 = 4 + 4 + 4.
+    //示例 2:
+    //
+    //输入: n = 13
+    //输出: 2
+    //解释: 13 = 4 + 9.
+    //
+    ///*这里使用动态规划来做。时间复杂度O(nlogn)，空间复杂度O(n)。代码非常精简
+    //
+    //定义一个函数f(n)表示我们要求的解。f(n)的求解过程为：
+    //f(n) = 1 + min{
+    //  f(n-1^2), f(n-2^2), f(n-3^2), f(n-4^2), ... , f(n-k^2) //(k为满足k^2<=n的最大的k)
+    //}
+    //
+    public int numSquares(int n) {
+        int[] dp = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            int minVal= Integer.MAX_VALUE;
+            for (int j = 1; j*j<= i ; j++) {
+                minVal=Math.min(minVal,dp[i-j*j]);
+            }
+            dp[i] = 1 + minVal;
+        }
+        return dp[n];
     }
 
 
