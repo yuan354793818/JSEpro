@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -3855,9 +3857,9 @@ public class 算法 {
     public int numSquares(int n) {
         int[] dp = new int[n + 1];
         for (int i = 1; i <= n; i++) {
-            int minVal= Integer.MAX_VALUE;
-            for (int j = 1; j*j<= i ; j++) {
-                minVal=Math.min(minVal,dp[i-j*j]);
+            int minVal = Integer.MAX_VALUE;
+            for (int j = 1; j * j <= i; j++) {
+                minVal = Math.min(minVal, dp[i - j * j]);
             }
             dp[i] = 1 + minVal;
         }
@@ -3905,7 +3907,7 @@ public class 算法 {
 
         // 模拟新年的第一天跑到旅行的最后一天。
         for (int today = 1; today <= 365; today++) {
-            if(dayIdx >= days.length){
+            if (dayIdx >= days.length) {
                 break;
             }
             // 判断今天是否属于旅行日。
@@ -3930,7 +3932,122 @@ public class 算法 {
 
     @Test
     public void test3913() {
-        System.out.println(mincostTickets(new int[]{1,4,6,7,8,365},new int[]{2,7,15}));
+        System.out.println(mincostTickets(new int[]{1, 4, 6, 7, 8, 365}, new int[]{2, 7, 15}));
+    }
+
+
+    //1105. 填充书架
+    public int minHeightShelves(int[][] books, int shelf_width) {
+        int[] dp = new int[books.length + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+        for (int i = 1; i <= books.length; i++) {
+            int tmpWidth = 0, h = 0;
+            for (int j = i; j > 0; j--) {
+                tmpWidth += books[j - 1][0];
+                if (tmpWidth > shelf_width)
+                    break;
+                h = Math.max(h, books[j - 1][1]);
+                dp[i] = Math.min(dp[i], dp[j - 1] + h);
+            }
+        }
+        return dp[dp.length - 1];
+    }
+
+    @Test
+    public void test3955() {
+        System.out.println(minHeightShelves(new int[][]{{1, 1}, {2, 3}, {2, 3}, {1, 1}, {1, 1}, {1, 1}, {1, 2}}, 4));
+    }
+
+    //编写一个程序判断给定的数是否为丑数。
+    //
+    //丑数就是只包含质因数 2, 3, 5 的正整数。
+    //
+    //示例 1:
+    //
+    //输入: 6
+    //输出: true
+    //解释: 6 = 2 × 3
+    //示例 2:
+    //
+    //输入: 8
+    //输出: true
+    //解释: 8 = 2 × 2 × 2
+    //示例 3:
+    //
+    //输入: 14
+    //输出: false
+    //解释: 14 不是丑数，因为它包含了另外一个质因数 7。
+    //说明：
+    //
+    //1 是丑数。
+    //输入不会超过 32 位有符号整数的范围: [−231,  231 − 1]。
+    //
+    public boolean isUgly(int num) {
+        if (num == 0) {
+            return false;
+        }
+        int[] nums = {2, 3, 5};
+        BigDecimal[] bds = new BigDecimal[nums.length];
+        BigDecimal n = new BigDecimal(new DecimalFormat("#.0").format(new BigDecimal(num)));
+        while (true) {
+            for (int i = 0; i < nums.length; i++) {
+                bds[i] = n.divide(BigDecimal.valueOf(nums[i]), 1, BigDecimal.ROUND_HALF_EVEN);
+            }
+            if (n.equals(BigDecimal.valueOf((double) 1))) {
+                return true;
+            } else {
+                boolean mark = false;
+                for (int i = 0; i < nums.length; i++) {
+                    if (bds[i].toString().charAt(bds[i].toString().length() - 1) == '0') {
+                        n = bds[i];
+                        mark = true;
+                        break;
+                    }
+                }
+                if (!mark) {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public boolean isUgly_Release(int num) {
+        if (num == 0)
+            return false;
+        while (num % 2 == 0) num /= 2;
+        while (num % 3 == 0) num /= 3;
+        while (num % 5 == 0) num /= 5;
+        return num == 1;
+    }
+
+    @Test
+    public void test4002() {
+        System.out.println(isUgly(2123366400));
+    }
+
+    ///
+    //     * 思路优化（如何利用之前的计算）
+    //     * 解题二：动态规划+三指针
+    //     * dp保存按序排列的丑数，三指针分别是*2，*3，*5，找出下一个丑数
+    //
+    public int nthUglyNumber(int n) {
+        int[] dp = new int[n];
+        dp[0]=1;
+        int i2 = 0, i3 = 0, i5 = 0;
+        for (int i = 1; i < n; i++) {
+            int min = Math.min(dp[i2]*2, Math.min(dp[i3]*3, dp[i5]*5));
+            if(min==dp[i2]*2)i2++;
+            if(min==dp[i3]*3)i3++;
+            if(min==dp[i5]*5)i5++;
+            dp[i]=min;
+        }
+        return dp[n-1];
+    }
+
+    @Test
+    public void test4048() {
+        System.out.println(nthUglyNumber(1690));
     }
 
     //  [1,3,5,6], 4

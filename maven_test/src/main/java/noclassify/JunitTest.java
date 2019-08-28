@@ -692,6 +692,29 @@ public class JunitTest {
     public void test692() {
         System.out.println(Arrays.toString(AA.class.getInterfaces()));
     }
+
+    @Test
+    public void test697() {
+        BigDecimal n= BigDecimal.valueOf(998);
+        n=n.divide(BigDecimal.valueOf(2),1,BigDecimal.ROUND_HALF_EVEN);
+        System.out.println(n);
+        System.out.println(n.toString().substring(n.toString().indexOf(".")+1));
+    }
+
+    @Test
+    public void test705() {
+        BigDecimal n= BigDecimal.valueOf((double)998);
+        System.out.println(n.toString());
+    }
+
+    @Test
+    public void test711() {
+        DecimalFormat decimalFormat=new DecimalFormat("#.0");
+        BigDecimal d =BigDecimal.valueOf((double)2343434);
+        System.out.println( d.toPlainString());
+        System.out.println(decimalFormat.format(d));
+        System.out.println((double)454543);
+    }
 }
 
 
