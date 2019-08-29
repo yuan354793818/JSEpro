@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class 算法 {
     public static void main(String[] args) {
@@ -4050,6 +4052,139 @@ public class 算法 {
         System.out.println(nthUglyNumber(1690));
     }
 
+    //给定一个正整数 n，将其拆分为至少两个正整数的和，并使这些整数的乘积最大化。 返回你可以获得的最大乘积。
+    //
+    //示例 1:
+    //
+    //输入: 2
+    //输出: 1
+    //解释: 2 = 1 + 1, 1 × 1 = 1。
+    //示例 2:
+    //
+    //输入: 10
+    //输出: 36
+    //解释: 10 = 3 + 3 + 4, 3 × 3 × 4 = 36。
+    //说明: 你可以假设 n 不小于 2 且不大于 58。
+    //
+    // 方法1:
+    // 数学方法，求函数y=(n/x)^x(x>0)的最大值，可得x=e时y最大，但只能分解成整数，
+    // 故x取2或3，由于6=2+2+2=3+3，显然2^3=8<9=3^2,故应分解为多个3
+    // 接近3最好
+    public int integerBreak(int n) {
+        if(n==2){
+            return 1;
+        }
+        if (n==3){
+            return 2;
+        }
+        int a=1;
+        while (n>4){
+            n-=3;
+            a*=3;
+        }
+        return a*n;
+    }
+
+    @Test
+    public void test3865(){
+        System.out.println(integerBreak(3));
+    }
+
+    public int integerBreak_dp(int n) {
+        int [] dp=new int[n+1];
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <i ; j++) {
+                int max = Math.max(dp[i - j] * j, j *(i - j));
+                dp[i]=Math.max(dp[i],max);
+            }
+        }
+        return dp[n];
+    }
+
+    @Test
+    public void test3881() {
+        System.out.println(integerBreak_dp(55));
+    }
+
+
+    //给出 n 个数对。 在每一个数对中，第一个数字总是比第二个数字小。
+    //
+    //现在，我们定义一种跟随关系，当且仅当 b < c 时，数对(c, d) 才可以跟在 (a, b) 后面。我们用这种形式来构造一个数对链。
+    //
+    //给定一个对数集合，找出能够形成的最长数对链的长度。你不需要用到所有的数对，你可以以任何顺序选择其中的一些数对来构造。
+    //
+    //示例 :
+    //
+    //输入: [[1,2], [2,3], [3,4]]
+    //输出: 2
+    //解释: 最长的数对链是 [1,2] -> [3,4]
+    //
+    // 贪心算法
+    // 先按pairs[x][1] 排序
+    public int findLongestChain(int[][] pairs) {
+        Arrays.sort(pairs, Comparator.comparingInt(o -> o[1]));
+        int cnt=1,tmp=pairs[0][1];
+        for (int i = 1; i < pairs.length; i++) {
+            if (tmp<pairs[i][0]){
+                cnt++;
+                tmp=pairs[i][1];
+            }
+        }
+        return cnt;
+    }
+
+    @Test
+    public void test4011() {
+        int[][] a={{-6,9},{1,6},{8,10},{-1,4},{-6,-2},{-9,8},{-5,3},{0,3}};
+        Arrays.sort(a, Comparator.comparingInt(o -> o[0]));
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                System.out.print(a[i][j]+",");
+            }
+            System.out.println();
+        }
+    }
+
+
+    //给定一个整数数组 nums ，你可以对它进行一些操作。
+    //
+    //每次操作中，选择任意一个 nums[i] ，删除它并获得 nums[i] 的点数。之后，你必须删除每个等于 nums[i] - 1 或 nums[i] + 1 的元素。
+    //
+    //开始你拥有 0 个点数。返回你能通过这些操作获得的最大点数。
+    //
+    //示例 1:
+    //
+    //输入: nums = [3, 4, 2]
+    //输出: 6
+    //解释:
+    //删除 4 来获得 4 个点数，因此 3 也被删除。
+    //之后，删除 2 来获得 2 个点数。总共获得 6 个点数。
+    //示例 2:
+    //
+    //输入: nums = [2, 2, 3, 3, 3, 4]
+    //输出: 9
+    //解释:
+    //删除 3 来获得 3 个点数，接着要删除两个 2 和 4 。
+    //之后，再次删除 3 获得 3 个点数，再次删除 3 获得 3 个点数。
+    //总共获得 9 个点数。
+    public int deleteAndEarn(int[] nums) {
+        int [] cnts=new int[10001];
+        for (int i = 0; i < nums.length; i++) {
+            cnts[nums[i]]+=nums[i];
+        }
+        int[] dp=new int[10001];
+        dp[1]=cnts[1];
+        for (int i = 2; i <10001 ; i++) {
+            dp[i]=Math.max(dp[i-1],dp[i-2]+cnts[i]);
+        }
+        return dp[10000];
+    }
+
+    @Test
+    public void test4065(){
+        System.out.println(deleteAndEarn(new int[]{2, 2, 3, 3, 3, 4}));
+    }
+
     //  [1,3,5,6], 4
     // 二分插入位置
     public static int searchInsert(int[] nums, int target) {
@@ -4154,3 +4289,57 @@ public class 算法 {
 
 
 
+class Foo {
+
+    private int flag=1;
+    private ReentrantLock r = new ReentrantLock();
+    private Condition cdn1= r.newCondition();
+    private Condition cdn2= r.newCondition();
+    private Condition cdn3= r.newCondition();
+
+    public Foo() {
+
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        r.lock();
+        if (flag!=1) {
+            cdn1.await();
+        }
+
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
+
+        flag = 2;
+        cdn2.signal();
+        r.unlock();
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        r.lock();
+        if (flag!=2) {
+            cdn1.await();
+        }
+
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        printSecond.run();
+
+        flag = 3;
+        cdn2.signal();
+        r.unlock();
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        r.lock();
+        if (flag!=3) {
+            cdn1.await();
+        }
+
+        // printThird.run() outputs "third". Do not change or remove this line.
+        printThird.run();
+
+        flag = 1;
+        cdn2.signal();
+        r.unlock();
+    }
+}

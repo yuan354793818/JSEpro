@@ -694,7 +694,7 @@ public class JunitTest {
     }
 
     @Test
-    public void test697() {
+    public void test6927() {
         BigDecimal n= BigDecimal.valueOf(998);
         n=n.divide(BigDecimal.valueOf(2),1,BigDecimal.ROUND_HALF_EVEN);
         System.out.println(n);
@@ -714,6 +714,48 @@ public class JunitTest {
         System.out.println( d.toPlainString());
         System.out.println(decimalFormat.format(d));
         System.out.println((double)454543);
+    }
+
+    @Test
+    public void test697() {
+        System.out.println(Math.sqrt(10));
+        System.out.println(Math.ceil(2.55));
+        System.out.println(Math.pow(2,3));
+    }
+
+    @Test
+    public void test704() throws IOException {
+        File f = new File("E:\\JavaEEworkspace\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\noclassify\\txt\\hh");
+        f.mkdir();
+        String s = f.getAbsolutePath() + "\\path.txt";
+        File file = new File(s);
+        file.createNewFile();
+        String s1 = f.getAbsolutePath() + "\\files";
+        File file1 = new File(s1);
+        System.out.println( file1.mkdir());
+    }
+
+    @Test
+    public void test716(){
+        String s = "ass.jsp333.jsp";
+        System.out.println(s.lastIndexOf(".jsp",55));
+    }
+
+    @Test
+    public void test722() {
+        Calendar calendar =Calendar.getInstance();
+        System.out.println(calendar.toInstant().toString().substring(0,10));
+    }
+
+    @Test
+    public void test728() {
+        System.out.println("E:\\eclipse-workspace\\speedframework\\sfw.war\\WEB-INF\\source".replace("\\","/"));
+    }
+
+    @Test
+    public void test733() {
+        String zzzzx = "zzzzx";
+        System.out.println(zzzzx.substring(0,zzzzx.length()-1));
     }
 }
 
