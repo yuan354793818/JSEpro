@@ -15,10 +15,20 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.joda.time.DateTime;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.awt.print.PrinterJob;
 import java.io.*;
 import java.math.BigDecimal;
@@ -757,6 +767,69 @@ public class JunitTest {
         String zzzzx = "zzzzx";
         System.out.println(zzzzx.substring(0,zzzzx.length()-1));
     }
+
+    @Test
+    public void test762() throws IOException {
+        Document doc = Jsoup.connect("https://rule34hentai.net/_images/660b172027c17f5117b7496c10537590/117073%20-%20Candy_Chiu%20Crocface%20Gravity_Falls.jpg").proxy("127.0.0.1",1080).post();
+        System.out.println(doc.outerHtml());
+    }
+
+    @Test
+    public void test770() throws ScriptException {
+        ScriptEngineManager m = new ScriptEngineManager();
+//获取JavaScript执行引擎
+        ScriptEngine engine = m.getEngineByName("JavaScript");
+//执行JavaScript代码
+        engine.eval("var s, t, o, p, b, r, e, a, k, i, n, g, f, eXtgFCA = {\n" +
+                "                            \"XqqiCd\": +((!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + []) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (+[]) + (!+[] + !![] + !![])) / +((!+[] + !![] + !![] + []) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![]) + (!+[] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]))\n" +
+                "                        };\n" +
+                "                        g = String.fromCharCode;\n" +
+                "                        o = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\";\n" +
+                "                        e = function(s) {\n" +
+                "                            s += \"==\".slice(2 - (s.length & 3));\n" +
+                "                            var bm, r = \"\", r1, r2, i = 0;\n" +
+                "                            for (; i < s.length; ) {\n" +
+                "                                bm = o.indexOf(s.charAt(i++)) << 18 | o.indexOf(s.charAt(i++)) << 12 | (r1 = o.indexOf(s.charAt(i++))) << 6 | (r2 = o.indexOf(s.charAt(i++)));\n" +
+                "                                r += r1 === 64 ? g(bm >> 16 & 255) : r2 === 64 ? g(bm >> 16 & 255, bm >> 8 & 255) : g(bm >> 16 & 255, bm >> 8 & 255, bm & 255);\n" +
+                "                            }\n" +
+                "                            return r;\n" +
+                "                        }\n" +
+                "                        ;\n" +
+                "                        k = 'cf-dn-EPLGsYiLhxq';\n" +
+                "                        ;eXtgFCA.XqqiCd -= +((!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + []) + (+!![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (+[]) + (!+[] + !![] + !![] + !![]) + (!+[] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![])) / (+(+((!+[] + !![] + !![] + !![] + !![] + !![] + !![] + []) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (+!![]) + (!+[] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![]))) + (function(p) {\n" +
+                "                            return eval((true + \"\")[0] + \".ch\" + (false + \"\")[1] + (true + \"\")[1] + Function(\"return escape\")()((\"\")[\"italics\"]())[2] + \"o\" + (undefined + \"\")[2] + (true + \"\")[3] + \"A\" + (true + \"\")[0] + \"(\" + p + \")\")\n" +
+                "                        }(+((+!![] + []) + (!+[] + !![])))));\n" +
+                "                        eXtgFCA.XqqiCd *= function(p) {\n" +
+                "                            var p = eval(eval(e(\"ZG9jdW1l\") + (undefined + \"\")[1] + (true + \"\")[0] + (+(+!+[] + [+!+[]] + (!![] + [])[!+[] + !+[] + !+[]] + [!+[] + !+[]] + [+[]]) + [])[+!+[]] + g(103) + (true + \"\")[3] + (true + \"\")[0] + \"Element\" + g(66) + (NaN + [Infinity])[10] + \"Id(\" + g(107) + \").\" + e(\"aW5uZXJIVE1M\")));\n" +
+                "                            return +(p)\n" +
+                "                        }();\n" +
+                "                        eXtgFCA.XqqiCd -= +((!+[] + !![] + !![] + !![] + !![] + !![] + !![] + !![] + []) + (+!![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (+[]) + (!+[] + !![] + !![] + !![]) + (!+[] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![])) / +((!+[] + !![] + !![] + []) + (!+[] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![]) + (!+[] + !![] + !![] + !![] + !![] + !![] + !![]) + (+[]) + (!+[] + !![] + !![]));\n" +
+                "                        a.value = (+eXtgFCA.XqqiCd).toFixed(10);" +
+                " print('我爱你中国！' + eXtgFCA.XqqiCd);");
+    }
+
+    @Test
+    public void test807() throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--proxy-server=http://127.0.0.1:1080");
+        //不打开浏览器
+        //options.addArguments("--headless");
+        ChromeDriver driver = new ChromeDriver(options);
+        driver.get("https://rule34hentai.net/_images/660b172027c17f5117b7496c10537590/117073%20-%20Candy_Chiu%20Crocface%20Gravity_Falls.jpg");
+        //driver.get("https://www.baidu.com");
+        //driver.navigate().refresh();
+        //Thread.sleep(1000);
+        WebElement img = driver.findElement(By.cssSelector("img"));
+        Actions action = new Actions(driver);
+        action.contextClick(img).perform();
+        action.moveByOffset(11,11).build().perform();
+        action.click().perform();
+        // Thread.sleep(1000);
+        //action.sendKeys("v").build().perform();
+        //driver.quit();
+    }
+
 }
 
 
