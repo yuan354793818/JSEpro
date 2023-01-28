@@ -26,9 +26,11 @@ import org.openqa.selenium.interactions.Actions;
 import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
 
+import javax.imageio.ImageIO;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import java.awt.image.BufferedImage;
 import java.awt.print.PrinterJob;
 import java.io.*;
 import java.math.BigDecimal;
@@ -828,6 +830,13 @@ public class JunitTest {
         // Thread.sleep(1000);
         //action.sendKeys("v").build().perform();
         //driver.quit();
+    }
+
+    @Test
+    public void test834() throws IOException {
+        BufferedImage img = ImageIO.read(
+                new URL("https://rule34hentai.net/_images/660b172027c17f5117b7496c10537590/117073%20-%20Candy_Chiu%20Crocface%20Gravity_Falls.jpg"));
+        ImageIO.write(img,"xxx",new File("D:\\JavaEEworkspace\\JSEpro\\maven_test\\src\\main\\java\\noclassify\\txt\\xx.jpg"));
     }
 
 }

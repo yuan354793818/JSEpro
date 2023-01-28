@@ -20,7 +20,7 @@ public class 获取祖类方法 {
     public static class Son extends Fa{
         void think() {
             try {
-                //MethodHandles.lookup().findVirtual(Gfa.class, "think", MethodType.methodType(void.class)).bindTo(new Gfa()).invoke();
+                //MethodHandles.lookup().findVirtual(Gfa.class, "think", MethodType.methodType(void.class)).bindTo(new Fa()).invoke();
                 MethodHandles.lookup().findSpecial(Gfa.class, "think", MethodType.methodType(void.class),Son.class).invoke(this);
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
